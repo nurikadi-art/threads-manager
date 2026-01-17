@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProgressIndicator from './ProgressIndicator';
 import {
@@ -42,6 +42,9 @@ import {
 } from '../slides/SlideTemplates';
 import slidesData from '../data/slidesData';
 import './Presentation.css';
+
+// Number of slides to render before/after current slide (for smooth scrolling)
+const RENDER_BUFFER = 4;
 
 // Map slide types to components
 const slideComponents = {
@@ -153,8 +156,30 @@ const Presentation = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // Render slide based on type
+  // Determine which slides should be rendered (virtualization)
+  const visibleRange = useMemo(() => {
+    const start = Math.max(0, currentSlide - RENDER_BUFFER);
+    const end = Math.min(slidesData.length - 1, currentSlide + RENDER_BUFFER);
+    return { start, end };
+  }, [currentSlide]);
+
+  // Render slide based on type (only if in visible range)
   const renderSlide = (slideData, index) => {
+    // Check if slide is within render range
+    const isInRange = index >= visibleRange.start && index <= visibleRange.end;
+
+    if (!isInRange) {
+      // Return a placeholder to maintain scroll position
+      return (
+        <div
+          key={slideData.id}
+          data-slide-index={index}
+          className="slide-placeholder"
+          style={{ minHeight: '100vh' }}
+        />
+      );
+    }
+
     const SlideComponent = slideComponents[slideData.type];
     if (!SlideComponent) {
       console.warn(`Unknown slide type: ${slideData.type}`);
@@ -165,6 +190,14 @@ const Presentation = () => {
 
   return (
     <>
+      {/* Starfield Background - CSS only, very lightweight */}
+      <div className="starfield">
+        <div className="starfield__layer starfield__layer--1" />
+        <div className="starfield__layer starfield__layer--2" />
+        <div className="starfield__layer starfield__layer--3" />
+        <div className="starfield__nebula" />
+      </div>
+
       {/* Loading Screen */}
       <AnimatePresence>
         {isLoading && (

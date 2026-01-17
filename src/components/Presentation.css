@@ -7,6 +7,12 @@
   z-index: 1;
 }
 
+/* Placeholder for virtualized slides (not currently rendered) */
+.slide-placeholder {
+  width: 100%;
+  min-height: 100vh;
+}
+
 /* =============================================
    LOADING SCREEN
    ============================================= */
