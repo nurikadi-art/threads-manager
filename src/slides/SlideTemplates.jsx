@@ -8,13 +8,76 @@ import './SlideTemplates.css';
 const Spline = lazy(() => import('@splinetool/react-spline'));
 
 // =============================================
-// SPLINE 3D ROBOT SCENE
+// FLOATING PARTICLES - Luxury ambient effect
 // =============================================
-const SplineRobot = () => {
+const FloatingParticles = () => (
+  <div className="floating-particles">
+    {[...Array(20)].map((_, i) => (
+      <motion.div
+        key={i}
+        className="floating-particle"
+        style={{
+          left: `${Math.random() * 100}%`,
+          top: `${Math.random() * 100}%`,
+          width: `${2 + Math.random() * 4}px`,
+          height: `${2 + Math.random() * 4}px`,
+        }}
+        animate={{
+          y: [0, -100, 0],
+          x: [0, Math.random() * 50 - 25, 0],
+          opacity: [0, 1, 0],
+          scale: [0, 1, 0],
+        }}
+        transition={{
+          duration: 5 + Math.random() * 5,
+          repeat: Infinity,
+          delay: Math.random() * 5,
+          ease: "easeInOut"
+        }}
+      />
+    ))}
+  </div>
+);
+
+// =============================================
+// ANIMATED LINES - Decorative elements
+// =============================================
+const AnimatedLines = () => (
+  <div className="animated-lines">
+    <motion.div
+      className="animated-line animated-line--1"
+      initial={{ scaleX: 0, opacity: 0 }}
+      animate={{ scaleX: 1, opacity: 1 }}
+      transition={{ duration: 1.5, delay: 0.5 }}
+    />
+    <motion.div
+      className="animated-line animated-line--2"
+      initial={{ scaleX: 0, opacity: 0 }}
+      animate={{ scaleX: 1, opacity: 1 }}
+      transition={{ duration: 1.5, delay: 0.7 }}
+    />
+    <motion.div
+      className="animated-line animated-line--3"
+      initial={{ scaleY: 0, opacity: 0 }}
+      animate={{ scaleY: 1, opacity: 1 }}
+      transition={{ duration: 1.5, delay: 0.9 }}
+    />
+  </div>
+);
+
+// =============================================
+// SPLINE 3D ROBOT SCENE - Full screen dramatic
+// =============================================
+const SplineRobot = ({ onLoaded }) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
+  const handleLoad = () => {
+    setIsLoaded(true);
+    if (onLoaded) onLoaded();
+  };
+
   return (
-    <div className="spline-robot">
+    <div className="spline-robot-full">
       {/* Loading indicator */}
       {!isLoaded && (
         <div className="spline-robot__loader">
@@ -23,7 +86,12 @@ const SplineRobot = () => {
             animate={{ rotate: 360 }}
             transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
           />
-          <span>Loading 3D Robot...</span>
+          <motion.span
+            animate={{ opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+          >
+            Initializing AI...
+          </motion.span>
         </div>
       )}
 
@@ -31,59 +99,131 @@ const SplineRobot = () => {
       <Suspense fallback={null}>
         <Spline
           scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-          onLoad={() => setIsLoaded(true)}
+          onLoad={handleLoad}
           style={{
             width: '100%',
             height: '100%',
             opacity: isLoaded ? 1 : 0,
-            transition: 'opacity 0.5s ease'
+            transition: 'opacity 1s ease'
           }}
         />
       </Suspense>
+
+      {/* Glow effect behind robot */}
+      <motion.div
+        className="robot-glow"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: isLoaded ? 1 : 0, scale: 1 }}
+        transition={{ duration: 1, delay: 0.5 }}
+      />
     </div>
   );
 };
 
 // =============================================
-// HERO SLIDE - The opening title slide with 3D Robot
+// HERO SLIDE - Cinematic opening with 3D Robot
 // =============================================
-export const HeroSlide = ({ data, index }) => (
-  <Slide variant="hero" id={`slide-${data.id}`} index={index}>
-    <div className="hero-slide hero-slide--with-3d">
-      {/* Spotlight Effect */}
-      <Spotlight className="hero-slide__spotlight" fill="#c9a962" />
+export const HeroSlide = ({ data, index }) => {
+  const [robotLoaded, setRobotLoaded] = useState(false);
 
-      <div className="hero-slide__container">
-        {/* Left content */}
-        <div className="hero-slide__content">
-          <FadeIn delay={0.2}>
-            <h1 className="hero-slide__title">
-              <span className="hero-slide__title-line">{data.title}</span>
-            </h1>
-          </FadeIn>
-          <FadeIn delay={0.4}>
-            <h2 className="hero-slide__subtitle text-gradient">{data.subtitle}</h2>
-          </FadeIn>
-          <FadeIn delay={0.6}>
-            <p className="hero-slide__tagline">{data.tagline}</p>
-          </FadeIn>
-          <FadeIn delay={0.8}>
-            <div className="hero-slide__decoration">
-              <div className="hero-slide__line" />
-              <div className="hero-slide__diamond" />
-              <div className="hero-slide__line" />
+  return (
+    <Slide variant="hero" id={`slide-${data.id}`} index={index}>
+      <div className="hero-cinematic">
+        {/* Background Effects */}
+        <div className="hero-cinematic__bg">
+          <div className="hero-cinematic__gradient" />
+          <div className="hero-cinematic__vignette" />
+          <FloatingParticles />
+          <AnimatedLines />
+        </div>
+
+        {/* Multiple Spotlights */}
+        <motion.div
+          className="hero-cinematic__spotlight hero-cinematic__spotlight--1"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 2 }}
+        />
+        <motion.div
+          className="hero-cinematic__spotlight hero-cinematic__spotlight--2"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 2, delay: 0.3 }}
+        />
+
+        {/* 3D Robot - Center/Right positioned, large */}
+        <div className="hero-cinematic__robot">
+          <SplineRobot onLoaded={() => setRobotLoaded(true)} />
+        </div>
+
+        {/* Content Overlay */}
+        <div className="hero-cinematic__content">
+          {/* Eyebrow text */}
+          <motion.div
+            className="hero-cinematic__eyebrow"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            <span className="hero-cinematic__eyebrow-line" />
+            <span>WEBINAR PRESENTATION</span>
+            <span className="hero-cinematic__eyebrow-line" />
+          </motion.div>
+
+          {/* Main Title with letter animation */}
+          <motion.h1
+            className="hero-cinematic__title"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.5 }}
+          >
+            <span className="hero-cinematic__title-line">{data.title}</span>
+          </motion.h1>
+
+          {/* Subtitle with gradient */}
+          <motion.h2
+            className="hero-cinematic__subtitle"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.8 }}
+          >
+            {data.subtitle}
+          </motion.h2>
+
+          {/* Tagline */}
+          <motion.p
+            className="hero-cinematic__tagline"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 1.1 }}
+          >
+            {data.tagline}
+          </motion.p>
+
+          {/* Decorative diamond */}
+          <motion.div
+            className="hero-cinematic__diamond-container"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 1.4, type: "spring" }}
+          >
+            <div className="hero-cinematic__diamond">
+              <motion.div
+                className="hero-cinematic__diamond-inner"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              />
             </div>
-          </FadeIn>
+            <div className="hero-cinematic__diamond-glow" />
+          </motion.div>
         </div>
 
-        {/* Right 3D Robot */}
-        <div className="hero-slide__scene">
-          <SplineRobot />
-        </div>
+        {/* Bottom gradient fade */}
+        <div className="hero-cinematic__bottom-fade" />
       </div>
-    </div>
-  </Slide>
-);
+    </Slide>
+  );
+};
 
 // =============================================
 // GIFT SLIDE - Free gift announcement
