@@ -339,67 +339,53 @@ export const GiftSlide = ({ data, index }) => {
           </p>
         </motion.div>
 
-        {/* 3D Gift Container */}
+        {/* 2D Gift Container */}
         <motion.div
-          className={`gift-3d-container ${stage >= 2 ? 'gift-3d-container--opened' : ''}`}
+          className={`gift-2d-container ${stage >= 2 ? 'gift-2d-container--opened' : ''}`}
           onClick={handleOpen}
           whileHover={{ scale: stage < 2 ? 1.05 : 1 }}
           whileTap={{ scale: stage < 2 ? 0.95 : 1 }}
           onHoverStart={() => stage === 0 && setStage(1)}
         >
-          {/* 3D Gift Box */}
-          <div className="gift-3d">
-            {/* Gift base with all sides */}
-            <div className="gift-3d__base">
-              <div className="gift-3d__face gift-3d__face--front" />
-              <div className="gift-3d__face gift-3d__face--back" />
-              <div className="gift-3d__face gift-3d__face--left" />
-              <div className="gift-3d__face gift-3d__face--right" />
-              <div className="gift-3d__face gift-3d__face--bottom" />
-              {/* Ribbons */}
-              <div className="gift-3d__ribbon gift-3d__ribbon--v" />
-              <div className="gift-3d__ribbon gift-3d__ribbon--h" />
+          {/* Simple 2D Gift Box */}
+          <div className="gift-2d">
+            {/* Gift base */}
+            <div className="gift-2d__base">
+              <div className="gift-2d__ribbon-v" />
+              <div className="gift-2d__ribbon-h" />
             </div>
 
             {/* Gift lid */}
             <motion.div
-              className="gift-3d__lid"
+              className="gift-2d__lid"
               animate={stage >= 2 ? {
-                rotateX: -120,
-                y: -50,
-                opacity: 0.5,
+                y: -60,
+                rotate: -15,
+                opacity: 0.7,
               } : {
-                rotateX: 0,
                 y: 0,
+                rotate: 0,
+                opacity: 1,
               }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
             >
-              <div className="gift-3d__lid-top" />
-              <div className="gift-3d__lid-front" />
+              <div className="gift-2d__lid-ribbon" />
               {/* Bow */}
-              <div className="gift-3d__bow">
-                <div className="bow-loop bow-loop--left" />
-                <div className="bow-loop bow-loop--right" />
-                <div className="bow-center" />
+              <div className="gift-2d__bow">
+                <div className="bow-2d-loop bow-2d-loop--left" />
+                <div className="bow-2d-loop bow-2d-loop--right" />
+                <div className="bow-2d-center" />
               </div>
             </motion.div>
 
             {/* Light rays when opened */}
             {stage >= 2 && (
               <motion.div
-                className="gift-3d__rays"
+                className="gift-2d__glow"
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
-              >
-                {[...Array(8)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="light-ray"
-                    style={{ transform: `rotate(${i * 45}deg)` }}
-                  />
-                ))}
-              </motion.div>
+              />
             )}
           </div>
 
@@ -583,8 +569,7 @@ export const ParadoxSlide = ({ data, index }) => {
             onClick={() => handlePanelClick(0)}
             initial={{ x: -100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.3, type: "spring", stiffness: 100 }}
-            whileHover={{ scale: activePanel === null ? 1.02 : 1 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
           >
             {/* Sparkle effects */}
             <div className="paradox-panel__sparkles">
@@ -624,36 +609,38 @@ export const ParadoxSlide = ({ data, index }) => {
             <h3 className="paradox-panel__label">{data.columns[0].label}</h3>
             <p className="paradox-panel__sublabel">The hype you've heard everywhere</p>
 
-            <motion.div
-              className="paradox-panel__details"
-              initial={{ height: 0, opacity: 0 }}
-              animate={activePanel === 0 ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
-            >
-              <ul className="paradox-list">
-                <li>
-                  <span className="list-icon">🚀</span>
-                  <span>"10x your productivity overnight!"</span>
-                </li>
-                <li>
-                  <span className="list-icon">👥</span>
-                  <span>"Replace your entire team with AI"</span>
-                </li>
-                <li>
-                  <span className="list-icon">⚡</span>
-                  <span>"Just type and get instant results"</span>
-                </li>
-                <li>
-                  <span className="list-icon">💰</span>
-                  <span>"Make millions while you sleep"</span>
-                </li>
-                <li>
-                  <span className="list-icon">🎯</span>
-                  <span>"Anyone can do it, no skills needed"</span>
-                </li>
-              </ul>
-            </motion.div>
-
-            <div className="paradox-panel__glow paradox-panel__glow--gold" />
+            {activePanel === 0 && (
+              <motion.div
+                className="paradox-panel__details"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+              >
+                <ul className="paradox-list">
+                  <li>
+                    <span className="list-icon">🚀</span>
+                    <span>"10x your productivity overnight!"</span>
+                  </li>
+                  <li>
+                    <span className="list-icon">👥</span>
+                    <span>"Replace your entire team with AI"</span>
+                  </li>
+                  <li>
+                    <span className="list-icon">⚡</span>
+                    <span>"Just type and get instant results"</span>
+                  </li>
+                  <li>
+                    <span className="list-icon">💰</span>
+                    <span>"Make millions while you sleep"</span>
+                  </li>
+                  <li>
+                    <span className="list-icon">🎯</span>
+                    <span>"Anyone can do it, no skills needed"</span>
+                  </li>
+                </ul>
+              </motion.div>
+            )}
 
             {bothExplored.left && (
               <motion.div
@@ -697,8 +684,7 @@ export const ParadoxSlide = ({ data, index }) => {
             onClick={() => handlePanelClick(1)}
             initial={{ x: 100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.4, type: "spring", stiffness: 100 }}
-            whileHover={{ scale: activePanel === null ? 1.02 : 1 }}
+            transition={{ delay: 0.4, duration: 0.5 }}
           >
             {/* Confusion effects */}
             <div className="paradox-panel__confusion">
@@ -743,36 +729,38 @@ export const ParadoxSlide = ({ data, index }) => {
             <h3 className="paradox-panel__label">{data.columns[1].label}</h3>
             <p className="paradox-panel__sublabel">The reality you're experiencing</p>
 
-            <motion.div
-              className="paradox-panel__details"
-              initial={{ height: 0, opacity: 0 }}
-              animate={activePanel === 1 ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
-            >
-              <ul className="paradox-list paradox-list--reality">
-                <li>
-                  <span className="list-icon">😫</span>
-                  <span>"Great, another tool to learn..."</span>
-                </li>
-                <li>
-                  <span className="list-icon">🤦</span>
-                  <span>"It keeps making obvious mistakes"</span>
-                </li>
-                <li>
-                  <span className="list-icon">😵</span>
-                  <span>"Where do I even start?"</span>
-                </li>
-                <li>
-                  <span className="list-icon">⏰</span>
-                  <span>"I spend more time fixing AI output"</span>
-                </li>
-                <li>
-                  <span className="list-icon">💸</span>
-                  <span>"Is this just another shiny object?"</span>
-                </li>
-              </ul>
-            </motion.div>
-
-            <div className="paradox-panel__glow paradox-panel__glow--blue" />
+            {activePanel === 1 && (
+              <motion.div
+                className="paradox-panel__details"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+              >
+                <ul className="paradox-list paradox-list--reality">
+                  <li>
+                    <span className="list-icon">😫</span>
+                    <span>"Great, another tool to learn..."</span>
+                  </li>
+                  <li>
+                    <span className="list-icon">🤦</span>
+                    <span>"It keeps making obvious mistakes"</span>
+                  </li>
+                  <li>
+                    <span className="list-icon">😵</span>
+                    <span>"Where do I even start?"</span>
+                  </li>
+                  <li>
+                    <span className="list-icon">⏰</span>
+                    <span>"I spend more time fixing AI output"</span>
+                  </li>
+                  <li>
+                    <span className="list-icon">💸</span>
+                    <span>"Is this just another shiny object?"</span>
+                  </li>
+                </ul>
+              </motion.div>
+            )}
 
             {bothExplored.right && (
               <motion.div
@@ -1041,29 +1029,12 @@ export const FormulaSlide = ({ data, index }) => {
                 <path d="M4 17l8 5 8-5" />
               </svg>
               {step >= 5 && (
-                <>
-                  <motion.div
-                    className="element-glow element-glow--rainbow"
-                    initial={{ scale: 0 }}
-                    animate={{ scale: [1, 1.3, 1], rotate: [0, 180, 360] }}
-                    transition={{ duration: 4, repeat: Infinity }}
-                  />
-                  <motion.div
-                    className="leverage-rays"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                  >
-                    {[...Array(8)].map((_, i) => (
-                      <motion.div
-                        key={i}
-                        className="leverage-ray"
-                        style={{ transform: `rotate(${i * 45}deg)` }}
-                        animate={{ scaleX: [0.5, 1, 0.5], opacity: [0.3, 1, 0.3] }}
-                        transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.1 }}
-                      />
-                    ))}
-                  </motion.div>
-                </>
+                <motion.div
+                  className="element-glow element-glow--rainbow"
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: [1, 1.2, 1], opacity: [0.6, 1, 0.6] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                />
               )}
             </div>
             <span className="element-label element-label--leverage">LEVERAGE</span>
