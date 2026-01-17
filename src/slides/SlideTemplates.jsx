@@ -226,179 +226,287 @@ export const HeroSlide = ({ data, index }) => {
 };
 
 // =============================================
-// GIFT SLIDE - Free gift announcement
-// =============================================
-// GIFT SLIDE - Interactive unwrap animation
+// GIFT SLIDE - Spectacular 3D Gift Experience
 // =============================================
 export const GiftSlide = ({ data, index }) => {
-  const [isUnwrapped, setIsUnwrapped] = useState(false);
-  const [showParticles, setShowParticles] = useState(false);
+  const [stage, setStage] = useState(0); // 0: initial, 1: hover, 2: opened, 3: full reveal
+  const [count, setCount] = useState(0);
 
-  const handleUnwrap = () => {
-    if (!isUnwrapped) {
-      setShowParticles(true);
-      setTimeout(() => setIsUnwrapped(true), 300);
+  const handleOpen = () => {
+    if (stage < 2) {
+      setStage(2);
+      // Animate count up
+      let current = 0;
+      const target = 5000;
+      const duration = 2000;
+      const step = target / (duration / 16);
+      const counter = setInterval(() => {
+        current += step;
+        if (current >= target) {
+          setCount(target);
+          clearInterval(counter);
+          setTimeout(() => setStage(3), 500);
+        } else {
+          setCount(Math.floor(current));
+        }
+      }, 16);
     }
   };
 
   return (
     <Slide variant="offer" id={`slide-${data.id}`} index={index}>
-      <div className="gift-slide-wow">
-        {/* Background glow */}
-        <motion.div
-          className="gift-slide-wow__glow"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.6, 0.3]
-          }}
-          transition={{ duration: 3, repeat: Infinity }}
-        />
+      <div className="gift-spectacular">
+        {/* Ambient background effects */}
+        <div className="gift-spectacular__ambient">
+          <motion.div
+            className="ambient-orb ambient-orb--1"
+            animate={{
+              scale: [1, 1.3, 1],
+              opacity: [0.3, 0.5, 0.3],
+              x: [0, 30, 0],
+              y: [0, -20, 0],
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="ambient-orb ambient-orb--2"
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.2, 0.4, 0.2],
+              x: [0, -40, 0],
+              y: [0, 30, 0],
+            }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          />
+          <motion.div
+            className="ambient-orb ambient-orb--3"
+            animate={{
+              scale: [1, 1.4, 1],
+              opacity: [0.15, 0.3, 0.15],
+            }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          />
+        </div>
 
-        {/* Floating sparkles around gift */}
-        <div className="gift-slide-wow__sparkles">
-          {[...Array(12)].map((_, i) => (
+        {/* Floating bonus icons */}
+        <div className="gift-spectacular__floating-icons">
+          {['📝', '🎯', '💡', '🚀', '⚡', '💰'].map((emoji, i) => (
             <motion.div
               key={i}
-              className="gift-sparkle"
-              style={{
-                '--angle': `${i * 30}deg`,
-                '--delay': `${i * 0.1}s`,
-              }}
+              className="floating-icon"
+              initial={{ opacity: 0, scale: 0 }}
               animate={{
-                scale: [0, 1, 0],
-                opacity: [0, 1, 0],
+                opacity: stage >= 2 ? [0, 1, 1, 0] : 0,
+                scale: stage >= 2 ? [0, 1.2, 1, 0.8] : 0,
+                y: stage >= 2 ? [50, 0, -20, -100] : 50,
+                x: stage >= 2 ? [0, (i % 2 === 0 ? 1 : -1) * (20 + i * 10), (i % 2 === 0 ? 1 : -1) * (40 + i * 15)] : 0,
               }}
               transition={{
-                duration: 2,
-                repeat: Infinity,
+                duration: 2.5,
                 delay: i * 0.15,
+                ease: "easeOut"
               }}
-            />
+              style={{
+                left: `${15 + i * 12}%`,
+              }}
+            >
+              {emoji}
+            </motion.div>
           ))}
         </div>
 
-        {/* Main gift container - clickable */}
+        {/* Header section */}
         <motion.div
-          className={`gift-slide-wow__box ${isUnwrapped ? 'gift-slide-wow__box--unwrapped' : ''}`}
-          onClick={handleUnwrap}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          initial={{ rotateY: 0 }}
-          animate={{
-            rotateY: isUnwrapped ? 0 : [0, 5, -5, 0],
-          }}
-          transition={{
-            duration: 2,
-            repeat: isUnwrapped ? 0 : Infinity,
-            ease: "easeInOut"
-          }}
+          className="gift-spectacular__header"
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
         >
-          {/* Gift lid */}
-          <motion.div
-            className="gift-box__lid"
-            animate={isUnwrapped ? {
-              y: -80,
-              rotateX: -30,
-              opacity: 0
-            } : {}}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-          >
-            <div className="gift-box__lid-top" />
-            <div className="gift-box__ribbon-bow" />
-          </motion.div>
+          <div className="gift-badge">
+            <motion.span
+              className="gift-badge__dot"
+              animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            />
+            <span>EXCLUSIVE BONUS</span>
+          </div>
+          <h2 className="gift-spectacular__title">
+            Stay Until Q&A<br />
+            <span className="title-highlight">Unlock Your Free Gift</span>
+          </h2>
+          <p className="gift-spectacular__subtitle">
+            We've prepared something special for dedicated attendees
+          </p>
+        </motion.div>
 
-          {/* Gift base */}
-          <div className="gift-box__base">
-            <div className="gift-box__ribbon-v" />
-            <div className="gift-box__ribbon-h" />
+        {/* 3D Gift Container */}
+        <motion.div
+          className={`gift-3d-container ${stage >= 2 ? 'gift-3d-container--opened' : ''}`}
+          onClick={handleOpen}
+          whileHover={{ scale: stage < 2 ? 1.05 : 1 }}
+          whileTap={{ scale: stage < 2 ? 0.95 : 1 }}
+          onHoverStart={() => stage === 0 && setStage(1)}
+        >
+          {/* 3D Gift Box */}
+          <div className="gift-3d">
+            {/* Gift base with all sides */}
+            <div className="gift-3d__base">
+              <div className="gift-3d__face gift-3d__face--front" />
+              <div className="gift-3d__face gift-3d__face--back" />
+              <div className="gift-3d__face gift-3d__face--left" />
+              <div className="gift-3d__face gift-3d__face--right" />
+              <div className="gift-3d__face gift-3d__face--bottom" />
+              {/* Ribbons */}
+              <div className="gift-3d__ribbon gift-3d__ribbon--v" />
+              <div className="gift-3d__ribbon gift-3d__ribbon--h" />
+            </div>
+
+            {/* Gift lid */}
+            <motion.div
+              className="gift-3d__lid"
+              animate={stage >= 2 ? {
+                rotateX: -120,
+                y: -50,
+                opacity: 0.5,
+              } : {
+                rotateX: 0,
+                y: 0,
+              }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+              <div className="gift-3d__lid-top" />
+              <div className="gift-3d__lid-front" />
+              {/* Bow */}
+              <div className="gift-3d__bow">
+                <div className="bow-loop bow-loop--left" />
+                <div className="bow-loop bow-loop--right" />
+                <div className="bow-center" />
+              </div>
+            </motion.div>
+
+            {/* Light rays when opened */}
+            {stage >= 2 && (
+              <motion.div
+                className="gift-3d__rays"
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                {[...Array(8)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="light-ray"
+                    style={{ transform: `rotate(${i * 45}deg)` }}
+                  />
+                ))}
+              </motion.div>
+            )}
           </div>
 
-          {/* Revealed content */}
+          {/* Click prompt */}
           <motion.div
-            className="gift-box__content"
-            initial={{ opacity: 0, scale: 0.5, y: 20 }}
-            animate={isUnwrapped ? {
-              opacity: 1,
-              scale: 1,
-              y: -40
-            } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            className="gift-click-prompt"
+            animate={{
+              opacity: stage < 2 ? [0.5, 1, 0.5] : 0,
+              y: stage < 2 ? [0, -5, 0] : 10,
+            }}
+            transition={{ duration: 1.5, repeat: Infinity }}
           >
-            <span className="gift-box__prompt-count">5,000</span>
-            <span className="gift-box__prompt-label">AI Prompts</span>
+            {stage === 0 ? '✨ Hover to preview' : '👆 Click to open!'}
           </motion.div>
         </motion.div>
 
-        {/* Burst particles on unwrap */}
-        {showParticles && (
-          <div className="gift-particles-burst">
-            {[...Array(20)].map((_, i) => (
+        {/* Revealed content */}
+        <motion.div
+          className="gift-spectacular__reveal"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{
+            opacity: stage >= 2 ? 1 : 0,
+            y: stage >= 2 ? 0 : 30,
+          }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
+          <div className="reveal-counter">
+            <motion.span className="counter-number">
+              {count.toLocaleString()}
+            </motion.span>
+            <span className="counter-label">AI Business Prompts</span>
+          </div>
+
+          <motion.div
+            className="reveal-details"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: stage >= 3 ? 1 : 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <p className="reveal-tagline">Everything you need to supercharge your business with AI</p>
+
+            <div className="reveal-grid">
+              <div className="reveal-item">
+                <span className="reveal-item__icon">📧</span>
+                <span className="reveal-item__text">Email Templates</span>
+                <span className="reveal-item__count">500+</span>
+              </div>
+              <div className="reveal-item">
+                <span className="reveal-item__icon">📊</span>
+                <span className="reveal-item__text">Marketing Scripts</span>
+                <span className="reveal-item__count">1,200+</span>
+              </div>
+              <div className="reveal-item">
+                <span className="reveal-item__icon">🎯</span>
+                <span className="reveal-item__text">Sales Frameworks</span>
+                <span className="reveal-item__count">800+</span>
+              </div>
+              <div className="reveal-item">
+                <span className="reveal-item__icon">💼</span>
+                <span className="reveal-item__text">Business Strategy</span>
+                <span className="reveal-item__count">2,500+</span>
+              </div>
+            </div>
+
+            <div className="reveal-value">
+              <span className="value-label">Total Value:</span>
+              <span className="value-strike">$297</span>
+              <span className="value-free">FREE</span>
+            </div>
+
+            <p className="reveal-cta">Just stay until the end of Q&A to claim!</p>
+          </motion.div>
+        </motion.div>
+
+        {/* Confetti particles */}
+        {stage >= 2 && (
+          <div className="gift-confetti">
+            {[...Array(40)].map((_, i) => (
               <motion.div
                 key={i}
-                className="burst-particle"
+                className="confetti-piece"
                 initial={{
                   x: 0,
                   y: 0,
-                  scale: 1,
-                  opacity: 1
+                  rotate: 0,
+                  opacity: 1,
                 }}
                 animate={{
-                  x: (Math.random() - 0.5) * 400,
-                  y: (Math.random() - 0.5) * 400,
-                  scale: 0,
-                  opacity: 0
+                  x: (Math.random() - 0.5) * 600,
+                  y: (Math.random() - 0.5) * 400 - 100,
+                  rotate: Math.random() * 720 - 360,
+                  opacity: 0,
                 }}
                 transition={{
-                  duration: 1 + Math.random() * 0.5,
-                  ease: "easeOut"
+                  duration: 2 + Math.random(),
+                  ease: "easeOut",
+                }}
+                style={{
+                  background: ['#c9a962', '#e4d4a5', '#fff', '#ff6b6b', '#4ecdc4'][Math.floor(Math.random() * 5)],
+                  width: `${8 + Math.random() * 8}px`,
+                  height: `${8 + Math.random() * 8}px`,
+                  borderRadius: Math.random() > 0.5 ? '50%' : '2px',
                 }}
               />
             ))}
           </div>
         )}
-
-        {/* Text content */}
-        <div className="gift-slide-wow__text">
-          <motion.div
-            className="gift-slide-wow__badge"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            <span className="badge-pulse" />
-            FREE BONUS
-          </motion.div>
-
-          <motion.h2
-            className="gift-slide-wow__title"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-          >
-            {data.title}
-          </motion.h2>
-
-          <motion.p
-            className="gift-slide-wow__instruction"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
-          >
-            {isUnwrapped ? '🎉 Gift Revealed!' : '👆 Click the gift to unwrap'}
-          </motion.p>
-
-          <motion.div
-            className="gift-slide-wow__highlight"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{
-              opacity: isUnwrapped ? 1 : 0.7,
-              scale: isUnwrapped ? 1.05 : 1
-            }}
-            transition={{ delay: 0.8 }}
-          >
-            {data.highlight}
-          </motion.div>
-        </div>
       </div>
     </Slide>
   );
@@ -409,24 +517,47 @@ export const GiftSlide = ({ data, index }) => {
 // =============================================
 export const ParadoxSlide = ({ data, index }) => {
   const [activePanel, setActivePanel] = useState(null);
-  const [showReveal, setShowReveal] = useState(false);
+  const [bothExplored, setBothExplored] = useState({ left: false, right: false });
 
   const handlePanelClick = (panelIndex) => {
     setActivePanel(activePanel === panelIndex ? null : panelIndex);
-    if (activePanel === null) {
-      setTimeout(() => setShowReveal(true), 500);
-    }
+    if (panelIndex === 0) setBothExplored(prev => ({ ...prev, left: true }));
+    if (panelIndex === 1) setBothExplored(prev => ({ ...prev, right: true }));
   };
+
+  const showInsight = bothExplored.left && bothExplored.right;
 
   return (
     <Slide variant="default" id={`slide-${data.id}`} index={index}>
       <div className="paradox-slide-wow">
+        {/* Background elements */}
+        <div className="paradox-bg-effects">
+          <motion.div
+            className="paradox-bg-orb paradox-bg-orb--1"
+            animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.2, 0.1] }}
+            transition={{ duration: 8, repeat: Infinity }}
+          />
+          <motion.div
+            className="paradox-bg-orb paradox-bg-orb--2"
+            animate={{ scale: [1, 1.3, 1], opacity: [0.1, 0.15, 0.1] }}
+            transition={{ duration: 10, repeat: Infinity, delay: 2 }}
+          />
+        </div>
+
         {/* Title with animated underline */}
         <motion.div
           className="paradox-slide-wow__header"
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
         >
+          <motion.span
+            className="paradox-eyebrow"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            THE ELEPHANT IN THE ROOM
+          </motion.span>
           <h2 className="paradox-slide-wow__title">{data.title}</h2>
           <motion.div
             className="paradox-slide-wow__underline"
@@ -434,6 +565,14 @@ export const ParadoxSlide = ({ data, index }) => {
             animate={{ scaleX: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           />
+          <motion.p
+            className="paradox-intro"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6 }}
+          >
+            Every founder faces this disconnect. Let's explore both sides.
+          </motion.p>
         </motion.div>
 
         {/* Split screen panels */}
@@ -449,7 +588,7 @@ export const ParadoxSlide = ({ data, index }) => {
           >
             {/* Sparkle effects */}
             <div className="paradox-panel__sparkles">
-              {[...Array(8)].map((_, i) => (
+              {[...Array(12)].map((_, i) => (
                 <motion.div
                   key={i}
                   className="panel-sparkle"
@@ -461,11 +600,11 @@ export const ParadoxSlide = ({ data, index }) => {
                   transition={{
                     duration: 2,
                     repeat: Infinity,
-                    delay: i * 0.25
+                    delay: i * 0.2
                   }}
                   style={{
-                    left: `${15 + Math.random() * 70}%`,
-                    top: `${15 + Math.random() * 70}%`,
+                    left: `${10 + Math.random() * 80}%`,
+                    top: `${10 + Math.random() * 80}%`,
                   }}
                 />
               ))}
@@ -483,6 +622,7 @@ export const ParadoxSlide = ({ data, index }) => {
             </div>
 
             <h3 className="paradox-panel__label">{data.columns[0].label}</h3>
+            <p className="paradox-panel__sublabel">The hype you've heard everywhere</p>
 
             <motion.div
               className="paradox-panel__details"
@@ -490,13 +630,40 @@ export const ParadoxSlide = ({ data, index }) => {
               animate={activePanel === 0 ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
             >
               <ul className="paradox-list">
-                <li>"10x your productivity!"</li>
-                <li>"Replace your entire team"</li>
-                <li>"Instant results"</li>
+                <li>
+                  <span className="list-icon">🚀</span>
+                  <span>"10x your productivity overnight!"</span>
+                </li>
+                <li>
+                  <span className="list-icon">👥</span>
+                  <span>"Replace your entire team with AI"</span>
+                </li>
+                <li>
+                  <span className="list-icon">⚡</span>
+                  <span>"Just type and get instant results"</span>
+                </li>
+                <li>
+                  <span className="list-icon">💰</span>
+                  <span>"Make millions while you sleep"</span>
+                </li>
+                <li>
+                  <span className="list-icon">🎯</span>
+                  <span>"Anyone can do it, no skills needed"</span>
+                </li>
               </ul>
             </motion.div>
 
             <div className="paradox-panel__glow paradox-panel__glow--gold" />
+
+            {bothExplored.left && (
+              <motion.div
+                className="panel-check"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+              >
+                ✓
+              </motion.div>
+            )}
           </motion.div>
 
           {/* Center divider with VS */}
@@ -535,23 +702,23 @@ export const ParadoxSlide = ({ data, index }) => {
           >
             {/* Confusion effects */}
             <div className="paradox-panel__confusion">
-              {[...Array(5)].map((_, i) => (
+              {[...Array(6)].map((_, i) => (
                 <motion.div
                   key={i}
                   className="confusion-mark"
                   animate={{
-                    y: [0, -10, 0],
-                    opacity: [0.3, 0.7, 0.3],
-                    rotate: [-5, 5, -5]
+                    y: [0, -15, 0],
+                    opacity: [0.2, 0.6, 0.2],
+                    rotate: [-10, 10, -10]
                   }}
                   transition={{
                     duration: 1.5,
                     repeat: Infinity,
-                    delay: i * 0.2
+                    delay: i * 0.15
                   }}
                   style={{
-                    left: `${20 + i * 15}%`,
-                    top: `${20 + Math.random() * 40}%`,
+                    left: `${15 + i * 14}%`,
+                    top: `${20 + (i % 3) * 20}%`,
                   }}
                 >
                   ?
@@ -570,11 +737,11 @@ export const ParadoxSlide = ({ data, index }) => {
               >
                 <circle cx="12" cy="12" r="10" />
                 <path d="M9 9h.01M15 9h.01M9 15c1 1 2.5 1.5 3 1.5s2-0.5 3-1.5" />
-                <path d="M8 9c.5-1.5 1.5-2 2-2s1.5.5 2 2" />
               </motion.svg>
             </div>
 
             <h3 className="paradox-panel__label">{data.columns[1].label}</h3>
+            <p className="paradox-panel__sublabel">The reality you're experiencing</p>
 
             <motion.div
               className="paradox-panel__details"
@@ -582,35 +749,85 @@ export const ParadoxSlide = ({ data, index }) => {
               animate={activePanel === 1 ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
             >
               <ul className="paradox-list paradox-list--reality">
-                <li>"Another tool to learn..."</li>
-                <li>"It keeps making mistakes"</li>
-                <li>"Where do I even start?"</li>
+                <li>
+                  <span className="list-icon">😫</span>
+                  <span>"Great, another tool to learn..."</span>
+                </li>
+                <li>
+                  <span className="list-icon">🤦</span>
+                  <span>"It keeps making obvious mistakes"</span>
+                </li>
+                <li>
+                  <span className="list-icon">😵</span>
+                  <span>"Where do I even start?"</span>
+                </li>
+                <li>
+                  <span className="list-icon">⏰</span>
+                  <span>"I spend more time fixing AI output"</span>
+                </li>
+                <li>
+                  <span className="list-icon">💸</span>
+                  <span>"Is this just another shiny object?"</span>
+                </li>
               </ul>
             </motion.div>
 
             <div className="paradox-panel__glow paradox-panel__glow--blue" />
+
+            {bothExplored.right && (
+              <motion.div
+                className="panel-check"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+              >
+                ✓
+              </motion.div>
+            )}
           </motion.div>
         </div>
 
-        {/* Bottom revelation text */}
+        {/* Bottom revelation/insight */}
         <motion.div
-          className="paradox-slide-wow__revelation"
+          className={`paradox-slide-wow__revelation ${showInsight ? 'paradox-slide-wow__revelation--highlighted' : ''}`}
           initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: showReveal || activePanel !== null ? 1 : 0.5, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}
         >
-          <p>{data.content}</p>
+          {showInsight ? (
+            <motion.div
+              className="paradox-insight"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+            >
+              <span className="insight-icon">💡</span>
+              <h4>Here's the truth:</h4>
+              <p>{data.content}</p>
+              <p className="insight-emphasis">This webinar will bridge that gap.</p>
+            </motion.div>
+          ) : (
+            <p className="revelation-placeholder">
+              {bothExplored.left || bothExplored.right
+                ? `Explore ${!bothExplored.left ? 'the left' : 'the right'} panel to unlock the insight...`
+                : 'Explore both sides to understand the full picture...'}
+            </p>
+          )}
         </motion.div>
 
         {/* Click instruction */}
         <motion.div
           className="paradox-instruction"
           initial={{ opacity: 0 }}
-          animate={{ opacity: activePanel === null ? 1 : 0 }}
+          animate={{ opacity: !showInsight ? 1 : 0 }}
           transition={{ delay: 1 }}
         >
           👆 Click each side to explore
         </motion.div>
+
+        {/* Progress indicator */}
+        <div className="paradox-progress">
+          <div className={`progress-dot ${bothExplored.left ? 'progress-dot--complete' : ''}`} />
+          <div className={`progress-dot ${bothExplored.right ? 'progress-dot--complete' : ''}`} />
+        </div>
       </div>
     </Slide>
   );
