@@ -862,28 +862,306 @@ export const ChecklistSlide = ({ data, index }) => (
 );
 
 // =============================================
-// FORMULA SLIDE - Equation display
+// FORMULA SLIDE - Interactive Equation Visualization
 // =============================================
-export const FormulaSlide = ({ data, index }) => (
-  <Slide variant="hero" id={`slide-${data.id}`} index={index}>
-    <div className="formula-slide">
-      {data.badge && (
-        <FadeIn>
-          <div className="slide-badge">{data.badge}</div>
-        </FadeIn>
-      )}
-      <FadeIn delay={0.2}>
-        <h2 className="section-title">{data.title}</h2>
-      </FadeIn>
-      <ScaleIn delay={0.4}>
-        <div className="formula-slide__equation text-gradient">{data.equation}</div>
-      </ScaleIn>
-      <FadeIn delay={0.6}>
-        <p className="formula-slide__content">{data.content}</p>
-      </FadeIn>
-    </div>
-  </Slide>
-);
+export const FormulaSlide = ({ data, index }) => {
+  const [step, setStep] = useState(0); // 0: start, 1: AI, 2: +, 3: Human, 4: =, 5: Leverage
+
+  const nextStep = () => {
+    if (step < 5) setStep(step + 1);
+  };
+
+  const getStepInstruction = () => {
+    switch(step) {
+      case 0: return "Click to build the formula";
+      case 1: return "Click to add the next element";
+      case 2: return "Click to continue";
+      case 3: return "Click to see the result";
+      case 4: return "Click to reveal the power";
+      case 5: return "The complete formula for success";
+      default: return "";
+    }
+  };
+
+  return (
+    <Slide variant="hero" id={`slide-${data.id}`} index={index}>
+      <div className="formula-spectacular" onClick={nextStep}>
+        {/* Background effects */}
+        <div className="formula-bg">
+          <motion.div
+            className="formula-bg__orb formula-bg__orb--1"
+            animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.3, 0.2] }}
+            transition={{ duration: 8, repeat: Infinity }}
+          />
+          <motion.div
+            className="formula-bg__orb formula-bg__orb--2"
+            animate={{ scale: [1, 1.3, 1], opacity: [0.15, 0.25, 0.15] }}
+            transition={{ duration: 10, repeat: Infinity, delay: 2 }}
+          />
+        </div>
+
+        {/* Header */}
+        <motion.div
+          className="formula-header"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <span className="formula-eyebrow">THE SECRET EQUATION</span>
+          <h2 className="formula-title">{data.title}</h2>
+        </motion.div>
+
+        {/* Main Formula Visualization */}
+        <div className="formula-equation-visual">
+          {/* AI Element */}
+          <motion.div
+            className={`formula-element formula-element--ai ${step >= 1 ? 'formula-element--active' : ''}`}
+            initial={{ opacity: 0.3, scale: 0.8 }}
+            animate={{
+              opacity: step >= 1 ? 1 : 0.3,
+              scale: step >= 1 ? 1 : 0.8,
+              y: step >= 1 ? 0 : 20
+            }}
+            transition={{ duration: 0.5, type: "spring" }}
+          >
+            <div className="element-icon element-icon--ai">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <rect x="3" y="4" width="18" height="16" rx="2" />
+                <circle cx="9" cy="10" r="1.5" fill="currentColor" />
+                <circle cx="15" cy="10" r="1.5" fill="currentColor" />
+                <path d="M9 15h6" />
+                <path d="M12 2v2" />
+                <path d="M8 2l1 2" />
+                <path d="M16 2l-1 2" />
+              </svg>
+              {step >= 1 && (
+                <motion.div
+                  className="element-glow element-glow--blue"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                />
+              )}
+            </div>
+            <span className="element-label">AI</span>
+            <span className="element-desc">Speed & Scale</span>
+            {step >= 1 && step < 5 && (
+              <motion.div
+                className="element-warning"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+              >
+                ⚠️ Alone: Dangerous
+              </motion.div>
+            )}
+          </motion.div>
+
+          {/* Plus Sign */}
+          <motion.div
+            className={`formula-operator ${step >= 2 ? 'formula-operator--active' : ''}`}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{
+              opacity: step >= 2 ? 1 : 0,
+              scale: step >= 2 ? 1 : 0,
+              rotate: step >= 2 ? 0 : -180
+            }}
+            transition={{ duration: 0.4, type: "spring" }}
+          >
+            <span>+</span>
+          </motion.div>
+
+          {/* Human Judgment Element */}
+          <motion.div
+            className={`formula-element formula-element--human ${step >= 3 ? 'formula-element--active' : ''}`}
+            initial={{ opacity: 0.3, scale: 0.8 }}
+            animate={{
+              opacity: step >= 3 ? 1 : 0.3,
+              scale: step >= 3 ? 1 : 0.8,
+              y: step >= 3 ? 0 : 20
+            }}
+            transition={{ duration: 0.5, type: "spring" }}
+          >
+            <div className="element-icon element-icon--human">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <circle cx="12" cy="8" r="4" />
+                <path d="M4 20v-2a4 4 0 014-4h8a4 4 0 014 4v2" />
+                <circle cx="12" cy="8" r="1" fill="currentColor" />
+              </svg>
+              {step >= 3 && (
+                <motion.div
+                  className="element-glow element-glow--gold"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+                />
+              )}
+            </div>
+            <span className="element-label">Human Judgment</span>
+            <span className="element-desc">Wisdom & Context</span>
+            {step >= 3 && step < 5 && (
+              <motion.div
+                className="element-warning element-warning--slow"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+              >
+                🐢 Alone: Slow
+              </motion.div>
+            )}
+          </motion.div>
+
+          {/* Equals Sign */}
+          <motion.div
+            className={`formula-operator formula-operator--equals ${step >= 4 ? 'formula-operator--active' : ''}`}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{
+              opacity: step >= 4 ? 1 : 0,
+              scale: step >= 4 ? 1 : 0
+            }}
+            transition={{ duration: 0.4, type: "spring" }}
+          >
+            <span>=</span>
+          </motion.div>
+
+          {/* Leverage Result */}
+          <motion.div
+            className={`formula-element formula-element--result ${step >= 5 ? 'formula-element--active formula-element--leverage' : ''}`}
+            initial={{ opacity: 0.3, scale: 0.8 }}
+            animate={{
+              opacity: step >= 5 ? 1 : 0.3,
+              scale: step >= 5 ? 1.1 : 0.8,
+              y: step >= 5 ? 0 : 20
+            }}
+            transition={{ duration: 0.6, type: "spring" }}
+          >
+            <div className="element-icon element-icon--leverage">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M12 2L4 7l8 5 8-5-8-5z" />
+                <path d="M4 12l8 5 8-5" />
+                <path d="M4 17l8 5 8-5" />
+              </svg>
+              {step >= 5 && (
+                <>
+                  <motion.div
+                    className="element-glow element-glow--rainbow"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: [1, 1.3, 1], rotate: [0, 180, 360] }}
+                    transition={{ duration: 4, repeat: Infinity }}
+                  />
+                  <motion.div
+                    className="leverage-rays"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                  >
+                    {[...Array(8)].map((_, i) => (
+                      <motion.div
+                        key={i}
+                        className="leverage-ray"
+                        style={{ transform: `rotate(${i * 45}deg)` }}
+                        animate={{ scaleX: [0.5, 1, 0.5], opacity: [0.3, 1, 0.3] }}
+                        transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.1 }}
+                      />
+                    ))}
+                  </motion.div>
+                </>
+              )}
+            </div>
+            <span className="element-label element-label--leverage">LEVERAGE</span>
+            <span className="element-desc element-desc--leverage">Unstoppable Growth</span>
+          </motion.div>
+        </div>
+
+        {/* Visual Representation Below */}
+        {step >= 5 && (
+          <motion.div
+            className="formula-visual-explanation"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+          >
+            <div className="visual-card">
+              <div className="visual-card__icon">🤖</div>
+              <div className="visual-card__content">
+                <h4>AI Power</h4>
+                <p>Process 1000x faster</p>
+                <p>Never gets tired</p>
+                <p>Scales infinitely</p>
+              </div>
+            </div>
+            <div className="visual-card visual-card--plus">
+              <span>+</span>
+            </div>
+            <div className="visual-card">
+              <div className="visual-card__icon">🧠</div>
+              <div className="visual-card__content">
+                <h4>Your Wisdom</h4>
+                <p>Strategic decisions</p>
+                <p>Creative direction</p>
+                <p>Quality control</p>
+              </div>
+            </div>
+            <div className="visual-card visual-card--equals">
+              <span>=</span>
+            </div>
+            <div className="visual-card visual-card--result">
+              <div className="visual-card__icon">🚀</div>
+              <div className="visual-card__content">
+                <h4>10x Output</h4>
+                <p>Scale without burnout</p>
+                <p>Quality at speed</p>
+                <p>Competitive edge</p>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Bottom Text */}
+        <motion.div
+          className="formula-footer"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          {step < 5 ? (
+            <p className="formula-instruction">
+              {getStepInstruction()}
+              <motion.span
+                className="click-indicator"
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 1, repeat: Infinity }}
+              >
+                👆
+              </motion.span>
+            </p>
+          ) : (
+            <motion.div
+              className="formula-conclusion"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              <p className="conclusion-text">
+                <span className="highlight-danger">AI alone is dangerous.</span>
+                <span className="highlight-slow">Humans alone are slow.</span>
+              </p>
+              <p className="conclusion-result">Together, they are <span className="highlight-leverage">LEVERAGE.</span></p>
+            </motion.div>
+          )}
+        </motion.div>
+
+        {/* Progress dots */}
+        <div className="formula-progress">
+          {[0, 1, 2, 3, 4, 5].map((s) => (
+            <div
+              key={s}
+              className={`formula-progress__dot ${step >= s ? 'formula-progress__dot--active' : ''}`}
+            />
+          ))}
+        </div>
+      </div>
+    </Slide>
+  );
+};
 
 // =============================================
 // METAPHOR SLIDE - Analogy with icon
