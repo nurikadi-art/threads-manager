@@ -1,86 +1,51 @@
+import { Suspense, lazy, useState } from 'react';
 import { motion } from 'framer-motion';
 import Slide, { FadeIn, ScaleIn, StaggerContainer, StaggerItem } from '../components/Slide';
 import { Spotlight } from '../components/Spotlight';
 import './SlideTemplates.css';
 
-// =============================================
-// HERO 3D VISUAL - Animated geometric shapes
-// =============================================
-const Hero3DVisual = () => (
-  <div className="hero-3d-visual">
-    {/* Glowing orb background */}
-    <motion.div
-      className="hero-3d-visual__glow"
-      animate={{
-        scale: [1, 1.2, 1],
-        opacity: [0.3, 0.6, 0.3],
-      }}
-      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-    />
-
-    {/* Rotating outer ring */}
-    <motion.div
-      className="hero-3d-visual__ring hero-3d-visual__ring--outer"
-      animate={{ rotateZ: 360, rotateX: 15 }}
-      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-    />
-
-    {/* Counter-rotating middle ring */}
-    <motion.div
-      className="hero-3d-visual__ring hero-3d-visual__ring--middle"
-      animate={{ rotateZ: -360, rotateY: 20 }}
-      transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-    />
-
-    {/* Inner rotating ring */}
-    <motion.div
-      className="hero-3d-visual__ring hero-3d-visual__ring--inner"
-      animate={{ rotateZ: 360, rotateX: -10 }}
-      transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-    />
-
-    {/* Central diamond */}
-    <motion.div
-      className="hero-3d-visual__core"
-      animate={{
-        rotateY: 360,
-        scale: [1, 1.1, 1],
-      }}
-      transition={{
-        rotateY: { duration: 8, repeat: Infinity, ease: "linear" },
-        scale: { duration: 3, repeat: Infinity, ease: "easeInOut" }
-      }}
-    >
-      <div className="hero-3d-visual__diamond" />
-    </motion.div>
-
-    {/* Floating particles */}
-    {[...Array(6)].map((_, i) => (
-      <motion.div
-        key={i}
-        className="hero-3d-visual__particle"
-        style={{
-          left: `${20 + Math.random() * 60}%`,
-          top: `${20 + Math.random() * 60}%`,
-        }}
-        animate={{
-          y: [0, -30, 0],
-          opacity: [0.3, 1, 0.3],
-          scale: [1, 1.5, 1],
-        }}
-        transition={{
-          duration: 3 + Math.random() * 2,
-          repeat: Infinity,
-          delay: i * 0.5,
-          ease: "easeInOut"
-        }}
-      />
-    ))}
-  </div>
-);
+// Lazy load Spline for better performance
+const Spline = lazy(() => import('@splinetool/react-spline'));
 
 // =============================================
-// HERO SLIDE - The opening title slide with 3D Visual
+// SPLINE 3D ROBOT SCENE
+// =============================================
+const SplineRobot = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  return (
+    <div className="spline-robot">
+      {/* Loading indicator */}
+      {!isLoaded && (
+        <div className="spline-robot__loader">
+          <motion.div
+            className="spline-robot__loader-ring"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+          />
+          <span>Loading 3D Robot...</span>
+        </div>
+      )}
+
+      {/* Spline 3D Scene */}
+      <Suspense fallback={null}>
+        <Spline
+          scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+          onLoad={() => setIsLoaded(true)}
+          style={{
+            width: '100%',
+            height: '100%',
+            opacity: isLoaded ? 1 : 0,
+            transition: 'opacity 0.5s ease'
+          }}
+        />
+      </Suspense>
+    </div>
+  );
+};
+
+// =============================================
+// HERO SLIDE - The opening title slide with 3D Robot
 // =============================================
 export const HeroSlide = ({ data, index }) => (
   <Slide variant="hero" id={`slide-${data.id}`} index={index}>
@@ -111,11 +76,9 @@ export const HeroSlide = ({ data, index }) => (
           </FadeIn>
         </div>
 
-        {/* Right 3D Visual */}
+        {/* Right 3D Robot */}
         <div className="hero-slide__scene">
-          <ScaleIn delay={0.5}>
-            <Hero3DVisual />
-          </ScaleIn>
+          <SplineRobot />
         </div>
       </div>
     </div>
