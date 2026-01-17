@@ -616,12 +616,12 @@
 }
 
 .ambient-orb--3 {
-  width: 500px;
-  height: 500px;
-  top: 50%;
-  left: 50%;
+  width: 300px;
+  height: 300px;
+  top: 15%;
+  left: 70%;
   transform: translate(-50%, -50%);
-  background: radial-gradient(circle, rgba(201, 169, 98, 0.2) 0%, transparent 60%);
+  background: radial-gradient(circle, rgba(201, 169, 98, 0.1) 0%, transparent 60%);
 }
 
 /* Floating icons */
@@ -670,7 +670,7 @@
 
 .gift-spectacular__title {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: clamp(2.5rem, 6vw, 4rem);
   line-height: 1.2;
   margin-bottom: var(--spacing-sm);
 }
@@ -683,9 +683,9 @@
 }
 
 .gift-spectacular__subtitle {
-  font-size: 1.1rem;
+  font-size: 1.35rem;
   color: var(--color-text-secondary);
-  max-width: 400px;
+  max-width: 500px;
   margin: 0 auto;
 }
 
@@ -885,10 +885,15 @@
 
 /* Click prompt */
 .gift-click-prompt {
-  margin-top: var(--spacing-sm);
-  font-size: 0.9rem;
-  color: var(--color-text-tertiary);
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.1rem;
+  color: var(--color-gold);
   text-align: center;
+  white-space: nowrap;
+  font-weight: 500;
 }
 
 /* Reveal section */
@@ -917,7 +922,7 @@
 .counter-label {
   display: block;
   font-family: var(--font-heading);
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   color: var(--color-gold);
   text-transform: uppercase;
   letter-spacing: 3px;
@@ -925,7 +930,7 @@
 }
 
 .reveal-tagline {
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   color: var(--color-text-secondary);
   margin-bottom: var(--spacing-md);
 }
@@ -960,13 +965,13 @@
 }
 
 .reveal-item__text {
-  font-size: 0.85rem;
+  font-size: 1rem;
   color: var(--color-text-secondary);
 }
 
 .reveal-item__count {
   font-family: var(--font-heading);
-  font-size: 0.75rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--color-gold);
   margin-top: 0.25rem;
@@ -1074,19 +1079,19 @@
 }
 
 .paradox-bg-orb--1 {
-  width: 400px;
-  height: 400px;
-  top: 20%;
-  left: -10%;
-  background: rgba(201, 169, 98, 0.2);
+  width: 300px;
+  height: 300px;
+  top: 5%;
+  left: -15%;
+  background: rgba(201, 169, 98, 0.1);
 }
 
 .paradox-bg-orb--2 {
-  width: 350px;
-  height: 350px;
-  bottom: 10%;
-  right: -5%;
-  background: rgba(100, 150, 255, 0.15);
+  width: 250px;
+  height: 250px;
+  bottom: 5%;
+  right: -10%;
+  background: rgba(100, 150, 255, 0.08);
 }
 
 .paradox-slide-wow__header {
@@ -1110,7 +1115,7 @@
 
 .paradox-slide-wow__title {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: clamp(2.5rem, 6vw, 4rem);
   margin-bottom: var(--spacing-sm);
 }
 
@@ -1123,9 +1128,9 @@
 }
 
 .paradox-intro {
-  font-size: 1.1rem;
+  font-size: 1.4rem;
   color: var(--color-text-secondary);
-  max-width: 500px;
+  max-width: 600px;
   margin: 0 auto;
 }
 
@@ -1231,14 +1236,14 @@
 /* Panel labels */
 .paradox-panel__label {
   font-family: var(--font-heading);
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: 600;
   text-align: center;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
 }
 
 .paradox-panel__sublabel {
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: var(--color-text-tertiary);
   margin-bottom: var(--spacing-sm);
 }
@@ -1277,6 +1282,7 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.6rem 0;
+  font-size: 1.15rem;
   font-style: italic;
   color: var(--color-text-secondary);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -1287,7 +1293,7 @@
 }
 
 .paradox-list .list-icon {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-style: normal;
 }
 
@@ -1298,23 +1304,23 @@
 /* Panel glows */
 .paradox-panel__glow {
   position: absolute;
-  bottom: -50%;
+  bottom: -30%;
   left: 50%;
   transform: translateX(-50%);
-  width: 200px;
-  height: 200px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
-  filter: blur(60px);
+  filter: blur(50px);
   pointer-events: none;
-  opacity: 0.5;
+  opacity: 0.3;
 }
 
 .paradox-panel__glow--gold {
-  background: rgba(201, 169, 98, 0.3);
+  background: rgba(201, 169, 98, 0.25);
 }
 
 .paradox-panel__glow--blue {
-  background: rgba(100, 150, 255, 0.2);
+  background: rgba(100, 150, 255, 0.15);
 }
 
 /* Center divider */
@@ -1557,19 +1563,19 @@
 }
 
 .formula-bg__orb--1 {
-  width: 500px;
-  height: 500px;
-  top: 10%;
-  left: -10%;
-  background: rgba(201, 169, 98, 0.2);
+  width: 300px;
+  height: 300px;
+  top: 5%;
+  left: -15%;
+  background: rgba(201, 169, 98, 0.08);
 }
 
 .formula-bg__orb--2 {
-  width: 400px;
-  height: 400px;
-  bottom: 10%;
-  right: -5%;
-  background: rgba(100, 200, 255, 0.15);
+  width: 250px;
+  height: 250px;
+  bottom: 5%;
+  right: -10%;
+  background: rgba(100, 200, 255, 0.06);
 }
 
 /* Header */
@@ -1594,7 +1600,7 @@
 
 .formula-title {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: clamp(2.5rem, 6vw, 4rem);
 }
 
 /* Main equation visual */
@@ -1721,13 +1727,13 @@
 /* Element labels */
 .element-label {
   font-family: var(--font-heading);
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 0.25rem;
 }
 
 .element-label--leverage {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   background: linear-gradient(135deg, #22c55e, #4ade80);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1735,7 +1741,7 @@
 }
 
 .element-desc {
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: var(--color-text-tertiary);
 }
 
