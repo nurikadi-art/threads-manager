@@ -39,6 +39,52 @@
   margin: 0 auto;
 }
 
+/* Hero with 3D Scene - Split Layout */
+.hero-slide--with-3d {
+  position: relative;
+  max-width: 100%;
+  width: 100%;
+  min-height: 600px;
+  text-align: left;
+  overflow: hidden;
+}
+
+.hero-slide__spotlight {
+  position: absolute;
+  top: -200px;
+  left: 0;
+  z-index: 1;
+  opacity: 0.8;
+}
+
+.hero-slide__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-lg);
+  min-height: 600px;
+  position: relative;
+  z-index: 10;
+}
+
+.hero-slide__content {
+  flex: 1;
+  max-width: 600px;
+  padding: var(--spacing-lg);
+}
+
+.hero-slide__scene {
+  flex: 1;
+  position: relative;
+  min-height: 500px;
+  max-width: 50%;
+}
+
+.hero-slide__spline {
+  position: absolute;
+  inset: 0;
+}
+
 .hero-slide__title {
   font-family: var(--font-display);
   font-size: clamp(2.5rem, 7vw, 5rem);
@@ -70,9 +116,12 @@
 .hero-slide__decoration {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: var(--spacing-sm);
   margin-top: var(--spacing-lg);
+}
+
+.hero-slide--with-3d .hero-slide__decoration {
+  justify-content: flex-start;
 }
 
 .hero-slide__line {
@@ -86,6 +135,30 @@
   height: 12px;
   background: var(--color-gold);
   transform: rotate(45deg);
+}
+
+/* Responsive for Hero with 3D */
+@media (max-width: 968px) {
+  .hero-slide__container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero-slide__content {
+    max-width: 100%;
+    order: 1;
+  }
+
+  .hero-slide__scene {
+    max-width: 100%;
+    width: 100%;
+    min-height: 350px;
+    order: 2;
+  }
+
+  .hero-slide--with-3d .hero-slide__decoration {
+    justify-content: center;
+  }
 }
 
 /* =============================================

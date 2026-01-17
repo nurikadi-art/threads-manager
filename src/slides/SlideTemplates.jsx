@@ -1,31 +1,49 @@
 import { motion } from 'framer-motion';
 import Slide, { FadeIn, ScaleIn, StaggerContainer, StaggerItem } from '../components/Slide';
+import { Spotlight } from '../components/Spotlight';
+import SplineScene from '../components/SplineScene';
 import './SlideTemplates.css';
 
 // =============================================
-// HERO SLIDE - The opening title slide
+// HERO SLIDE - The opening title slide with 3D Scene
 // =============================================
 export const HeroSlide = ({ data, index }) => (
   <Slide variant="hero" id={`slide-${data.id}`} index={index}>
-    <div className="hero-slide">
-      <FadeIn delay={0.2}>
-        <h1 className="hero-slide__title">
-          <span className="hero-slide__title-line">{data.title}</span>
-        </h1>
-      </FadeIn>
-      <FadeIn delay={0.4}>
-        <h2 className="hero-slide__subtitle text-gradient">{data.subtitle}</h2>
-      </FadeIn>
-      <FadeIn delay={0.6}>
-        <p className="hero-slide__tagline">{data.tagline}</p>
-      </FadeIn>
-      <FadeIn delay={0.8}>
-        <div className="hero-slide__decoration">
-          <div className="hero-slide__line" />
-          <div className="hero-slide__diamond" />
-          <div className="hero-slide__line" />
+    <div className="hero-slide hero-slide--with-3d">
+      {/* Spotlight Effect */}
+      <Spotlight className="hero-slide__spotlight" fill="#c9a962" />
+
+      <div className="hero-slide__container">
+        {/* Left content */}
+        <div className="hero-slide__content">
+          <FadeIn delay={0.2}>
+            <h1 className="hero-slide__title">
+              <span className="hero-slide__title-line">{data.title}</span>
+            </h1>
+          </FadeIn>
+          <FadeIn delay={0.4}>
+            <h2 className="hero-slide__subtitle text-gradient">{data.subtitle}</h2>
+          </FadeIn>
+          <FadeIn delay={0.6}>
+            <p className="hero-slide__tagline">{data.tagline}</p>
+          </FadeIn>
+          <FadeIn delay={0.8}>
+            <div className="hero-slide__decoration">
+              <div className="hero-slide__line" />
+              <div className="hero-slide__diamond" />
+              <div className="hero-slide__line" />
+            </div>
+          </FadeIn>
         </div>
-      </FadeIn>
+
+        {/* Right 3D Scene */}
+        <div className="hero-slide__scene">
+          <SplineScene
+            scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+            className="hero-slide__spline"
+          />
+        </div>
+      </div>
     </div>
   </Slide>
 );
