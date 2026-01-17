@@ -572,41 +572,238 @@
 }
 
 /* =============================================
-   GIFT SLIDE
+   GIFT SLIDE - WOW Interactive Version
    ============================================= */
 
-.gift-slide {
-  text-align: center;
-  max-width: 700px;
-  margin: 0 auto;
+.gift-slide-wow {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: var(--spacing-lg);
 }
 
-.gift-slide__icon {
-  width: 100px;
-  height: 100px;
-  margin: 0 auto var(--spacing-md);
-  color: var(--color-gold);
-  animation: float 3s ease-in-out infinite;
+/* Background glow */
+.gift-slide-wow__glow {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201, 169, 98, 0.3) 0%, transparent 70%);
+  filter: blur(60px);
+  pointer-events: none;
 }
 
-.gift-slide__icon svg {
+/* Sparkles around gift */
+.gift-slide-wow__sparkles {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  pointer-events: none;
+}
+
+.gift-sparkle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--color-gold);
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(201, 169, 98, 0.8);
+  left: 50%;
+  top: 50%;
+  transform: rotate(var(--angle)) translateX(120px);
+}
+
+/* Gift box container */
+.gift-slide-wow__box {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  cursor: pointer;
+  perspective: 1000px;
+  margin-bottom: var(--spacing-lg);
+  z-index: 10;
+}
+
+/* Gift base */
+.gift-box__base {
+  position: absolute;
+  bottom: 0;
+  width: 180px;
+  height: 140px;
+  background: linear-gradient(135deg, #c9a962 0%, #a88b4a 100%);
+  border-radius: 8px;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    inset 0 -10px 30px rgba(0, 0, 0, 0.2),
+    inset 0 10px 30px rgba(255, 255, 255, 0.1);
+}
+
+/* Ribbons */
+.gift-box__ribbon-v {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 100%;
+  background: linear-gradient(90deg, #8b1538 0%, #c41e3a 50%, #8b1538 100%);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.gift-box__ribbon-h {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 30px;
+  background: linear-gradient(180deg, #8b1538 0%, #c41e3a 50%, #8b1538 100%);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Gift lid */
+.gift-box__lid {
+  position: absolute;
+  top: 0;
+  width: 190px;
+  left: -5px;
+  height: 50px;
+  transform-origin: bottom center;
+  z-index: 5;
+}
+
+.gift-box__lid-top {
   width: 100%;
   height: 100%;
+  background: linear-gradient(135deg, #d4b872 0%, #c9a962 100%);
+  border-radius: 8px 8px 0 0;
+  box-shadow:
+    0 -5px 20px rgba(0, 0, 0, 0.2),
+    inset 0 5px 15px rgba(255, 255, 255, 0.2);
 }
 
-.gift-slide__title {
+/* Ribbon bow */
+.gift-box__ribbon-bow {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 40px;
+  background:
+    radial-gradient(ellipse 25px 20px at 15px 20px, #c41e3a, transparent),
+    radial-gradient(ellipse 25px 20px at 45px 20px, #c41e3a, transparent);
+  filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3));
+}
+
+.gift-box__ribbon-bow::before {
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 20px;
+  background: #8b1538;
+  border-radius: 50%;
+}
+
+/* Revealed content inside gift */
+.gift-box__content {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  pointer-events: none;
+}
+
+.gift-box__prompt-count {
   font-family: var(--font-display);
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
-  margin-bottom: var(--spacing-sm);
+  font-size: 3rem;
+  font-weight: 700;
+  background: var(--color-gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 40px rgba(201, 169, 98, 0.5);
 }
 
-.gift-slide__content {
-  font-size: 1.25rem;
-  color: var(--color-text-secondary);
-  margin-bottom: var(--spacing-sm);
+.gift-box__prompt-label {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  color: var(--color-gold);
+  text-transform: uppercase;
+  letter-spacing: 3px;
 }
 
-.gift-slide__highlight {
+/* Burst particles */
+.gift-particles-burst {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.burst-particle {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: var(--color-gold);
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(201, 169, 98, 1);
+}
+
+/* Text content */
+.gift-slide-wow__text {
+  text-align: center;
+  max-width: 600px;
+  z-index: 5;
+}
+
+.gift-slide-wow__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.5rem;
+  background: rgba(201, 169, 98, 0.15);
+  border: 1px solid var(--color-gold);
+  border-radius: var(--radius-full);
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--color-gold);
+  margin-bottom: var(--spacing-md);
+}
+
+.badge-pulse {
+  width: 8px;
+  height: 8px;
+  background: var(--color-gold);
+  border-radius: 50%;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.gift-slide-wow__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text-primary);
+}
+
+.gift-slide-wow__instruction {
+  font-size: 1rem;
+  color: var(--color-text-tertiary);
+  margin-bottom: var(--spacing-md);
+}
+
+.gift-slide-wow__highlight {
   font-family: var(--font-heading);
   font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 700;
@@ -614,55 +811,286 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  padding: var(--spacing-sm) var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-lg);
   border: 2px solid var(--color-gold);
   border-radius: var(--radius-lg);
   display: inline-block;
-  animation: glow 2s ease-in-out infinite;
+  transition: all 0.3s ease;
 }
 
 /* =============================================
-   PARADOX SLIDE
+   PARADOX SLIDE - WOW Interactive Split Screen
    ============================================= */
 
-.paradox-slide {
-  text-align: center;
-  max-width: 900px;
+.paradox-slide-wow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-lg);
+  max-width: 1200px;
   margin: 0 auto;
 }
 
-.paradox-slide__columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-md);
-  margin-bottom: var(--spacing-lg);
+.paradox-slide-wow__header {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
 }
 
-.paradox-slide__column {
+.paradox-slide-wow__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  margin-bottom: var(--spacing-sm);
+}
+
+.paradox-slide-wow__underline {
+  width: 150px;
+  height: 3px;
+  background: var(--color-gold-gradient);
+  margin: 0 auto;
+  transform-origin: center;
+}
+
+/* Split panels container */
+.paradox-panels {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  width: 100%;
+  max-width: 1000px;
+  min-height: 350px;
+}
+
+/* Individual panel */
+.paradox-panel {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding: var(--spacing-lg);
-  background: var(--gradient-card);
+  background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: var(--radius-lg);
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.4s ease;
 }
 
-.paradox-slide__column:first-child {
-  border-color: rgba(34, 197, 94, 0.3);
+.paradox-panel--promise {
+  border-radius: var(--radius-xl) 0 0 var(--radius-xl);
+  border-right: none;
 }
 
-.paradox-slide__column:last-child {
-  border-color: rgba(239, 68, 68, 0.3);
+.paradox-panel--reality {
+  border-radius: 0 var(--radius-xl) var(--radius-xl) 0;
+  border-left: none;
 }
 
-.paradox-slide__column-label {
+.paradox-panel--active {
+  flex: 1.5;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.paradox-panel--inactive {
+  flex: 0.5;
+  opacity: 0.5;
+}
+
+/* Sparkle effects in promise panel */
+.paradox-panel__sparkles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.panel-sparkle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: var(--color-gold);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+/* Confusion effects in reality panel */
+.paradox-panel__confusion {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.confusion-mark {
+  position: absolute;
+  font-size: 2rem;
+  font-weight: bold;
+  color: rgba(239, 68, 68, 0.3);
+}
+
+/* Panel icons */
+.paradox-panel__icon {
+  width: 80px;
+  height: 80px;
+  margin-bottom: var(--spacing-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.paradox-panel__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.paradox-panel__icon--sparkle {
+  color: var(--color-gold);
+  filter: drop-shadow(0 0 20px rgba(201, 169, 98, 0.5));
+}
+
+.paradox-panel__icon--confused {
+  color: rgba(239, 68, 68, 0.7);
+}
+
+/* Panel labels */
+.paradox-panel__label {
   font-family: var(--font-heading);
   font-size: 1.25rem;
   font-weight: 600;
+  text-align: center;
+  margin-bottom: var(--spacing-sm);
 }
 
-.paradox-slide__content {
+/* Panel details (revealed on click) */
+.paradox-panel__details {
+  overflow: hidden;
+}
+
+.paradox-list {
+  list-style: none;
+  text-align: left;
+  padding: var(--spacing-sm);
+}
+
+.paradox-list li {
+  padding: 0.5rem 0;
+  font-style: italic;
+  color: var(--color-text-secondary);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.paradox-list li:last-child {
+  border-bottom: none;
+}
+
+.paradox-list--reality li {
+  color: rgba(239, 68, 68, 0.8);
+}
+
+/* Panel glows */
+.paradox-panel__glow {
+  position: absolute;
+  bottom: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.paradox-panel__glow--gold {
+  background: rgba(201, 169, 98, 0.3);
+}
+
+.paradox-panel__glow--blue {
+  background: rgba(100, 150, 255, 0.2);
+}
+
+/* Center divider */
+.paradox-divider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 var(--spacing-sm);
+  z-index: 10;
+}
+
+.paradox-divider__line {
+  width: 2px;
+  flex: 1;
+  background: linear-gradient(180deg, transparent, var(--color-gold), transparent);
+}
+
+.paradox-divider__vs {
+  padding: 1rem;
+  background: var(--color-bg-primary);
+  border: 2px solid var(--color-gold);
+  border-radius: 50%;
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-gold);
+}
+
+/* Bottom revelation */
+.paradox-slide-wow__revelation {
+  margin-top: var(--spacing-lg);
+  max-width: 700px;
+  text-align: center;
+}
+
+.paradox-slide-wow__revelation p {
   font-size: 1.25rem;
   color: var(--color-text-secondary);
   line-height: 1.8;
+}
+
+/* Instruction */
+.paradox-instruction {
+  margin-top: var(--spacing-md);
+  font-size: 0.875rem;
+  color: var(--color-text-tertiary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .paradox-panels {
+    flex-direction: column;
+  }
+
+  .paradox-panel--promise,
+  .paradox-panel--reality {
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .paradox-divider {
+    flex-direction: row;
+    padding: var(--spacing-sm) 0;
+  }
+
+  .paradox-divider__line {
+    width: auto;
+    height: 2px;
+    flex: 1;
+    background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+  }
+
+  .gift-slide-wow__box {
+    width: 140px;
+    height: 140px;
+  }
+
+  .gift-box__base {
+    width: 140px;
+    height: 110px;
+  }
+
+  .gift-box__lid {
+    width: 150px;
+    left: -5px;
+    height: 40px;
+  }
 }
 
 /* =============================================
