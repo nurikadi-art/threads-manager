@@ -1,0 +1,210 @@
+/* ===================================
+   SLIDE COMPONENT STYLES
+   Light Theme with Yellow Border Frame
+   =================================== */
+
+.slide {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-lg) var(--spacing-md);
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--color-bg-primary);
+}
+
+.slide--full {
+  min-height: 100vh;
+}
+
+.slide__inner {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  z-index: 2;
+  background: var(--color-bg-primary);
+  border: 6px solid var(--color-gold);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+  position: relative;
+}
+
+/* Yellow corner accents like PDF */
+.slide__inner::before {
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 40px;
+  height: 40px;
+  border-top: 3px solid var(--color-gold-dark);
+  border-left: 3px solid var(--color-gold-dark);
+  opacity: 0.5;
+}
+
+.slide__inner::after {
+  content: '';
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  width: 40px;
+  height: 40px;
+  border-bottom: 3px solid var(--color-gold-dark);
+  border-right: 3px solid var(--color-gold-dark);
+  opacity: 0.5;
+}
+
+.slide__content {
+  position: relative;
+  text-align: center;
+}
+
+/* Decorative Grid Background - Subtle for light theme */
+.slide__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(245, 195, 65, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 195, 65, 0.08) 1px, transparent 1px);
+  background-size: 50px 50px;
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: var(--radius-lg);
+}
+
+/* Glow Effect - Softer for light theme */
+.slide__glow {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245, 195, 65, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Slide Variants */
+.slide--hero {
+  background: linear-gradient(180deg,
+    rgba(245, 195, 65, 0.08) 0%,
+    var(--color-bg-primary) 40%,
+    var(--color-bg-primary) 100%
+  );
+}
+
+.slide--hero .slide__glow {
+  width: 900px;
+  height: 900px;
+  background: radial-gradient(circle, rgba(245, 195, 65, 0.15) 0%, transparent 60%);
+}
+
+.slide--hero .slide__inner {
+  border-width: 8px;
+}
+
+.slide--dark {
+  background: var(--color-bg-secondary);
+}
+
+.slide--warning {
+  background: linear-gradient(180deg,
+    rgba(239, 68, 68, 0.05) 0%,
+    var(--color-bg-primary) 50%
+  );
+}
+
+.slide--warning .slide__inner {
+  border-color: #ef4444;
+}
+
+.slide--warning .slide__glow {
+  background: radial-gradient(circle, rgba(239, 68, 68, 0.1) 0%, transparent 70%);
+}
+
+.slide--success {
+  background: linear-gradient(180deg,
+    rgba(34, 197, 94, 0.05) 0%,
+    var(--color-bg-primary) 50%
+  );
+}
+
+.slide--success .slide__inner {
+  border-color: #22c55e;
+}
+
+.slide--success .slide__glow {
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.1) 0%, transparent 70%);
+}
+
+.slide--offer {
+  background: linear-gradient(180deg,
+    rgba(245, 195, 65, 0.15) 0%,
+    rgba(245, 195, 65, 0.05) 50%,
+    var(--color-bg-primary) 100%
+  );
+}
+
+.slide--offer .slide__inner {
+  border-width: 8px;
+  box-shadow: 0 0 30px rgba(245, 195, 65, 0.3);
+}
+
+.slide--offer .slide__glow {
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(245, 195, 65, 0.2) 0%, transparent 60%);
+}
+
+/* Section Divider Lines */
+.slide--section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 3px;
+  background: linear-gradient(90deg,
+    transparent,
+    var(--color-gold) 50%,
+    transparent
+  );
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .slide {
+    padding: var(--spacing-md) var(--spacing-sm);
+  }
+
+  .slide__inner {
+    padding: var(--spacing-md);
+    border-width: 4px;
+  }
+
+  .slide__glow {
+    width: 300px;
+    height: 300px;
+  }
+
+  .slide__inner::before,
+  .slide__inner::after {
+    width: 25px;
+    height: 25px;
+    top: 10px;
+    left: 10px;
+  }
+
+  .slide__inner::after {
+    top: auto;
+    left: auto;
+    bottom: 10px;
+    right: 10px;
+  }
+}
