@@ -1704,16 +1704,6 @@ export const ProblemSlide = ({ data, index }) => {
                   </div>
                 </div>
               </div>
-
-              {/* Confusion overlay effect */}
-              <motion.div
-                className="spreadsheet-visual__confusion"
-                animate={{ opacity: [0.3, 0.5, 0.3] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                <span>😵</span>
-                <span>???</span>
-              </motion.div>
             </div>
 
             <motion.p
