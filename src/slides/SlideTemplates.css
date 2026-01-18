@@ -6312,3 +6312,346 @@
     font-size: 2rem;
   }
 }
+
+/* ===========================================
+   ENHANCED SECTION SLIDE WITH AI TOOL ICONS
+   =========================================== */
+
+.section-slide-enhanced {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xl);
+  min-height: 80vh;
+  padding: var(--spacing-xl);
+  text-align: center;
+}
+
+.section-slide__header {
+  max-width: 800px;
+}
+
+.section-slide-enhanced .section-slide__title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 7vw, 5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: var(--spacing-md);
+}
+
+.section-slide-enhanced .section-slide__subtitle {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 500;
+  color: var(--color-gold);
+  margin-bottom: var(--spacing-sm);
+}
+
+.section-slide-enhanced .section-slide__content {
+  font-family: var(--font-body);
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  color: var(--color-text-secondary);
+  max-width: 600px;
+}
+
+/* AI Tool Cards for Section Slide */
+.section-slide__tools {
+  display: flex;
+  gap: var(--spacing-lg);
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: var(--spacing-lg) 0;
+}
+
+.section-tool-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-lg) var(--spacing-xl);
+  background: rgba(255, 255, 255, 0.03);
+  border: 2px solid var(--tool-color, rgba(255, 255, 255, 0.1));
+  border-radius: var(--radius-xl);
+  min-width: 200px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.section-tool-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--tool-color);
+}
+
+.section-tool-card__icon {
+  font-size: 3.5rem;
+  margin-bottom: var(--spacing-xs);
+}
+
+.section-tool-card__name {
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--tool-color, var(--color-text-primary));
+}
+
+.section-tool-card__desc {
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  color: var(--color-text-tertiary);
+}
+
+.section-tool-card__glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, var(--tool-color), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.section-tool-card:hover .section-tool-card__glow {
+  opacity: 0.15;
+}
+
+/* ===========================================
+   ENHANCED PROBLEM SLIDE WITH SPREADSHEET
+   =========================================== */
+
+.problem-slide-enhanced {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-lg);
+  min-height: 80vh;
+  padding: var(--spacing-xl);
+  text-align: center;
+}
+
+.problem-slide-enhanced .problem-slide__header {
+  max-width: 800px;
+}
+
+.problem-slide-enhanced .problem-slide__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  color: var(--color-accent-red);
+  margin-bottom: var(--spacing-sm);
+}
+
+.problem-slide-enhanced .problem-slide__heading {
+  font-family: var(--font-heading);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.problem-slide-enhanced .problem-slide__content {
+  font-family: var(--font-body);
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+  max-width: 700px;
+}
+
+/* Spreadsheet Visual */
+.spreadsheet-visual {
+  position: relative;
+  margin: var(--spacing-lg) 0;
+  perspective: 1000px;
+}
+
+.spreadsheet-visual__frame {
+  position: relative;
+  background: #1e4620;
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.spreadsheet-visual__toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: 10px 15px;
+  background: linear-gradient(180deg, #217346 0%, #1e6b3e 100%);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.toolbar-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.dot--red { background: #ff5f57; }
+.dot--yellow { background: #febc2e; }
+.dot--green { background: #28c840; }
+
+.toolbar-title {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.spreadsheet-visual__content {
+  padding: 10px;
+  background: #1a1a22;
+  max-height: 250px;
+  overflow: hidden;
+}
+
+.spreadsheet-row {
+  display: flex;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.spreadsheet-row--header {
+  background: rgba(201, 169, 98, 0.1);
+}
+
+.spreadsheet-cell {
+  flex: 1;
+  min-width: 50px;
+  padding: 4px 8px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.7rem;
+  color: var(--color-text-secondary);
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.spreadsheet-cell--header {
+  font-weight: 600;
+  color: var(--color-gold);
+  text-align: center;
+  background: rgba(201, 169, 98, 0.05);
+}
+
+.spreadsheet-cell--row-num {
+  max-width: 30px;
+  min-width: 30px;
+  text-align: center;
+  color: var(--color-text-tertiary);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.spreadsheet-cell--highlight {
+  color: var(--color-accent-green);
+  font-weight: 600;
+}
+
+.spreadsheet-cell--error {
+  color: var(--color-accent-red);
+}
+
+.spreadsheet-visual__charts {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 15px;
+}
+
+.mini-chart {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: var(--radius-md);
+  padding: 10px;
+}
+
+.mini-chart--bar {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 60px;
+  width: 80px;
+}
+
+.mini-chart__bar {
+  flex: 1;
+  border-radius: 2px 2px 0 0;
+}
+
+.mini-chart--pie {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: conic-gradient(
+    #4a9eff 0deg 120deg,
+    #22c55e 120deg 220deg,
+    #f97316 220deg 360deg
+  );
+  position: relative;
+}
+
+.spreadsheet-visual__confusion {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: 3rem;
+  color: var(--color-accent-red);
+  text-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+  pointer-events: none;
+}
+
+.spreadsheet-visual__confusion span:last-child {
+  font-size: 1.5rem;
+  font-family: var(--font-heading);
+}
+
+.spreadsheet-visual__caption {
+  margin-top: var(--spacing-md);
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  color: var(--color-text-tertiary);
+  font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .section-slide__tools {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .section-tool-card {
+    min-width: 160px;
+    padding: var(--spacing-md);
+  }
+
+  .spreadsheet-visual__frame {
+    max-width: 100%;
+  }
+
+  .spreadsheet-cell {
+    min-width: 35px;
+    font-size: 0.6rem;
+    padding: 3px 4px;
+  }
+
+  .spreadsheet-visual__charts {
+    display: none;
+  }
+}

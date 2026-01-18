@@ -1399,25 +1399,79 @@ export const InsightSlide = ({ data, index }) => {
 // =============================================
 // SECTION SLIDE - Section divider
 // =============================================
-export const SectionSlide = ({ data, index }) => (
-  <Slide variant="section" id={`slide-${data.id}`} index={index}>
-    <div className="section-slide">
-      <FadeIn>
-        <h2 className="section-slide__title text-gradient">{data.title}</h2>
-      </FadeIn>
-      {data.subtitle && (
-        <FadeIn delay={0.3}>
-          <h3 className="section-slide__subtitle">{data.subtitle}</h3>
-        </FadeIn>
-      )}
-      {data.content && (
-        <FadeIn delay={0.5}>
-          <p className="section-slide__content">{data.content}</p>
-        </FadeIn>
-      )}
-    </div>
-  </Slide>
-);
+export const SectionSlide = ({ data, index }) => {
+  const isToolStack = data.title && data.title.includes('Tool Stack');
+
+  return (
+    <Slide variant="section" id={`slide-${data.id}`} index={index}>
+      <div className="section-slide-enhanced">
+        {/* Background pattern */}
+        <div className="slide-bg-pattern" />
+
+        <motion.div
+          className="section-slide__header"
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <h2 className="section-slide__title animated-gradient-text">{data.title}</h2>
+        </motion.div>
+
+        {data.subtitle && (
+          <motion.h3
+            className="section-slide__subtitle"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            {data.subtitle}
+          </motion.h3>
+        )}
+
+        {/* Show all 3 AI tool icons for Tool Stack slide */}
+        {isToolStack && (
+          <motion.div
+            className="section-slide__tools"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+          >
+            {[
+              { name: 'ChatGPT', color: '#10a37f', icon: '🎨', desc: 'Creative Intern' },
+              { name: 'Claude', color: '#cc785c', icon: '📊', desc: 'Smart Analyst' },
+              { name: 'Perplexity', color: '#20b8cd', icon: '🔍', desc: 'Researcher' }
+            ].map((tool, i) => (
+              <motion.div
+                key={tool.name}
+                className="section-tool-card"
+                style={{ '--tool-color': tool.color }}
+                initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ delay: 0.5 + i * 0.15 }}
+                whileHover={{ y: -10, scale: 1.05 }}
+              >
+                <div className="section-tool-card__icon">{tool.icon}</div>
+                <div className="section-tool-card__name">{tool.name}</div>
+                <div className="section-tool-card__desc">{tool.desc}</div>
+                <div className="section-tool-card__glow" />
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
+
+        {data.content && (
+          <motion.p
+            className="section-slide__content"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6 }}
+          >
+            {data.content}
+          </motion.p>
+        )}
+      </div>
+    </Slide>
+  );
+};
 
 // =============================================
 // TOOL SLIDE - Enhanced AI tool showcase with logos
@@ -1553,32 +1607,148 @@ export const WorkflowIntroSlide = ({ data, index }) => (
 // =============================================
 // PROBLEM SLIDE
 // =============================================
-export const ProblemSlide = ({ data, index }) => (
-  <Slide variant="warning" id={`slide-${data.id}`} index={index}>
-    <div className="problem-slide">
-      <FadeIn>
-        <h2 className="problem-slide__title">{data.title}</h2>
-      </FadeIn>
-      {data.heading && (
-        <FadeIn delay={0.2}>
-          <h3 className="problem-slide__heading">{data.heading}</h3>
-        </FadeIn>
-      )}
-      <FadeIn delay={0.4}>
-        <p className="problem-slide__content">{data.content}</p>
-      </FadeIn>
-      {data.items && (
-        <StaggerContainer className="problem-slide__items">
-          {data.items.map((item, i) => (
-            <StaggerItem key={i}>
-              <div className="problem-slide__item">{item}</div>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
-      )}
-    </div>
-  </Slide>
-);
+export const ProblemSlide = ({ data, index }) => {
+  // Check if this is the Financial X-Ray problem slide (slide 14)
+  const isFinancialSlide = data.heading && data.heading.includes('Data Blindness');
+
+  return (
+    <Slide variant="warning" id={`slide-${data.id}`} index={index}>
+      <div className="problem-slide-enhanced">
+        <motion.div
+          className="problem-slide__header"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <h2 className="problem-slide__title">{data.title}</h2>
+          {data.heading && (
+            <motion.h3
+              className="problem-slide__heading"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+            >
+              {data.heading}
+            </motion.h3>
+          )}
+        </motion.div>
+
+        {/* Spreadsheet visualization for Financial X-Ray slide */}
+        {isFinancialSlide && (
+          <motion.div
+            className="spreadsheet-visual"
+            initial={{ opacity: 0, scale: 0.9, rotateX: 10 }}
+            animate={{ opacity: 1, scale: 1, rotateX: 0 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+          >
+            <div className="spreadsheet-visual__frame">
+              {/* Excel-like header bar */}
+              <div className="spreadsheet-visual__toolbar">
+                <div className="toolbar-dots">
+                  <span className="dot dot--red" />
+                  <span className="dot dot--yellow" />
+                  <span className="dot dot--green" />
+                </div>
+                <span className="toolbar-title">FINAL_REPORT_V37_OVERLOAD.xlsx</span>
+              </div>
+
+              {/* Spreadsheet content */}
+              <div className="spreadsheet-visual__content">
+                {/* Column headers */}
+                <div className="spreadsheet-row spreadsheet-row--header">
+                  {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'].map((col) => (
+                    <div key={col} className="spreadsheet-cell spreadsheet-cell--header">{col}</div>
+                  ))}
+                </div>
+
+                {/* Data rows with random-looking data */}
+                {[...Array(8)].map((_, rowIdx) => (
+                  <motion.div
+                    key={rowIdx}
+                    className="spreadsheet-row"
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.5 + rowIdx * 0.05 }}
+                  >
+                    <div className="spreadsheet-cell spreadsheet-cell--row-num">{rowIdx + 1}</div>
+                    {[...Array(11)].map((_, colIdx) => (
+                      <div
+                        key={colIdx}
+                        className={`spreadsheet-cell ${colIdx === 3 || colIdx === 7 ? 'spreadsheet-cell--highlight' : ''} ${Math.random() > 0.7 ? 'spreadsheet-cell--error' : ''}`}
+                      >
+                        {colIdx === 0 ? `Item ${rowIdx + 1}` :
+                         colIdx === 3 || colIdx === 7 ? `$${(Math.random() * 10000).toFixed(0)}` :
+                         Math.random() > 0.5 ? (Math.random() * 100).toFixed(1) : '#REF!'}
+                      </div>
+                    ))}
+                  </motion.div>
+                ))}
+
+                {/* Charts overlay */}
+                <div className="spreadsheet-visual__charts">
+                  <div className="mini-chart mini-chart--bar">
+                    {[60, 80, 45, 90, 70, 55].map((h, i) => (
+                      <motion.div
+                        key={i}
+                        className="mini-chart__bar"
+                        initial={{ height: 0 }}
+                        animate={{ height: `${h}%` }}
+                        transition={{ delay: 0.8 + i * 0.1 }}
+                        style={{ background: i % 2 === 0 ? '#4a9eff' : '#22c55e' }}
+                      />
+                    ))}
+                  </div>
+                  <div className="mini-chart mini-chart--pie">
+                    <div className="pie-segment pie-segment--1" />
+                    <div className="pie-segment pie-segment--2" />
+                    <div className="pie-segment pie-segment--3" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Confusion overlay effect */}
+              <motion.div
+                className="spreadsheet-visual__confusion"
+                animate={{ opacity: [0.3, 0.5, 0.3] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                <span>😵</span>
+                <span>???</span>
+              </motion.div>
+            </div>
+
+            <motion.p
+              className="spreadsheet-visual__caption"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1 }}
+            >
+              Sound familiar?
+            </motion.p>
+          </motion.div>
+        )}
+
+        <motion.p
+          className="problem-slide__content"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: isFinancialSlide ? 0.8 : 0.4 }}
+        >
+          {data.content}
+        </motion.p>
+
+        {data.items && (
+          <StaggerContainer className="problem-slide__items">
+            {data.items.map((item, i) => (
+              <StaggerItem key={i}>
+                <div className="problem-slide__item">{item}</div>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
+        )}
+      </div>
+    </Slide>
+  );
+};
 
 // =============================================
 // SOLUTION STEP SLIDE
