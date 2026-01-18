@@ -1915,158 +1915,319 @@ export const ProblemSlide = ({ data, index }) => {
 // =============================================
 // SOLUTION STEP SLIDE
 // =============================================
-export const SolutionStepSlide = ({ data, index }) => (
-  <Slide variant="success" id={`slide-${data.id}`} index={index}>
-    <div className="solution-step-slide">
-      {data.tool && (
-        <FadeIn>
-          <div className="solution-step-slide__tool">{data.tool}</div>
+export const SolutionStepSlide = ({ data, index }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const isSlide15 = data.id === 15;
+
+  const handleVideoClick = (e) => {
+    const video = e.target;
+    if (video.paused) {
+      video.play();
+      setIsPlaying(true);
+    } else {
+      video.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  return (
+    <Slide variant="success" id={`slide-${data.id}`} index={index}>
+      <div className="solution-step-slide">
+        {data.tool && (
+          <FadeIn>
+            <div className="solution-step-slide__tool">{data.tool}</div>
+          </FadeIn>
+        )}
+        <FadeIn delay={0.2}>
+          <h2 className="solution-step-slide__step">{data.step}</h2>
         </FadeIn>
-      )}
-      <FadeIn delay={0.2}>
-        <h2 className="solution-step-slide__step">{data.step}</h2>
-      </FadeIn>
-      <FadeIn delay={0.4}>
-        <p className="solution-step-slide__content">{data.content}</p>
-      </FadeIn>
-      {data.animation === 'upload' && (
-        <ScaleIn delay={0.6}>
-          <div className="solution-step-slide__animation upload-animation">
-            <div className="upload-animation__box">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                <polyline points="17 8 12 3 7 8"/>
-                <line x1="12" y1="3" x2="12" y2="15"/>
-              </svg>
-              <span>Drop PDF here</span>
-            </div>
-          </div>
-        </ScaleIn>
-      )}
-      {data.animation === 'voice' && (
-        <ScaleIn delay={0.6}>
-          <div className="solution-step-slide__animation voice-animation">
-            <div className="voice-animation__waves">
-              {[...Array(5)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="voice-animation__bar"
-                  animate={{ scaleY: [0.3, 1, 0.3] }}
-                  transition={{
-                    duration: 0.8,
-                    repeat: Infinity,
-                    delay: i * 0.1
-                  }}
+        <FadeIn delay={0.4}>
+          <p className="solution-step-slide__content">{data.content}</p>
+        </FadeIn>
+
+        {/* Video for Slide 15 */}
+        {isSlide15 && (
+          <ScaleIn delay={0.6}>
+            <div className="slide-video-container">
+              <motion.div
+                className={`slide-video-wrapper ${isPlaying ? 'playing' : ''}`}
+                whileHover={{ scale: 1.02 }}
+              >
+                <video
+                  className="slide-video"
+                  src="/videos/1230(1).mp4"
+                  onClick={handleVideoClick}
+                  playsInline
+                  loop
                 />
-              ))}
+                {!isPlaying && (
+                  <motion.div
+                    className="slide-video-play-overlay"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    <div className="slide-video-play-btn">
+                      <svg viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="5,3 19,12 5,21" />
+                      </svg>
+                    </div>
+                    <span className="slide-video-hint">Click to play</span>
+                  </motion.div>
+                )}
+              </motion.div>
             </div>
-          </div>
-        </ScaleIn>
-      )}
-    </div>
-  </Slide>
-);
+          </ScaleIn>
+        )}
+
+        {data.animation === 'upload' && !isSlide15 && (
+          <ScaleIn delay={0.6}>
+            <div className="solution-step-slide__animation upload-animation">
+              <div className="upload-animation__box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+                <span>Drop PDF here</span>
+              </div>
+            </div>
+          </ScaleIn>
+        )}
+        {data.animation === 'voice' && (
+          <ScaleIn delay={0.6}>
+            <div className="solution-step-slide__animation voice-animation">
+              <div className="voice-animation__waves">
+                {[...Array(5)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="voice-animation__bar"
+                    animate={{ scaleY: [0.3, 1, 0.3] }}
+                    transition={{
+                      duration: 0.8,
+                      repeat: Infinity,
+                      delay: i * 0.1
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+          </ScaleIn>
+        )}
+      </div>
+    </Slide>
+  );
+};
 
 // =============================================
 // PROMPT SLIDE
 // =============================================
-export const PromptSlide = ({ data, index }) => (
-  <Slide variant="default" id={`slide-${data.id}`} index={index}>
-    <div className="prompt-slide">
-      {data.tool && (
-        <FadeIn>
-          <div className="prompt-slide__tool">{data.tool}</div>
+export const PromptSlide = ({ data, index }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const isSlide16 = data.id === 16;
+
+  const handleVideoClick = (e) => {
+    const video = e.target;
+    if (video.paused) {
+      video.play();
+      setIsPlaying(true);
+    } else {
+      video.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  return (
+    <Slide variant="default" id={`slide-${data.id}`} index={index}>
+      <div className="prompt-slide">
+        {data.tool && (
+          <FadeIn>
+            <div className="prompt-slide__tool">{data.tool}</div>
+          </FadeIn>
+        )}
+        <FadeIn delay={0.2}>
+          <h2 className="prompt-slide__title">{data.title}</h2>
         </FadeIn>
-      )}
-      <FadeIn delay={0.2}>
-        <h2 className="prompt-slide__title">{data.title}</h2>
-      </FadeIn>
-      {data.step && (
-        <FadeIn delay={0.3}>
-          <p className="prompt-slide__step">{data.step}</p>
-        </FadeIn>
-      )}
-      {data.highlight && (
-        <FadeIn delay={0.4}>
-          <p className="prompt-slide__highlight">{data.highlight}</p>
-        </FadeIn>
-      )}
-      <ScaleIn delay={0.5}>
-        <div className="prompt-slide__box">
-          <div className="prompt-slide__box-header">
-            <span className="prompt-slide__box-dot" />
-            <span className="prompt-slide__box-dot" />
-            <span className="prompt-slide__box-dot" />
-          </div>
-          <p className="prompt-slide__text">{data.promptText}</p>
-        </div>
-      </ScaleIn>
-    </div>
-  </Slide>
-);
+        {data.step && (
+          <FadeIn delay={0.3}>
+            <p className="prompt-slide__step">{data.step}</p>
+          </FadeIn>
+        )}
+        {data.highlight && (
+          <FadeIn delay={0.4}>
+            <p className="prompt-slide__highlight">{data.highlight}</p>
+          </FadeIn>
+        )}
+
+        {/* Video for Slide 16 */}
+        {isSlide16 && (
+          <ScaleIn delay={0.5}>
+            <div className="slide-video-container">
+              <motion.div
+                className={`slide-video-wrapper ${isPlaying ? 'playing' : ''}`}
+                whileHover={{ scale: 1.02 }}
+              >
+                <video
+                  className="slide-video"
+                  src="/videos/1230(2).mp4"
+                  onClick={handleVideoClick}
+                  playsInline
+                  loop
+                />
+                {!isPlaying && (
+                  <motion.div
+                    className="slide-video-play-overlay"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    <div className="slide-video-play-btn">
+                      <svg viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="5,3 19,12 5,21" />
+                      </svg>
+                    </div>
+                    <span className="slide-video-hint">Click to play</span>
+                  </motion.div>
+                )}
+              </motion.div>
+            </div>
+          </ScaleIn>
+        )}
+
+        {!isSlide16 && (
+          <ScaleIn delay={0.5}>
+            <div className="prompt-slide__box">
+              <div className="prompt-slide__box-header">
+                <span className="prompt-slide__box-dot" />
+                <span className="prompt-slide__box-dot" />
+                <span className="prompt-slide__box-dot" />
+              </div>
+              <p className="prompt-slide__text">{data.promptText}</p>
+            </div>
+          </ScaleIn>
+        )}
+      </div>
+    </Slide>
+  );
+};
 
 // =============================================
 // RESULT SLIDE
 // =============================================
-export const ResultSlide = ({ data, index }) => (
-  <Slide variant="success" id={`slide-${data.id}`} index={index}>
-    <div className="result-slide">
-      <FadeIn>
-        <h2 className="result-slide__title">{data.title}</h2>
-      </FadeIn>
-      {data.heading && (
-        <FadeIn delay={0.2}>
-          <h3 className="result-slide__heading">{data.heading}</h3>
+export const ResultSlide = ({ data, index }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const isSlide17 = data.id === 17;
+
+  const handleVideoClick = (e) => {
+    const video = e.target;
+    if (video.paused) {
+      video.play();
+      setIsPlaying(true);
+    } else {
+      video.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  return (
+    <Slide variant="success" id={`slide-${data.id}`} index={index}>
+      <div className="result-slide">
+        <FadeIn>
+          <h2 className="result-slide__title">{data.title}</h2>
         </FadeIn>
-      )}
-      {data.step && (
-        <FadeIn delay={0.2}>
-          <p className="result-slide__step">{data.step}</p>
-        </FadeIn>
-      )}
-      {data.highlight && (
-        <ScaleIn delay={0.4}>
-          <div className="result-slide__highlight text-gradient">{data.highlight}</div>
-        </ScaleIn>
-      )}
-      <FadeIn delay={0.5}>
-        <p className="result-slide__content">{data.content}</p>
-      </FadeIn>
-      {data.animation === 'chart' && (
-        <ScaleIn delay={0.6}>
-          <div className="result-slide__chart">
-            {[60, 85, 45, 90, 70].map((height, i) => (
+        {data.heading && (
+          <FadeIn delay={0.2}>
+            <h3 className="result-slide__heading">{data.heading}</h3>
+          </FadeIn>
+        )}
+        {data.step && (
+          <FadeIn delay={0.2}>
+            <p className="result-slide__step">{data.step}</p>
+          </FadeIn>
+        )}
+        {data.highlight && (
+          <ScaleIn delay={0.4}>
+            <div className="result-slide__highlight text-gradient">{data.highlight}</div>
+          </ScaleIn>
+        )}
+        {!isSlide17 && (
+          <FadeIn delay={0.5}>
+            <p className="result-slide__content">{data.content}</p>
+          </FadeIn>
+        )}
+
+        {/* Video for Slide 17 */}
+        {isSlide17 && (
+          <ScaleIn delay={0.5}>
+            <div className="slide-video-container slide-video-container--large">
               <motion.div
-                key={i}
-                className="result-slide__chart-bar"
-                initial={{ height: 0 }}
-                animate={{ height: `${height}%` }}
-                transition={{ delay: 0.8 + i * 0.1, duration: 0.5 }}
-              />
-            ))}
-          </div>
-        </ScaleIn>
-      )}
-      {data.animation === 'transform' && (
-        <ScaleIn delay={0.6}>
-          <div className="result-slide__transform">
-            <div className="result-slide__transform-before">Chaos</div>
-            <motion.div
-              className="result-slide__transform-arrow"
-              animate={{ x: [0, 10, 0] }}
-              transition={{ repeat: Infinity, duration: 1.5 }}
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </motion.div>
-            <div className="result-slide__transform-after">Clarity</div>
-          </div>
-        </ScaleIn>
-      )}
-    </div>
-  </Slide>
-);
+                className={`slide-video-wrapper ${isPlaying ? 'playing' : ''}`}
+                whileHover={{ scale: 1.02 }}
+              >
+                <video
+                  className="slide-video"
+                  src="/videos/1230(4) (1).mp4"
+                  onClick={handleVideoClick}
+                  playsInline
+                  loop
+                />
+                {!isPlaying && (
+                  <motion.div
+                    className="slide-video-play-overlay"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    <div className="slide-video-play-btn">
+                      <svg viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="5,3 19,12 5,21" />
+                      </svg>
+                    </div>
+                    <span className="slide-video-hint">Click to play</span>
+                  </motion.div>
+                )}
+              </motion.div>
+              <p className="slide-video-caption">{data.content}</p>
+            </div>
+          </ScaleIn>
+        )}
+
+        {data.animation === 'chart' && !isSlide17 && (
+          <ScaleIn delay={0.6}>
+            <div className="result-slide__chart">
+              {[60, 85, 45, 90, 70].map((height, i) => (
+                <motion.div
+                  key={i}
+                  className="result-slide__chart-bar"
+                  initial={{ height: 0 }}
+                  animate={{ height: `${height}%` }}
+                  transition={{ delay: 0.8 + i * 0.1, duration: 0.5 }}
+                />
+              ))}
+            </div>
+          </ScaleIn>
+        )}
+        {data.animation === 'transform' && (
+          <ScaleIn delay={0.6}>
+            <div className="result-slide__transform">
+              <div className="result-slide__transform-before">Chaos</div>
+              <motion.div
+                className="result-slide__transform-arrow"
+                animate={{ x: [0, 10, 0] }}
+                transition={{ repeat: Infinity, duration: 1.5 }}
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </motion.div>
+              <div className="result-slide__transform-after">Clarity</div>
+            </div>
+          </ScaleIn>
+        )}
+      </div>
+    </Slide>
+  );
+};
 
 // =============================================
 // SUMMARY SLIDE
