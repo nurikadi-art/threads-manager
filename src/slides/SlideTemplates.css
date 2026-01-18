@@ -6655,3 +6655,465 @@
     display: none;
   }
 }
+
+/* ===========================================
+   INBOX TRIAGE ILLUSTRATION (Slide 18)
+   =========================================== */
+
+.workflow-intro-slide-enhanced {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-lg);
+  min-height: 80vh;
+  padding: var(--spacing-xl);
+  text-align: center;
+}
+
+.inbox-illustration {
+  margin-top: var(--spacing-lg);
+}
+
+.inbox-scene {
+  position: relative;
+  width: 400px;
+  height: 280px;
+}
+
+.inbox-desk {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Monitor */
+.inbox-monitor {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 240px;
+  height: 160px;
+}
+
+.inbox-monitor__screen {
+  width: 100%;
+  height: 140px;
+  background: linear-gradient(180deg, #1a1a22 0%, #12121a 100%);
+  border: 3px solid #3a3a45;
+  border-radius: 10px 10px 0 0;
+  padding: 10px;
+  overflow: hidden;
+  box-shadow:
+    0 0 30px rgba(100, 150, 255, 0.1),
+    inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.inbox-monitor__stand {
+  width: 60px;
+  height: 20px;
+  background: linear-gradient(180deg, #3a3a45, #2a2a35);
+  margin: 0 auto;
+  border-radius: 0 0 5px 5px;
+}
+
+/* Email list */
+.inbox-emails {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.inbox-email {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 4px;
+  border-left: 3px solid transparent;
+}
+
+.inbox-email--unread {
+  background: rgba(255, 255, 255, 0.08);
+  border-left-color: var(--color-gold);
+}
+
+.inbox-email--urgent {
+  border-left-color: var(--color-accent-red);
+}
+
+.inbox-email__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-text-tertiary);
+}
+
+.inbox-email--unread .inbox-email__dot {
+  background: var(--color-gold);
+}
+
+.inbox-email--urgent .inbox-email__dot {
+  background: var(--color-accent-red);
+  animation: pulse-dot 1s infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
+
+.inbox-email__lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.inbox-email__line {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+}
+
+.inbox-email__line--title {
+  width: 70%;
+}
+
+.inbox-email__line--preview {
+  width: 90%;
+  opacity: 0.5;
+}
+
+.inbox-email__urgent {
+  font-size: 0.7rem;
+  color: var(--color-accent-red);
+  font-weight: 700;
+}
+
+/* Person silhouette */
+.inbox-person {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.inbox-person__head {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(180deg, #4a4a55, #3a3a45);
+  border-radius: 50%;
+  margin: 0 auto;
+}
+
+.inbox-person__body {
+  width: 60px;
+  height: 40px;
+  background: linear-gradient(180deg, #3a3a45, #2a2a35);
+  border-radius: 30px 30px 0 0;
+  margin-top: -5px;
+}
+
+.inbox-person__thought {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 12px;
+  background: rgba(201, 169, 98, 0.15);
+  border: 1px solid rgba(201, 169, 98, 0.3);
+  border-radius: 20px;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+/* Keyboard */
+.inbox-keyboard {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 15px;
+  background: linear-gradient(180deg, #3a3a45, #2a2a35);
+  border-radius: 3px;
+}
+
+/* Coffee */
+.inbox-coffee {
+  position: absolute;
+  bottom: 10px;
+  right: 40px;
+  font-size: 2rem;
+}
+
+/* ===========================================
+   WORRIED PERSON ILLUSTRATION (Slide 19)
+   =========================================== */
+
+.worried-person-illustration {
+  margin: var(--spacing-lg) 0;
+}
+
+.worried-scene {
+  position: relative;
+  width: 350px;
+  height: 280px;
+  margin: 0 auto;
+}
+
+/* Worried Person */
+.worried-person {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.worried-person__head {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(180deg, #e4d4a5, #c9a962);
+  border-radius: 50%;
+  margin: 0 auto;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.worried-person__face {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 50px;
+}
+
+/* Eyebrows */
+.worried-person__eyebrows {
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.worried-person__eyebrow {
+  width: 18px;
+  height: 4px;
+  background: #5a4a30;
+  border-radius: 2px;
+}
+
+.worried-person__eyebrow--left {
+  transform: rotate(15deg);
+}
+
+.worried-person__eyebrow--right {
+  transform: rotate(-15deg);
+}
+
+/* Eyes */
+.worried-person__eyes {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 45px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.worried-person__eye {
+  width: 16px;
+  height: 16px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.worried-person__pupil {
+  width: 8px;
+  height: 8px;
+  background: #2a2a35;
+  border-radius: 50%;
+  animation: worried-look 2s ease-in-out infinite;
+}
+
+@keyframes worried-look {
+  0%, 100% { transform: translateX(-2px); }
+  50% { transform: translateX(2px); }
+}
+
+/* Mouth */
+.worried-person__mouth {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 10px;
+  border: 3px solid #5a4a30;
+  border-top: none;
+  border-radius: 0 0 20px 20px;
+}
+
+/* Sweat */
+.worried-person__sweat {
+  position: absolute;
+  top: 15px;
+  right: -10px;
+  font-size: 1.25rem;
+}
+
+/* Body */
+.worried-person__body {
+  width: 100px;
+  height: 80px;
+  margin-top: -10px;
+}
+
+.worried-person__shirt {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #3a3a45, #2a2a35);
+  border-radius: 40px 40px 0 0;
+}
+
+/* Hands on head */
+.worried-person__hands {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.worried-person__hand {
+  width: 25px;
+  height: 25px;
+  background: linear-gradient(180deg, #e4d4a5, #c9a962);
+  border-radius: 50%;
+}
+
+.worried-person__hand--left {
+  transform: translateY(10px);
+}
+
+.worried-person__hand--right {
+  transform: translateY(10px);
+}
+
+/* Angry Email */
+.angry-email {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 160px;
+  background: linear-gradient(145deg, #2a2a35, #1a1a22);
+  border: 2px solid var(--color-accent-red);
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow:
+    0 10px 30px rgba(239, 68, 68, 0.2),
+    0 0 20px rgba(239, 68, 68, 0.1);
+}
+
+.angry-email__header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 8px;
+}
+
+.angry-email__from {
+  font-size: 0.65rem;
+  color: var(--color-accent-red);
+  font-weight: 600;
+}
+
+.angry-email__subject {
+  font-size: 0.75rem;
+  color: var(--color-text-primary);
+  font-weight: 700;
+}
+
+.angry-email__body {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.angry-email__line {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+}
+
+.angry-email__line--short {
+  width: 60%;
+}
+
+.angry-email__icon {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  font-size: 2rem;
+}
+
+/* Stress symbols */
+.stress-symbols {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 1.5rem;
+  color: var(--color-accent-red);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .inbox-scene {
+    width: 300px;
+    height: 220px;
+  }
+
+  .inbox-monitor {
+    width: 180px;
+    height: 120px;
+  }
+
+  .inbox-monitor__screen {
+    height: 100px;
+    padding: 6px;
+  }
+
+  .worried-scene {
+    width: 280px;
+    height: 220px;
+  }
+
+  .worried-person__head {
+    width: 60px;
+    height: 60px;
+  }
+
+  .angry-email {
+    width: 120px;
+    padding: 8px;
+  }
+}

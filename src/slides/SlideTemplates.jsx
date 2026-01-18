@@ -1585,24 +1585,100 @@ export const ToolSlide = ({ data, index }) => {
 // =============================================
 // WORKFLOW INTRO SLIDE
 // =============================================
-export const WorkflowIntroSlide = ({ data, index }) => (
-  <Slide variant="hero" id={`slide-${data.id}`} index={index}>
-    <div className="workflow-intro-slide">
-      <ScaleIn>
-        <div className="workflow-intro-slide__number">
-          <span>Workflow</span>
-          <span className="workflow-intro-slide__number-value">#{data.number}</span>
-        </div>
-      </ScaleIn>
-      <FadeIn delay={0.3}>
-        <h2 className="workflow-intro-slide__title text-gradient">{data.title}</h2>
-      </FadeIn>
-      <FadeIn delay={0.5}>
-        <p className="workflow-intro-slide__subtitle">{data.subtitle}</p>
-      </FadeIn>
-    </div>
-  </Slide>
-);
+export const WorkflowIntroSlide = ({ data, index }) => {
+  const isInboxTriage = data.title && data.title.includes('Inbox Triage');
+
+  return (
+    <Slide variant="hero" id={`slide-${data.id}`} index={index}>
+      <div className="workflow-intro-slide-enhanced">
+        <ScaleIn>
+          <div className="workflow-intro-slide__number">
+            <span>Workflow</span>
+            <span className="workflow-intro-slide__number-value">#{data.number}</span>
+          </div>
+        </ScaleIn>
+        <FadeIn delay={0.3}>
+          <h2 className="workflow-intro-slide__title text-gradient">{data.title}</h2>
+        </FadeIn>
+        <FadeIn delay={0.5}>
+          <p className="workflow-intro-slide__subtitle">{data.subtitle}</p>
+        </FadeIn>
+
+        {/* Person at computer illustration for Inbox Triage */}
+        {isInboxTriage && (
+          <motion.div
+            className="inbox-illustration"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7 }}
+          >
+            <div className="inbox-scene">
+              {/* Desk */}
+              <div className="inbox-desk">
+                {/* Monitor */}
+                <div className="inbox-monitor">
+                  <div className="inbox-monitor__screen">
+                    {/* Email list */}
+                    <div className="inbox-emails">
+                      {[
+                        { unread: true, urgent: true },
+                        { unread: true, urgent: false },
+                        { unread: false, urgent: false },
+                        { unread: true, urgent: true },
+                        { unread: false, urgent: false },
+                      ].map((email, i) => (
+                        <motion.div
+                          key={i}
+                          className={`inbox-email ${email.unread ? 'inbox-email--unread' : ''} ${email.urgent ? 'inbox-email--urgent' : ''}`}
+                          initial={{ x: -20, opacity: 0 }}
+                          animate={{ x: 0, opacity: 1 }}
+                          transition={{ delay: 0.9 + i * 0.1 }}
+                        >
+                          <div className="inbox-email__dot" />
+                          <div className="inbox-email__lines">
+                            <div className="inbox-email__line inbox-email__line--title" />
+                            <div className="inbox-email__line inbox-email__line--preview" />
+                          </div>
+                          {email.urgent && <span className="inbox-email__urgent">!</span>}
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="inbox-monitor__stand" />
+                </div>
+
+                {/* Person silhouette */}
+                <div className="inbox-person">
+                  <div className="inbox-person__head" />
+                  <div className="inbox-person__body" />
+                  <motion.div
+                    className="inbox-person__thought"
+                    animate={{ y: [0, -5, 0], opacity: [0.7, 1, 0.7] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    📧 → 🤖 → ✅
+                  </motion.div>
+                </div>
+
+                {/* Keyboard */}
+                <div className="inbox-keyboard" />
+
+                {/* Coffee */}
+                <motion.div
+                  className="inbox-coffee"
+                  animate={{ y: [0, -2, 0] }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                >
+                  ☕
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </div>
+    </Slide>
+  );
+};
 
 // =============================================
 // PROBLEM SLIDE
@@ -1610,6 +1686,8 @@ export const WorkflowIntroSlide = ({ data, index }) => (
 export const ProblemSlide = ({ data, index }) => {
   // Check if this is the Financial X-Ray problem slide (slide 14)
   const isFinancialSlide = data.heading && data.heading.includes('Data Blindness');
+  // Check if this is the Monday Morning Panic slide (slide 19)
+  const isMondayPanic = data.title && data.title.includes('Monday Morning');
 
   return (
     <Slide variant="warning" id={`slide-${data.id}`} index={index}>
@@ -1631,6 +1709,100 @@ export const ProblemSlide = ({ data, index }) => {
             </motion.h3>
           )}
         </motion.div>
+
+        {/* Worried person illustration for Monday Morning Panic slide */}
+        {isMondayPanic && (
+          <motion.div
+            className="worried-person-illustration"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+          >
+            <div className="worried-scene">
+              {/* Person */}
+              <div className="worried-person">
+                {/* Head with worried expression */}
+                <div className="worried-person__head">
+                  <div className="worried-person__face">
+                    {/* Eyebrows - furrowed */}
+                    <div className="worried-person__eyebrows">
+                      <div className="worried-person__eyebrow worried-person__eyebrow--left" />
+                      <div className="worried-person__eyebrow worried-person__eyebrow--right" />
+                    </div>
+                    {/* Eyes - wide with concern */}
+                    <div className="worried-person__eyes">
+                      <div className="worried-person__eye">
+                        <div className="worried-person__pupil" />
+                      </div>
+                      <div className="worried-person__eye">
+                        <div className="worried-person__pupil" />
+                      </div>
+                    </div>
+                    {/* Mouth - worried frown */}
+                    <div className="worried-person__mouth" />
+                  </div>
+                  {/* Sweat drops */}
+                  <motion.div
+                    className="worried-person__sweat"
+                    animate={{ y: [0, 10, 0], opacity: [1, 0, 1] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
+                    💧
+                  </motion.div>
+                </div>
+
+                {/* Body */}
+                <div className="worried-person__body">
+                  <div className="worried-person__shirt" />
+                </div>
+
+                {/* Hands on head gesture */}
+                <div className="worried-person__hands">
+                  <div className="worried-person__hand worried-person__hand--left" />
+                  <div className="worried-person__hand worried-person__hand--right" />
+                </div>
+              </div>
+
+              {/* Floating angry email */}
+              <motion.div
+                className="angry-email"
+                animate={{
+                  y: [0, -5, 0],
+                  rotate: [-2, 2, -2],
+                }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                <div className="angry-email__header">
+                  <span className="angry-email__from">FROM: Angry Client</span>
+                  <span className="angry-email__subject">RE: URGENT!!!</span>
+                </div>
+                <div className="angry-email__body">
+                  <div className="angry-email__line" />
+                  <div className="angry-email__line" />
+                  <div className="angry-email__line angry-email__line--short" />
+                </div>
+                <motion.span
+                  className="angry-email__icon"
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 0.5, repeat: Infinity }}
+                >
+                  😠
+                </motion.span>
+              </motion.div>
+
+              {/* Stress indicators */}
+              <motion.div
+                className="stress-symbols"
+                animate={{ opacity: [0.5, 1, 0.5] }}
+                transition={{ duration: 1, repeat: Infinity }}
+              >
+                <span>⚡</span>
+                <span>❗</span>
+                <span>⚡</span>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
 
         {/* Spreadsheet visualization for Financial X-Ray slide */}
         {isFinancialSlide && (
