@@ -190,11 +190,12 @@ const Presentation = () => {
 
   return (
     <>
-      {/* Subtle Pattern Background - Light theme with yellow accents */}
-      <div className="subtle-pattern">
-        <div className="subtle-pattern__layer subtle-pattern__layer--dots" />
-        <div className="subtle-pattern__layer subtle-pattern__layer--glow" />
-        <div className="subtle-pattern__accent" />
+      {/* Starfield Background - CSS only, very lightweight */}
+      <div className="starfield">
+        <div className="starfield__layer starfield__layer--1" />
+        <div className="starfield__layer starfield__layer--2" />
+        <div className="starfield__layer starfield__layer--3" />
+        <div className="starfield__nebula" />
       </div>
 
       {/* Loading Screen */}

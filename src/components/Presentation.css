@@ -1,19 +1,16 @@
 /* ===================================
    PRESENTATION COMPONENT STYLES
-   Light Theme with Yellow Accents
    =================================== */
 
 .presentation {
   position: relative;
   z-index: 1;
-  background: var(--color-bg-primary);
 }
 
 /* Placeholder for virtualized slides (not currently rendered) */
 .slide-placeholder {
   width: 100%;
   min-height: 100vh;
-  background: var(--color-bg-primary);
 }
 
 /* =============================================
@@ -82,16 +79,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(245, 195, 65, 0.1);
-  border: 1px solid rgba(245, 195, 65, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-sm);
   color: var(--color-text-tertiary);
   transition: all var(--transition-base);
 }
 
 .nav-hint__key:hover {
-  background: rgba(245, 195, 65, 0.2);
-  color: var(--color-gold-dark);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-gold);
   border-color: var(--color-gold);
 }
 
@@ -123,22 +120,22 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(245, 195, 65, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(245, 195, 65, 0.05) 0%, transparent 50%);
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(201, 169, 98, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(201, 169, 98, 0.03) 0%, transparent 50%);
 }
 
 .background-particles {
   position: absolute;
   inset: 0;
   background-image:
-    radial-gradient(2px 2px at 100px 100px, rgba(245, 195, 65, 0.2) 0%, transparent 100%),
-    radial-gradient(2px 2px at 300px 200px, rgba(245, 195, 65, 0.15) 0%, transparent 100%),
-    radial-gradient(1px 1px at 500px 150px, rgba(201, 169, 98, 0.2) 0%, transparent 100%),
-    radial-gradient(2px 2px at 700px 300px, rgba(245, 195, 65, 0.15) 0%, transparent 100%),
-    radial-gradient(1px 1px at 200px 400px, rgba(201, 169, 98, 0.15) 0%, transparent 100%),
-    radial-gradient(2px 2px at 900px 100px, rgba(245, 195, 65, 0.2) 0%, transparent 100%),
-    radial-gradient(1px 1px at 400px 500px, rgba(201, 169, 98, 0.15) 0%, transparent 100%),
-    radial-gradient(2px 2px at 600px 450px, rgba(245, 195, 65, 0.15) 0%, transparent 100%);
+    radial-gradient(2px 2px at 100px 100px, rgba(201, 169, 98, 0.3) 0%, transparent 100%),
+    radial-gradient(2px 2px at 300px 200px, rgba(201, 169, 98, 0.2) 0%, transparent 100%),
+    radial-gradient(1px 1px at 500px 150px, rgba(255, 255, 255, 0.3) 0%, transparent 100%),
+    radial-gradient(2px 2px at 700px 300px, rgba(201, 169, 98, 0.2) 0%, transparent 100%),
+    radial-gradient(1px 1px at 200px 400px, rgba(255, 255, 255, 0.2) 0%, transparent 100%),
+    radial-gradient(2px 2px at 900px 100px, rgba(201, 169, 98, 0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 400px 500px, rgba(255, 255, 255, 0.2) 0%, transparent 100%),
+    radial-gradient(2px 2px at 600px 450px, rgba(201, 169, 98, 0.2) 0%, transparent 100%);
   background-size: 1000px 600px;
   animation: floatParticles 60s linear infinite;
 }
