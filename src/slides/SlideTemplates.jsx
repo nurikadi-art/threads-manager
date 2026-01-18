@@ -1135,35 +1135,105 @@ export const FormulaSlide = ({ data, index }) => {
 };
 
 // =============================================
-// METAPHOR SLIDE - Analogy with icon
+// METAPHOR SLIDE - Enhanced with CSS Illustrations
 // =============================================
-export const MetaphorSlide = ({ data, index }) => (
-  <Slide variant="default" id={`slide-${data.id}`} index={index}>
-    <div className="metaphor-slide">
-      <ScaleIn>
-        <div className="metaphor-slide__icon">
-          {data.icon === 'plane' && (
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
-            </svg>
-          )}
-          {data.icon === 'compass' && (
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <circle cx="12" cy="12" r="10"/>
-              <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
-            </svg>
-          )}
-        </div>
-      </ScaleIn>
-      <FadeIn delay={0.3}>
-        <h2 className="metaphor-slide__title">{data.title}</h2>
-      </FadeIn>
-      <FadeIn delay={0.5}>
-        <p className="metaphor-slide__content">{data.content}</p>
-      </FadeIn>
-    </div>
-  </Slide>
-);
+export const MetaphorSlide = ({ data, index }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <Slide variant="default" id={`slide-${data.id}`} index={index}>
+      <div className="metaphor-slide-enhanced">
+        {/* Background decorations */}
+        <div className="slide-bg-pattern" />
+        <div className="slide-corner-decoration slide-corner-decoration--tl" />
+        <div className="slide-corner-decoration slide-corner-decoration--br" />
+
+        {data.icon === 'plane' && (
+          <motion.div
+            className="metaphor-illustration"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            onHoverStart={() => setIsHovered(true)}
+            onHoverEnd={() => setIsHovered(false)}
+          >
+            {/* CSS Cockpit Illustration */}
+            <div className="css-cockpit">
+              <div className="css-cockpit__frame">
+                <div className="css-cockpit__window">
+                  <div className="css-cockpit__clouds">
+                    <div className="css-cockpit__cloud" />
+                    <div className="css-cockpit__cloud" />
+                    <div className="css-cockpit__cloud" />
+                    <div className="css-cockpit__cloud" />
+                  </div>
+                </div>
+                <div className="css-cockpit__dashboard">
+                  <div className="css-cockpit__gauge">
+                    <div className="css-cockpit__gauge-needle" />
+                    <div className="css-cockpit__gauge-center" />
+                  </div>
+                  <div className="css-cockpit__buttons">
+                    <div className="css-cockpit__btn css-cockpit__btn--lit" />
+                    <div className="css-cockpit__btn" />
+                    <div className="css-cockpit__btn css-cockpit__btn--lit" />
+                  </div>
+                  <div className="css-cockpit__gauge">
+                    <div className="css-cockpit__gauge-needle" />
+                    <div className="css-cockpit__gauge-center" />
+                  </div>
+                  <div className="css-cockpit__buttons">
+                    <div className="css-cockpit__btn" />
+                    <div className="css-cockpit__btn css-cockpit__btn--lit" />
+                    <div className="css-cockpit__btn" />
+                  </div>
+                  <div className="css-cockpit__gauge">
+                    <div className="css-cockpit__gauge-needle" />
+                    <div className="css-cockpit__gauge-center" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <motion.p
+              className="metaphor-illustration__caption"
+              animate={{ opacity: isHovered ? 1 : 0.7 }}
+            >
+              You set the destination. The pilot flies.
+            </motion.p>
+          </motion.div>
+        )}
+
+        {data.icon === 'compass' && (
+          <motion.div
+            className="metaphor-illustration"
+            initial={{ opacity: 0, rotate: -180 }}
+            animate={{ opacity: 1, rotate: 0 }}
+            transition={{ duration: 1, type: "spring" }}
+          >
+            <div className="css-compass">
+              <motion.div
+                className="css-compass__needle"
+                animate={{ rotate: [0, 10, -10, 0] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </div>
+          </motion.div>
+        )}
+
+        <motion.div
+          className="metaphor-content"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          <h2 className="metaphor-slide__title animated-gradient-text">{data.title}</h2>
+          <p className="metaphor-slide__content">{data.content}</p>
+        </motion.div>
+      </div>
+    </Slide>
+  );
+};
 
 // =============================================
 // AGENDA SLIDE - Numbered list with descriptions
@@ -1192,46 +1262,139 @@ export const AgendaSlide = ({ data, index }) => (
 );
 
 // =============================================
-// INSIGHT SLIDE - Key insight with icon
+// INSIGHT SLIDE - Enhanced with CSS Calculator
 // =============================================
-export const InsightSlide = ({ data, index }) => (
-  <Slide variant="default" id={`slide-${data.id}`} index={index}>
-    <div className="insight-slide">
-      <ScaleIn>
-        <div className="insight-slide__icon">
-          {data.icon === 'calculator' && (
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <rect x="4" y="2" width="16" height="20" rx="2"/>
-              <line x1="8" y1="6" x2="16" y2="6"/>
-              <line x1="8" y1="10" x2="8" y2="10"/>
-              <line x1="12" y1="10" x2="12" y2="10"/>
-              <line x1="16" y1="10" x2="16" y2="10"/>
-              <line x1="8" y1="14" x2="8" y2="14"/>
-              <line x1="12" y1="14" x2="12" y2="14"/>
-              <line x1="16" y1="14" x2="16" y2="14"/>
-              <line x1="8" y1="18" x2="8" y2="18"/>
-              <line x1="12" y1="18" x2="16" y2="18"/>
-            </svg>
-          )}
-          {data.icon === 'mask' && (
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <circle cx="12" cy="12" r="10"/>
-              <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
-              <line x1="9" y1="9" x2="9.01" y2="9"/>
-              <line x1="15" y1="9" x2="15.01" y2="9"/>
-            </svg>
-          )}
-        </div>
-      </ScaleIn>
-      <FadeIn delay={0.3}>
-        <h2 className="insight-slide__title">{data.title}</h2>
-      </FadeIn>
-      <FadeIn delay={0.5}>
-        <p className="insight-slide__content">{data.content}</p>
-      </FadeIn>
-    </div>
-  </Slide>
-);
+export const InsightSlide = ({ data, index }) => {
+  const [displayValue, setDisplayValue] = useState('');
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  // Animate calculator display on mount
+  useState(() => {
+    if (data.icon === 'calculator') {
+      const sequence = ['W', 'WO', 'WOR', 'WORD', 'WORDS'];
+      let i = 0;
+      setIsAnimating(true);
+      const timer = setInterval(() => {
+        if (i < sequence.length) {
+          setDisplayValue(sequence[i]);
+          i++;
+        } else {
+          clearInterval(timer);
+          setIsAnimating(false);
+        }
+      }, 400);
+    }
+  });
+
+  return (
+    <Slide variant="default" id={`slide-${data.id}`} index={index}>
+      <div className="insight-slide-enhanced">
+        {/* Background */}
+        <div className="slide-bg-grid" />
+
+        {data.icon === 'calculator' && (
+          <motion.div
+            className="insight-illustration"
+            initial={{ opacity: 0, y: 30, rotateX: 20 }}
+            animate={{ opacity: 1, y: 0, rotateX: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            {/* CSS Calculator */}
+            <div className={`css-calculator ${isAnimating ? 'css-calculator--animating' : ''}`}>
+              <div className="css-calculator__screen">
+                <motion.span
+                  key={displayValue}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                >
+                  {displayValue || 'WORDS'}
+                </motion.span>
+              </div>
+              <div className="css-calculator__buttons">
+                {['7', '8', '9', '÷', '4', '5', '6', '×', '1', '2', '3', '-', 'C', '0', '=', '+'].map((btn, i) => (
+                  <motion.div
+                    key={i}
+                    className={`css-calculator__btn ${
+                      ['÷', '×', '-', '+', '='].includes(btn)
+                        ? 'css-calculator__btn--op'
+                        : btn === 'C'
+                          ? 'css-calculator__btn--action'
+                          : 'css-calculator__btn--number'
+                    }`}
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.5 + i * 0.03 }}
+                  >
+                    {btn}
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+            <motion.p
+              className="insight-illustration__caption"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1 }}
+            >
+              Just like calculators made accountants faster...
+            </motion.p>
+          </motion.div>
+        )}
+
+        {data.icon === 'mask' && (
+          <motion.div
+            className="insight-illustration"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+          >
+            {/* CSS Robot that's a people pleaser */}
+            <div className="css-robot">
+              <div className="css-robot__antenna" />
+              <div className="css-robot__head">
+                <div className="css-robot__eyes">
+                  <div className="css-robot__eye" />
+                  <div className="css-robot__eye" />
+                </div>
+              </div>
+              <div className="css-robot__body">
+                <div className="css-robot__chest">
+                  <div className="css-robot__light" />
+                  <div className="css-robot__light" />
+                  <div className="css-robot__light" />
+                  <div className="css-robot__light" />
+                </div>
+              </div>
+              <div className="css-robot__arm css-robot__arm--left" />
+              <div className="css-robot__arm css-robot__arm--right" />
+              <div className="css-robot__legs">
+                <div className="css-robot__leg" />
+                <div className="css-robot__leg" />
+              </div>
+            </div>
+            <motion.div
+              className="insight-robot-speech"
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.5 }}
+            >
+              "I'll say whatever makes you happy!" 😊
+            </motion.div>
+          </motion.div>
+        )}
+
+        <motion.div
+          className="insight-content"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
+          <h2 className="insight-slide__title animated-gradient-text">{data.title}</h2>
+          <p className="insight-slide__content">{data.content}</p>
+        </motion.div>
+      </div>
+    </Slide>
+  );
+};
 
 // =============================================
 // SECTION SLIDE - Section divider
@@ -1257,48 +1420,113 @@ export const SectionSlide = ({ data, index }) => (
 );
 
 // =============================================
-// TOOL SLIDE - AI tool showcase
+// TOOL SLIDE - Enhanced AI tool showcase with logos
 // =============================================
-export const ToolSlide = ({ data, index }) => (
-  <Slide variant="default" id={`slide-${data.id}`} index={index}>
-    <div className="tool-slide">
-      <ScaleIn>
-        <div className="tool-slide__logo" style={{ '--tool-color': data.color }}>
-          <span className="tool-slide__logo-text">{data.tool[0]}</span>
-        </div>
-      </ScaleIn>
-      <FadeIn delay={0.2}>
-        <h2 className="tool-slide__name">
-          {data.tool}
-          {data.company && <span className="tool-slide__company">{data.company}</span>}
-        </h2>
-      </FadeIn>
-      <FadeIn delay={0.3}>
-        <p className="tool-slide__role">{data.role}</p>
-      </FadeIn>
-      <FadeIn delay={0.4}>
-        <div className="tool-slide__info">
-          <div className="tool-slide__use-case">
-            <span className="tool-slide__label">Use Case:</span>
-            <span>{data.useCase}</span>
-          </div>
-          {data.warning && (
-            <div className="tool-slide__warning">
-              <span className="tool-slide__warning-icon">!</span>
-              <span>{data.warning}</span>
+export const ToolSlide = ({ data, index }) => {
+  const [isRevealed, setIsRevealed] = useState(false);
+
+  // Get the appropriate logo class
+  const getLogoClass = () => {
+    const toolLower = data.tool.toLowerCase();
+    if (toolLower === 'chatgpt') return 'css-ai-logo--chatgpt';
+    if (toolLower === 'claude') return 'css-ai-logo--claude';
+    if (toolLower === 'perplexity') return 'css-ai-logo--perplexity';
+    return '';
+  };
+
+  return (
+    <Slide variant="default" id={`slide-${data.id}`} index={index}>
+      <div className="tool-slide-enhanced">
+        {/* Ambient glow based on tool color */}
+        <motion.div
+          className="tool-slide__ambient-glow"
+          style={{ background: `radial-gradient(circle, ${data.color}20 0%, transparent 70%)` }}
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1 }}
+        />
+
+        {/* AI Logo */}
+        <motion.div
+          className="tool-slide__logo-container"
+          initial={{ opacity: 0, y: -30, rotateY: 90 }}
+          animate={{ opacity: 1, y: 0, rotateY: 0 }}
+          transition={{ duration: 0.8, type: "spring" }}
+          onClick={() => setIsRevealed(!isRevealed)}
+        >
+          <div
+            className={`css-ai-logo ${getLogoClass()} glow-pulse`}
+            style={{ '--tool-color': data.color }}
+          />
+          <motion.div
+            className="tool-slide__logo-ring"
+            style={{ borderColor: data.color }}
+            animate={{ rotate: 360 }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          />
+        </motion.div>
+
+        {/* Tool info */}
+        <motion.div
+          className="tool-slide__info-enhanced"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+        >
+          <h2 className="tool-slide__name-enhanced" style={{ color: data.color }}>
+            {data.tool}
+            {data.company && <span className="tool-slide__company">{data.company}</span>}
+          </h2>
+
+          <motion.p
+            className="tool-slide__role-enhanced"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.4 }}
+          >
+            "{data.role}"
+          </motion.p>
+
+          <motion.div
+            className="tool-slide__details"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+          >
+            <div className="tool-slide__use-case-enhanced">
+              <span className="tool-slide__label">Best For:</span>
+              <span>{data.useCase}</span>
             </div>
-          )}
-          {data.why && (
-            <div className="tool-slide__why">
-              <span className="tool-slide__label">Why:</span>
-              <span>"{data.why}"</span>
-            </div>
-          )}
-        </div>
-      </FadeIn>
-    </div>
-  </Slide>
-);
+
+            {data.warning && (
+              <motion.div
+                className="tool-slide__warning-enhanced"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.7 }}
+              >
+                <span className="tool-slide__warning-icon">⚠️</span>
+                <span>{data.warning}</span>
+              </motion.div>
+            )}
+
+            {data.why && (
+              <motion.div
+                className="tool-slide__strength"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.7 }}
+              >
+                <span className="tool-slide__strength-icon">✓</span>
+                <span>{data.why}</span>
+              </motion.div>
+            )}
+          </motion.div>
+        </motion.div>
+      </div>
+    </Slide>
+  );
+};
 
 // =============================================
 // WORKFLOW INTRO SLIDE
@@ -1712,23 +1940,152 @@ export const WarningSlide = ({ data, index }) => (
 // =============================================
 // SOLUTION SLIDE
 // =============================================
-export const SolutionSlide = ({ data, index }) => (
-  <Slide variant="success" id={`slide-${data.id}`} index={index}>
-    <div className="solution-slide">
-      {data.highlight && (
-        <FadeIn>
-          <div className="solution-slide__badge">{data.highlight}</div>
-        </FadeIn>
-      )}
-      <FadeIn delay={0.2}>
-        <h2 className="solution-slide__title text-gradient">{data.title}</h2>
-      </FadeIn>
-      <FadeIn delay={0.4}>
-        <p className="solution-slide__content">{data.content}</p>
-      </FadeIn>
-    </div>
-  </Slide>
-);
+export const SolutionSlide = ({ data, index }) => {
+  const [step, setStep] = useState(0);
+  const isHITL = data.title && data.title.includes('Human-in-the-Loop');
+
+  return (
+    <Slide variant="success" id={`slide-${data.id}`} index={index}>
+      <div className="solution-slide-enhanced">
+        {data.highlight && (
+          <motion.div
+            className="solution-slide__badge glow-pulse"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+          >
+            {data.highlight}
+          </motion.div>
+        )}
+
+        <motion.h2
+          className="solution-slide__title animated-gradient-text"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          {data.title}
+        </motion.h2>
+
+        {/* HITL Flow Diagram */}
+        {isHITL && (
+          <motion.div
+            className="hitl-flow-diagram"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            onClick={() => setStep((step + 1) % 4)}
+          >
+            {/* AI Node */}
+            <motion.div
+              className={`hitl-node hitl-node--ai ${step >= 1 ? 'hitl-node--active' : ''}`}
+              initial={{ x: -50, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ delay: 0.5 }}
+            >
+              <div className="hitl-node__icon">🤖</div>
+              <div className="hitl-node__label">AI</div>
+              <div className="hitl-node__desc">Creates Draft</div>
+              {step >= 1 && (
+                <motion.div
+                  className="hitl-node__output"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                >
+                  Draft Ready →
+                </motion.div>
+              )}
+            </motion.div>
+
+            {/* Arrow 1 */}
+            <motion.div
+              className={`hitl-arrow ${step >= 1 ? 'hitl-arrow--active' : ''}`}
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: step >= 1 ? 1 : 0.3 }}
+            >
+              <svg viewBox="0 0 50 20" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M0 10 L40 10 M35 5 L45 10 L35 15" />
+              </svg>
+            </motion.div>
+
+            {/* Human Node */}
+            <motion.div
+              className={`hitl-node hitl-node--human ${step >= 2 ? 'hitl-node--active' : ''}`}
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.6 }}
+            >
+              <div className="hitl-node__icon">👤</div>
+              <div className="hitl-node__label">Human</div>
+              <div className="hitl-node__desc">Verifies & Edits</div>
+              {step >= 2 && (
+                <motion.div
+                  className="hitl-node__output"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                >
+                  Approved ✓
+                </motion.div>
+              )}
+            </motion.div>
+
+            {/* Arrow 2 */}
+            <motion.div
+              className={`hitl-arrow ${step >= 2 ? 'hitl-arrow--active' : ''}`}
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: step >= 2 ? 1 : 0.3 }}
+            >
+              <svg viewBox="0 0 50 20" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M0 10 L40 10 M35 5 L45 10 L35 15" />
+              </svg>
+            </motion.div>
+
+            {/* Output Node */}
+            <motion.div
+              className={`hitl-node hitl-node--output ${step >= 3 ? 'hitl-node--active' : ''}`}
+              initial={{ x: 50, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ delay: 0.7 }}
+            >
+              <div className="hitl-node__icon">✨</div>
+              <div className="hitl-node__label">Output</div>
+              <div className="hitl-node__desc">Safe & Fast</div>
+              {step >= 3 && (
+                <motion.div
+                  className="hitl-node__success"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ repeat: Infinity, duration: 2 }}
+                >
+                  🎯 Perfect Result
+                </motion.div>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+
+        {isHITL && (
+          <motion.p
+            className="hitl-instruction"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: step < 3 ? 1 : 0.5 }}
+            transition={{ delay: 1 }}
+          >
+            {step < 3 ? '👆 Click to see the flow' : 'Speed + Safety = Success'}
+          </motion.p>
+        )}
+
+        <motion.p
+          className="solution-slide__content"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
+        >
+          {data.content}
+        </motion.p>
+      </div>
+    </Slide>
+  );
+};
 
 // =============================================
 // INTRODUCTION SLIDE
@@ -2036,29 +2393,105 @@ export const PackageSlide = ({ data, index }) => (
 );
 
 // =============================================
-// TESTIMONIAL SLIDE
+// TESTIMONIAL SLIDE - Enhanced with premium styling
 // =============================================
-export const TestimonialSlide = ({ data, index }) => (
-  <Slide variant="default" id={`slide-${data.id}`} index={index}>
-    <div className="testimonial-slide">
-      <FadeIn>
-        <h2 className="testimonial-slide__header">{data.title}</h2>
-      </FadeIn>
-      <ScaleIn delay={0.3}>
-        <div className="testimonial-slide__card">
-          <div className="testimonial-slide__avatar">
-            <span>{data.name[0]}</span>
+export const TestimonialSlide = ({ data, index }) => {
+  const testimonialQuotes = {
+    'Latte': '"The VA service transformed how I run my business. I finally have time to focus on what matters."',
+    'Eddy P.': '"Game-changer for scaling operations. The AI-trained assistants understand exactly what I need."'
+  };
+
+  return (
+    <Slide variant="default" id={`slide-${data.id}`} index={index}>
+      <div className="testimonial-slide-enhanced">
+        {/* Background effects */}
+        <div className="slide-bg-pattern" />
+        <motion.div
+          className="testimonial-glow"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        />
+
+        <motion.div
+          className="testimonial-header"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <span className="testimonial-eyebrow">SUCCESS STORIES</span>
+          <h2 className="testimonial-title">{data.title}</h2>
+        </motion.div>
+
+        <motion.div
+          className="css-testimonial-card"
+          initial={{ opacity: 0, y: 30, rotateX: 10 }}
+          animate={{ opacity: 1, y: 0, rotateX: 0 }}
+          transition={{ delay: 0.3, type: "spring" }}
+          whileHover={{ y: -5, boxShadow: '0 30px 60px rgba(0, 0, 0, 0.4)' }}
+        >
+          {/* Stars */}
+          <div className="css-testimonial-card__stars">
+            {[...Array(5)].map((_, i) => (
+              <motion.span
+                key={i}
+                className="css-testimonial-card__star"
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.5 + i * 0.1 }}
+              >
+                ★
+              </motion.span>
+            ))}
           </div>
-          <div className="testimonial-slide__info">
-            <h3 className="testimonial-slide__name">{data.name}</h3>
-            <p className="testimonial-slide__role">{data.role}</p>
-            <p className="testimonial-slide__company">{data.company}</p>
+
+          {/* Avatar */}
+          <motion.div
+            className="css-testimonial-card__avatar"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.4, type: "spring" }}
+          >
+            {data.name[0]}
+          </motion.div>
+
+          <div className="css-testimonial-card__content">
+            {/* Quote */}
+            <motion.p
+              className="css-testimonial-card__quote"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+            >
+              {testimonialQuotes[data.name] || '"An incredible experience that exceeded all expectations."'}
+            </motion.p>
+
+            {/* Name and details */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 }}
+            >
+              <h3 className="css-testimonial-card__name">{data.name}</h3>
+              <p className="css-testimonial-card__role">{data.role}</p>
+              <p className="css-testimonial-card__company">{data.company}</p>
+            </motion.div>
           </div>
-        </div>
-      </ScaleIn>
-    </div>
-  </Slide>
-);
+        </motion.div>
+
+        {/* Decorative elements */}
+        <motion.div
+          className="testimonial-decoration"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.5 }}
+          transition={{ delay: 1 }}
+        >
+          <div className="testimonial-quote-mark testimonial-quote-mark--left">"</div>
+          <div className="testimonial-quote-mark testimonial-quote-mark--right">"</div>
+        </motion.div>
+      </div>
+    </Slide>
+  );
+};
 
 // =============================================
 // PROCESS SLIDE
