@@ -1,4 +1,4 @@
-import { Suspense, lazy, useState } from 'react';
+import { Suspense, lazy, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Slide, { FadeIn, ScaleIn, StaggerContainer, StaggerItem } from '../components/Slide';
 import { Spotlight } from '../components/Spotlight';
@@ -228,275 +228,100 @@ export const HeroSlide = ({ data, index }) => {
 // =============================================
 // GIFT SLIDE - Spectacular 3D Gift Experience
 // =============================================
-export const GiftSlide = ({ data, index }) => {
-  const [stage, setStage] = useState(0); // 0: initial, 1: hover, 2: opened, 3: full reveal
-  const [count, setCount] = useState(0);
+export const GiftSlide = ({ data, index }) => (
+  <Slide variant="offer" id={`slide-${data.id}`} index={index}>
+    <div className="gift-slide-new">
+      {/* Subtle background glow */}
+      <div className="gift-slide-new__glow" />
 
-  const handleOpen = () => {
-    if (stage < 2) {
-      setStage(2);
-      // Animate count up
-      let current = 0;
-      const target = 5000;
-      const duration = 2000;
-      const step = target / (duration / 16);
-      const counter = setInterval(() => {
-        current += step;
-        if (current >= target) {
-          setCount(target);
-          clearInterval(counter);
-          setTimeout(() => setStage(3), 500);
-        } else {
-          setCount(Math.floor(current));
-        }
-      }, 16);
-    }
-  };
-
-  return (
-    <Slide variant="offer" id={`slide-${data.id}`} index={index}>
-      <div className="gift-spectacular">
-        {/* Ambient background effects */}
-        <div className="gift-spectacular__ambient">
-          <motion.div
-            className="ambient-orb ambient-orb--1"
-            animate={{
-              scale: [1, 1.3, 1],
-              opacity: [0.3, 0.5, 0.3],
-              x: [0, 30, 0],
-              y: [0, -20, 0],
-            }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div
-            className="ambient-orb ambient-orb--2"
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.2, 0.4, 0.2],
-              x: [0, -40, 0],
-              y: [0, 30, 0],
-            }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          />
-          <motion.div
-            className="ambient-orb ambient-orb--3"
-            animate={{
-              scale: [1, 1.4, 1],
-              opacity: [0.15, 0.3, 0.15],
-            }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          />
-        </div>
-
-        {/* Floating bonus icons */}
-        <div className="gift-spectacular__floating-icons">
-          {['📝', '🎯', '💡', '🚀', '⚡', '💰'].map((emoji, i) => (
-            <motion.div
-              key={i}
-              className="floating-icon"
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{
-                opacity: stage >= 2 ? [0, 1, 1, 0] : 0,
-                scale: stage >= 2 ? [0, 1.2, 1, 0.8] : 0,
-                y: stage >= 2 ? [50, 0, -20, -100] : 50,
-                x: stage >= 2 ? [0, (i % 2 === 0 ? 1 : -1) * (20 + i * 10), (i % 2 === 0 ? 1 : -1) * (40 + i * 15)] : 0,
-              }}
-              transition={{
-                duration: 2.5,
-                delay: i * 0.15,
-                ease: "easeOut"
-              }}
-              style={{
-                left: `${15 + i * 12}%`,
-              }}
-            >
-              {emoji}
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Header section */}
+      {/* Main content */}
+      <div className="gift-slide-new__content">
+        {/* Badge */}
         <motion.div
-          className="gift-spectacular__header"
-          initial={{ opacity: 0, y: -30 }}
+          className="gift-slide-new__badge"
+          initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
         >
-          <div className="gift-badge">
+          <motion.span
+            className="gift-slide-new__badge-dot"
+            animate={{ scale: [1, 1.3, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          />
+          <span>FREE GIFT</span>
+        </motion.div>
+
+        {/* Main heading */}
+        <motion.h2
+          className="gift-slide-new__title"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+        >
+          Stay Until Q&A
+        </motion.h2>
+
+        {/* Gift value card */}
+        <motion.div
+          className="gift-slide-new__card"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          <div className="gift-slide-new__card-header">
+            <span className="gift-slide-new__card-icon">🎁</span>
+            <span className="gift-slide-new__card-label">You'll Receive</span>
+          </div>
+
+          <div className="gift-slide-new__card-value">
+            <span className="gift-slide-new__number">5,000</span>
+            <span className="gift-slide-new__label">AI Business Prompts</span>
+          </div>
+
+          <div className="gift-slide-new__card-details">
+            <div className="gift-slide-new__detail">
+              <span>Email Templates</span>
+              <span>500+</span>
+            </div>
+            <div className="gift-slide-new__detail">
+              <span>Marketing Scripts</span>
+              <span>1,200+</span>
+            </div>
+            <div className="gift-slide-new__detail">
+              <span>Sales Frameworks</span>
+              <span>800+</span>
+            </div>
+            <div className="gift-slide-new__detail">
+              <span>Business Strategy</span>
+              <span>2,500+</span>
+            </div>
+          </div>
+
+          <div className="gift-slide-new__card-footer">
+            <span className="gift-slide-new__value-strike">$297 Value</span>
             <motion.span
-              className="gift-badge__dot"
-              animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            />
-            <span>EXCLUSIVE BONUS</span>
-          </div>
-          <h2 className="gift-spectacular__title">
-            Stay Until Q&A<br />
-            <span className="title-highlight">Unlock Your Free Gift</span>
-          </h2>
-          <p className="gift-spectacular__subtitle">
-            We've prepared something special for dedicated attendees
-          </p>
-        </motion.div>
-
-        {/* 2D Gift Container */}
-        <motion.div
-          className={`gift-2d-container ${stage >= 2 ? 'gift-2d-container--opened' : ''}`}
-          onClick={handleOpen}
-          whileHover={{ scale: stage < 2 ? 1.05 : 1 }}
-          whileTap={{ scale: stage < 2 ? 0.95 : 1 }}
-          onHoverStart={() => stage === 0 && setStage(1)}
-        >
-          {/* Simple 2D Gift Box */}
-          <div className="gift-2d">
-            {/* Gift base */}
-            <div className="gift-2d__base">
-              <div className="gift-2d__ribbon-v" />
-              <div className="gift-2d__ribbon-h" />
-            </div>
-
-            {/* Gift lid */}
-            <motion.div
-              className="gift-2d__lid"
-              animate={stage >= 2 ? {
-                y: -60,
-                rotate: -15,
-                opacity: 0.7,
-              } : {
-                y: 0,
-                rotate: 0,
-                opacity: 1,
-              }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="gift-slide-new__value-free"
+              animate={{ scale: [1, 1.05, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
             >
-              <div className="gift-2d__lid-ribbon" />
-              {/* Bow */}
-              <div className="gift-2d__bow">
-                <div className="bow-2d-loop bow-2d-loop--left" />
-                <div className="bow-2d-loop bow-2d-loop--right" />
-                <div className="bow-2d-center" />
-              </div>
-            </motion.div>
-
-            {/* Light rays when opened */}
-            {stage >= 2 && (
-              <motion.div
-                className="gift-2d__glow"
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
-              />
-            )}
-          </div>
-
-          {/* Click prompt */}
-          <motion.div
-            className="gift-click-prompt"
-            animate={{
-              opacity: stage < 2 ? [0.5, 1, 0.5] : 0,
-              y: stage < 2 ? [0, -5, 0] : 10,
-            }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-          >
-            {stage === 0 ? '✨ Hover to preview' : '👆 Click to open!'}
-          </motion.div>
-        </motion.div>
-
-        {/* Revealed content */}
-        <motion.div
-          className="gift-spectacular__reveal"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{
-            opacity: stage >= 2 ? 1 : 0,
-            y: stage >= 2 ? 0 : 30,
-          }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-        >
-          <div className="reveal-counter">
-            <motion.span className="counter-number">
-              {count.toLocaleString()}
+              FREE
             </motion.span>
-            <span className="counter-label">AI Business Prompts</span>
           </div>
-
-          <motion.div
-            className="reveal-details"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: stage >= 3 ? 1 : 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <p className="reveal-tagline">Everything you need to supercharge your business with AI</p>
-
-            <div className="reveal-grid">
-              <div className="reveal-item">
-                <span className="reveal-item__icon">📧</span>
-                <span className="reveal-item__text">Email Templates</span>
-                <span className="reveal-item__count">500+</span>
-              </div>
-              <div className="reveal-item">
-                <span className="reveal-item__icon">📊</span>
-                <span className="reveal-item__text">Marketing Scripts</span>
-                <span className="reveal-item__count">1,200+</span>
-              </div>
-              <div className="reveal-item">
-                <span className="reveal-item__icon">🎯</span>
-                <span className="reveal-item__text">Sales Frameworks</span>
-                <span className="reveal-item__count">800+</span>
-              </div>
-              <div className="reveal-item">
-                <span className="reveal-item__icon">💼</span>
-                <span className="reveal-item__text">Business Strategy</span>
-                <span className="reveal-item__count">2,500+</span>
-              </div>
-            </div>
-
-            <div className="reveal-value">
-              <span className="value-label">Total Value:</span>
-              <span className="value-strike">$297</span>
-              <span className="value-free">FREE</span>
-            </div>
-
-            <p className="reveal-cta">Just stay until the end of Q&A to claim!</p>
-          </motion.div>
         </motion.div>
 
-        {/* Confetti particles */}
-        {stage >= 2 && (
-          <div className="gift-confetti">
-            {[...Array(40)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="confetti-piece"
-                initial={{
-                  x: 0,
-                  y: 0,
-                  rotate: 0,
-                  opacity: 1,
-                }}
-                animate={{
-                  x: (Math.random() - 0.5) * 600,
-                  y: (Math.random() - 0.5) * 400 - 100,
-                  rotate: Math.random() * 720 - 360,
-                  opacity: 0,
-                }}
-                transition={{
-                  duration: 2 + Math.random(),
-                  ease: "easeOut",
-                }}
-                style={{
-                  background: ['#c9a962', '#e4d4a5', '#fff', '#ff6b6b', '#4ecdc4'][Math.floor(Math.random() * 5)],
-                  width: `${8 + Math.random() * 8}px`,
-                  height: `${8 + Math.random() * 8}px`,
-                  borderRadius: Math.random() > 0.5 ? '50%' : '2px',
-                }}
-              />
-            ))}
-          </div>
-        )}
+        {/* CTA */}
+        <motion.p
+          className="gift-slide-new__cta"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
+          Claim yours at the end of Q&A
+        </motion.p>
       </div>
-    </Slide>
-  );
-};
+    </div>
+  </Slide>
+);
 
 // =============================================
 // PARADOX SLIDE - Interactive split-screen comparison
@@ -1585,100 +1410,24 @@ export const ToolSlide = ({ data, index }) => {
 // =============================================
 // WORKFLOW INTRO SLIDE
 // =============================================
-export const WorkflowIntroSlide = ({ data, index }) => {
-  const isInboxTriage = data.title && data.title.includes('Inbox Triage');
-
-  return (
-    <Slide variant="hero" id={`slide-${data.id}`} index={index}>
-      <div className="workflow-intro-slide-enhanced">
-        <ScaleIn>
-          <div className="workflow-intro-slide__number">
-            <span>Workflow</span>
-            <span className="workflow-intro-slide__number-value">#{data.number}</span>
-          </div>
-        </ScaleIn>
-        <FadeIn delay={0.3}>
-          <h2 className="workflow-intro-slide__title text-gradient">{data.title}</h2>
-        </FadeIn>
-        <FadeIn delay={0.5}>
-          <p className="workflow-intro-slide__subtitle">{data.subtitle}</p>
-        </FadeIn>
-
-        {/* Person at computer illustration for Inbox Triage */}
-        {isInboxTriage && (
-          <motion.div
-            className="inbox-illustration"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7 }}
-          >
-            <div className="inbox-scene">
-              {/* Desk */}
-              <div className="inbox-desk">
-                {/* Monitor */}
-                <div className="inbox-monitor">
-                  <div className="inbox-monitor__screen">
-                    {/* Email list */}
-                    <div className="inbox-emails">
-                      {[
-                        { unread: true, urgent: true },
-                        { unread: true, urgent: false },
-                        { unread: false, urgent: false },
-                        { unread: true, urgent: true },
-                        { unread: false, urgent: false },
-                      ].map((email, i) => (
-                        <motion.div
-                          key={i}
-                          className={`inbox-email ${email.unread ? 'inbox-email--unread' : ''} ${email.urgent ? 'inbox-email--urgent' : ''}`}
-                          initial={{ x: -20, opacity: 0 }}
-                          animate={{ x: 0, opacity: 1 }}
-                          transition={{ delay: 0.9 + i * 0.1 }}
-                        >
-                          <div className="inbox-email__dot" />
-                          <div className="inbox-email__lines">
-                            <div className="inbox-email__line inbox-email__line--title" />
-                            <div className="inbox-email__line inbox-email__line--preview" />
-                          </div>
-                          {email.urgent && <span className="inbox-email__urgent">!</span>}
-                        </motion.div>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="inbox-monitor__stand" />
-                </div>
-
-                {/* Person silhouette */}
-                <div className="inbox-person">
-                  <div className="inbox-person__head" />
-                  <div className="inbox-person__body" />
-                  <motion.div
-                    className="inbox-person__thought"
-                    animate={{ y: [0, -5, 0], opacity: [0.7, 1, 0.7] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
-                    📧 → 🤖 → ✅
-                  </motion.div>
-                </div>
-
-                {/* Keyboard */}
-                <div className="inbox-keyboard" />
-
-                {/* Coffee */}
-                <motion.div
-                  className="inbox-coffee"
-                  animate={{ y: [0, -2, 0] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                >
-                  ☕
-                </motion.div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </div>
-    </Slide>
-  );
-};
+export const WorkflowIntroSlide = ({ data, index }) => (
+  <Slide variant="hero" id={`slide-${data.id}`} index={index}>
+    <div className="workflow-intro-slide-enhanced">
+      <ScaleIn>
+        <div className="workflow-intro-slide__number">
+          <span>Workflow</span>
+          <span className="workflow-intro-slide__number-value">#{data.number}</span>
+        </div>
+      </ScaleIn>
+      <FadeIn delay={0.3}>
+        <h2 className="workflow-intro-slide__title text-gradient">{data.title}</h2>
+      </FadeIn>
+      <FadeIn delay={0.5}>
+        <p className="workflow-intro-slide__subtitle">{data.subtitle}</p>
+      </FadeIn>
+    </div>
+  </Slide>
+);
 
 // =============================================
 // PROBLEM SLIDE
@@ -1686,8 +1435,6 @@ export const WorkflowIntroSlide = ({ data, index }) => {
 export const ProblemSlide = ({ data, index }) => {
   // Check if this is the Financial X-Ray problem slide (slide 14)
   const isFinancialSlide = data.heading && data.heading.includes('Data Blindness');
-  // Check if this is the Monday Morning Panic slide (slide 19)
-  const isMondayPanic = data.title && data.title.includes('Monday Morning');
 
   return (
     <Slide variant="warning" id={`slide-${data.id}`} index={index}>
@@ -1709,100 +1456,6 @@ export const ProblemSlide = ({ data, index }) => {
             </motion.h3>
           )}
         </motion.div>
-
-        {/* Worried person illustration for Monday Morning Panic slide */}
-        {isMondayPanic && (
-          <motion.div
-            className="worried-person-illustration"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-          >
-            <div className="worried-scene">
-              {/* Person */}
-              <div className="worried-person">
-                {/* Head with worried expression */}
-                <div className="worried-person__head">
-                  <div className="worried-person__face">
-                    {/* Eyebrows - furrowed */}
-                    <div className="worried-person__eyebrows">
-                      <div className="worried-person__eyebrow worried-person__eyebrow--left" />
-                      <div className="worried-person__eyebrow worried-person__eyebrow--right" />
-                    </div>
-                    {/* Eyes - wide with concern */}
-                    <div className="worried-person__eyes">
-                      <div className="worried-person__eye">
-                        <div className="worried-person__pupil" />
-                      </div>
-                      <div className="worried-person__eye">
-                        <div className="worried-person__pupil" />
-                      </div>
-                    </div>
-                    {/* Mouth - worried frown */}
-                    <div className="worried-person__mouth" />
-                  </div>
-                  {/* Sweat drops */}
-                  <motion.div
-                    className="worried-person__sweat"
-                    animate={{ y: [0, 10, 0], opacity: [1, 0, 1] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                  >
-                    💧
-                  </motion.div>
-                </div>
-
-                {/* Body */}
-                <div className="worried-person__body">
-                  <div className="worried-person__shirt" />
-                </div>
-
-                {/* Hands on head gesture */}
-                <div className="worried-person__hands">
-                  <div className="worried-person__hand worried-person__hand--left" />
-                  <div className="worried-person__hand worried-person__hand--right" />
-                </div>
-              </div>
-
-              {/* Floating angry email */}
-              <motion.div
-                className="angry-email"
-                animate={{
-                  y: [0, -5, 0],
-                  rotate: [-2, 2, -2],
-                }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                <div className="angry-email__header">
-                  <span className="angry-email__from">FROM: Angry Client</span>
-                  <span className="angry-email__subject">RE: URGENT!!!</span>
-                </div>
-                <div className="angry-email__body">
-                  <div className="angry-email__line" />
-                  <div className="angry-email__line" />
-                  <div className="angry-email__line angry-email__line--short" />
-                </div>
-                <motion.span
-                  className="angry-email__icon"
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ duration: 0.5, repeat: Infinity }}
-                >
-                  😠
-                </motion.span>
-              </motion.div>
-
-              {/* Stress indicators */}
-              <motion.div
-                className="stress-symbols"
-                animate={{ opacity: [0.5, 1, 0.5] }}
-                transition={{ duration: 1, repeat: Infinity }}
-              >
-                <span>⚡</span>
-                <span>❗</span>
-                <span>⚡</span>
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
 
         {/* Spreadsheet visualization for Financial X-Ray slide */}
         {isFinancialSlide && (
@@ -1917,10 +1570,13 @@ export const ProblemSlide = ({ data, index }) => {
 // =============================================
 export const SolutionStepSlide = ({ data, index }) => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef(null);
   const isSlide15 = data.id === 15;
 
-  const handleVideoClick = (e) => {
-    const video = e.target;
+  const handleVideoToggle = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
     if (video.paused) {
       video.play();
       setIsPlaying(true);
@@ -1948,15 +1604,17 @@ export const SolutionStepSlide = ({ data, index }) => {
         {/* Video for Slide 15 */}
         {isSlide15 && (
           <ScaleIn delay={0.6}>
-            <div className="slide-video-container">
+            <div className="slide-video-container slide-video-container--centered">
               <motion.div
                 className={`slide-video-wrapper ${isPlaying ? 'playing' : ''}`}
                 whileHover={{ scale: 1.02 }}
+                onClick={handleVideoToggle}
+                style={{ cursor: 'pointer' }}
               >
                 <video
+                  ref={videoRef}
                   className="slide-video"
                   src="/videos/1230(1).mp4"
-                  onClick={handleVideoClick}
                   playsInline
                   loop
                 />
@@ -2024,10 +1682,13 @@ export const SolutionStepSlide = ({ data, index }) => {
 // =============================================
 export const PromptSlide = ({ data, index }) => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef(null);
   const isSlide16 = data.id === 16;
 
-  const handleVideoClick = (e) => {
-    const video = e.target;
+  const handleVideoToggle = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
     if (video.paused) {
       video.play();
       setIsPlaying(true);
@@ -2062,15 +1723,17 @@ export const PromptSlide = ({ data, index }) => {
         {/* Video for Slide 16 */}
         {isSlide16 && (
           <ScaleIn delay={0.5}>
-            <div className="slide-video-container">
+            <div className="slide-video-container slide-video-container--centered">
               <motion.div
                 className={`slide-video-wrapper ${isPlaying ? 'playing' : ''}`}
                 whileHover={{ scale: 1.02 }}
+                onClick={handleVideoToggle}
+                style={{ cursor: 'pointer' }}
               >
                 <video
+                  ref={videoRef}
                   className="slide-video"
                   src="/videos/1230(2).mp4"
-                  onClick={handleVideoClick}
                   playsInline
                   loop
                 />
@@ -2116,10 +1779,13 @@ export const PromptSlide = ({ data, index }) => {
 // =============================================
 export const ResultSlide = ({ data, index }) => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef(null);
   const isSlide17 = data.id === 17;
 
-  const handleVideoClick = (e) => {
-    const video = e.target;
+  const handleVideoToggle = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
     if (video.paused) {
       video.play();
       setIsPlaying(true);
@@ -2159,15 +1825,17 @@ export const ResultSlide = ({ data, index }) => {
         {/* Video for Slide 17 */}
         {isSlide17 && (
           <ScaleIn delay={0.5}>
-            <div className="slide-video-container slide-video-container--large">
+            <div className="slide-video-container slide-video-container--centered">
               <motion.div
                 className={`slide-video-wrapper ${isPlaying ? 'playing' : ''}`}
                 whileHover={{ scale: 1.02 }}
+                onClick={handleVideoToggle}
+                style={{ cursor: 'pointer' }}
               >
                 <video
+                  ref={videoRef}
                   className="slide-video"
                   src="/videos/1230(4) (1).mp4"
-                  onClick={handleVideoClick}
                   playsInline
                   loop
                 />
