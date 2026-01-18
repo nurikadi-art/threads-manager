@@ -2119,3 +2119,645 @@ export const FinalSlide = ({ data, index }) => (
     </div>
   </Slide>
 );
+
+// =============================================
+// AIRLINE EXECUTIVE SLIDE - Key metaphor
+// =============================================
+export const AirlineExecutiveSlide = ({ data, index }) => {
+  const [hovered, setHovered] = useState(null);
+
+  return (
+    <Slide variant="hero" id={`slide-${data.id}`} index={index}>
+      <div className="airline-slide">
+        {/* Header */}
+        <motion.div
+          className="airline-slide__header"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <span className="airline-slide__eyebrow">THE KEY MINDSET SHIFT</span>
+          <h2 className="airline-slide__title">
+            Be the <span className="text-gradient">Airline Executive</span>
+          </h2>
+          <p className="airline-slide__subtitle">Not the Pilot</p>
+        </motion.div>
+
+        {/* Visual comparison */}
+        <div className="airline-slide__comparison">
+          {/* Pilot side - stressed */}
+          <motion.div
+            className={`airline-card airline-card--pilot ${hovered === 'pilot' ? 'airline-card--active' : ''}`}
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3 }}
+            onMouseEnter={() => setHovered('pilot')}
+            onMouseLeave={() => setHovered(null)}
+          >
+            <div className="airline-card__icon airline-card__icon--stressed">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <circle cx="12" cy="8" r="5"/>
+                <path d="M3 21v-2a7 7 0 017-7h4a7 7 0 017 7v2"/>
+                <path d="M8 8c0-1 .5-2 1.5-2.5M16 8c0-1-.5-2-1.5-2.5" strokeLinecap="round"/>
+              </svg>
+              <motion.div
+                className="stress-lines"
+                animate={{ opacity: [0.3, 1, 0.3] }}
+                transition={{ duration: 0.5, repeat: Infinity }}
+              >
+                💦
+              </motion.div>
+            </div>
+            <h3 className="airline-card__title">The Pilot</h3>
+            <p className="airline-card__desc">Doing everything yourself</p>
+            <ul className="airline-card__list airline-card__list--negative">
+              <li>😰 Learning every AI tool</li>
+              <li>😵 Writing all the prompts</li>
+              <li>🔥 Checking every output</li>
+              <li>⏰ No time for strategy</li>
+            </ul>
+            <div className="airline-card__badge airline-card__badge--warning">
+              Burnout Zone
+            </div>
+          </motion.div>
+
+          {/* Arrow */}
+          <motion.div
+            className="airline-slide__arrow"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5 }}
+          >
+            <span className="airline-slide__vs">VS</span>
+          </motion.div>
+
+          {/* Executive side - relaxed */}
+          <motion.div
+            className={`airline-card airline-card--executive ${hovered === 'executive' ? 'airline-card--active' : ''}`}
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.4 }}
+            onMouseEnter={() => setHovered('executive')}
+            onMouseLeave={() => setHovered(null)}
+          >
+            <div className="airline-card__icon airline-card__icon--relaxed">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <circle cx="12" cy="8" r="5"/>
+                <path d="M3 21v-2a7 7 0 017-7h4a7 7 0 017 7v2"/>
+                <path d="M9 7.5c.5.5 1.5 1 3 1s2.5-.5 3-1" strokeLinecap="round"/>
+              </svg>
+              <motion.div
+                className="success-glow"
+                animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                ✨
+              </motion.div>
+            </div>
+            <h3 className="airline-card__title">The Executive</h3>
+            <p className="airline-card__desc">Setting the destination</p>
+            <ul className="airline-card__list airline-card__list--positive">
+              <li>🎯 Focus on strategy</li>
+              <li>👨‍✈️ Trained pilot operates AI</li>
+              <li>📈 Review results only</li>
+              <li>🏖️ Time for what matters</li>
+            </ul>
+            <div className="airline-card__badge airline-card__badge--success">
+              Growth Zone
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Bottom quote */}
+        <motion.div
+          className="airline-slide__quote"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7 }}
+        >
+          <p>"You pick the destination. <span className="text-gradient">They fly the plane.</span>"</p>
+        </motion.div>
+      </div>
+    </Slide>
+  );
+};
+
+// =============================================
+// AI TOOL STACK SLIDE - Three persona cards
+// =============================================
+export const AIToolStackSlide = ({ data, index }) => {
+  const [activeCard, setActiveCard] = useState(null);
+
+  const tools = [
+    {
+      id: 'chatgpt',
+      name: 'ChatGPT',
+      persona: 'The Creative Intern',
+      icon: '🎨',
+      color: '#10a37f',
+      useCases: ['Brainstorming ideas', 'Drafting emails', 'Rephrasing text', 'Creative writing'],
+      warning: '⚠️ Hallucinates - makes things up!',
+      quote: '"Great for drafts, but verify everything"'
+    },
+    {
+      id: 'claude',
+      name: 'Claude',
+      persona: 'The Smart Analyst',
+      icon: '📊',
+      color: '#cc785c',
+      useCases: ['Reviewing contracts', 'Analyzing financials', 'Writing reports', 'Complex reasoning'],
+      strength: '✓ Bigger brain, safer logic',
+      quote: '"Best for numbers and analysis"'
+    },
+    {
+      id: 'perplexity',
+      name: 'Perplexity',
+      persona: 'The Researcher',
+      icon: '🔍',
+      color: '#20b8cd',
+      useCases: ['Fact-checking', 'Competitor research', 'Market trends', 'Current events'],
+      strength: '✓ Always cites sources',
+      quote: '"Never guesses - shows receipts"'
+    }
+  ];
+
+  return (
+    <Slide variant="default" id={`slide-${data.id}`} index={index}>
+      <div className="toolstack-slide">
+        <motion.div
+          className="toolstack-slide__header"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <span className="toolstack-slide__eyebrow">YOUR AI TOOLKIT</span>
+          <h2 className="toolstack-slide__title">The Right Tool for Each Job</h2>
+          <p className="toolstack-slide__subtitle">Each AI has a personality. Learn to use the right one.</p>
+        </motion.div>
+
+        <div className="toolstack-slide__cards">
+          {tools.map((tool, i) => (
+            <motion.div
+              key={tool.id}
+              className={`tool-card ${activeCard === tool.id ? 'tool-card--active' : ''}`}
+              style={{ '--tool-color': tool.color }}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 + i * 0.15 }}
+              onClick={() => setActiveCard(activeCard === tool.id ? null : tool.id)}
+            >
+              <div className="tool-card__header">
+                <span className="tool-card__icon">{tool.icon}</span>
+                <div className="tool-card__names">
+                  <h3 className="tool-card__name">{tool.name}</h3>
+                  <p className="tool-card__persona">{tool.persona}</p>
+                </div>
+              </div>
+
+              <div className="tool-card__content">
+                <div className="tool-card__uses">
+                  <span className="tool-card__uses-label">Best for:</span>
+                  <ul>
+                    {tool.useCases.map((use, j) => (
+                      <li key={j}>{use}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                {tool.warning && (
+                  <div className="tool-card__warning">{tool.warning}</div>
+                )}
+                {tool.strength && (
+                  <div className="tool-card__strength">{tool.strength}</div>
+                )}
+
+                <div className="tool-card__quote">{tool.quote}</div>
+              </div>
+
+              <div className="tool-card__glow" />
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.p
+          className="toolstack-slide__tip"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8 }}
+        >
+          💡 Click each card to explore
+        </motion.p>
+      </div>
+    </Slide>
+  );
+};
+
+// =============================================
+// WORKFLOW DEMO SLIDE - Interactive workflow visualization
+// =============================================
+export const WorkflowDemoSlide = ({ data, index }) => {
+  const [step, setStep] = useState(0);
+
+  const workflows = {
+    financial: {
+      title: 'Financial X-Ray',
+      subtitle: 'From spreadsheet confusion to instant clarity',
+      tool: 'Claude',
+      toolColor: '#cc785c',
+      steps: [
+        { label: 'Before', icon: '📊', desc: 'Messy spreadsheet with hundreds of rows' },
+        { label: 'Action', icon: '⬆️', desc: 'Drag PDF into Claude' },
+        { label: 'Prompt', icon: '💬', desc: '"Give me top 3 expenses as bullets"' },
+        { label: 'Result', icon: '✨', desc: 'Clean bulleted analysis in 30 seconds' }
+      ],
+      timeSaved: '30 seconds vs. several days',
+      insight: 'CFO-level analysis before your coffee gets cold'
+    },
+    inbox: {
+      title: 'Inbox Triage',
+      subtitle: 'Save your emotional battery',
+      tool: 'ChatGPT',
+      toolColor: '#10a37f',
+      steps: [
+        { label: 'Before', icon: '😠', desc: 'Angry email ruins your mood' },
+        { label: 'Action', icon: '📋', desc: 'Paste email into ChatGPT' },
+        { label: 'Prompt', icon: '💬', desc: '"Give me 3 response options"' },
+        { label: 'Result', icon: '✅', desc: 'Professional replies ready to send' }
+      ],
+      timeSaved: 'Emotional energy saved',
+      insight: 'Delegate the emotion to AI, keep your sanity'
+    },
+    commute: {
+      title: 'Commute Cure',
+      subtitle: 'From chaos to clarity',
+      tool: 'Any AI',
+      toolColor: '#c9a962',
+      steps: [
+        { label: 'Before', icon: '💭', desc: 'Random idea while driving' },
+        { label: 'Action', icon: '🎤', desc: 'Voice message to AI' },
+        { label: 'Process', icon: '🔄', desc: 'AI structures your rambling' },
+        { label: 'Result', icon: '📝', desc: 'Organized notes with key points' }
+      ],
+      timeSaved: 'Ideas captured, never lost',
+      insight: 'From chaos to clarity in seconds'
+    }
+  };
+
+  const workflow = workflows[data.workflow] || workflows.financial;
+  const maxSteps = workflow.steps.length;
+
+  const nextStep = () => {
+    if (step < maxSteps - 1) setStep(step + 1);
+  };
+
+  return (
+    <Slide variant="default" id={`slide-${data.id}`} index={index}>
+      <div className="workflow-demo" onClick={nextStep}>
+        {/* Header */}
+        <motion.div
+          className="workflow-demo__header"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <div className="workflow-demo__tool" style={{ '--tool-color': workflow.toolColor }}>
+            {workflow.tool}
+          </div>
+          <h2 className="workflow-demo__title">{workflow.title}</h2>
+          <p className="workflow-demo__subtitle">{workflow.subtitle}</p>
+        </motion.div>
+
+        {/* Step visualization */}
+        <div className="workflow-demo__steps">
+          {workflow.steps.map((s, i) => (
+            <motion.div
+              key={i}
+              className={`workflow-step ${step >= i ? 'workflow-step--active' : ''} ${step === i ? 'workflow-step--current' : ''}`}
+              initial={{ opacity: 0.3, scale: 0.9 }}
+              animate={{
+                opacity: step >= i ? 1 : 0.3,
+                scale: step >= i ? 1 : 0.9,
+                y: step === i ? -5 : 0
+              }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="workflow-step__icon">{s.icon}</div>
+              <div className="workflow-step__label">{s.label}</div>
+              <div className="workflow-step__desc">{s.desc}</div>
+              {i < maxSteps - 1 && (
+                <div className={`workflow-step__arrow ${step > i ? 'workflow-step__arrow--active' : ''}`}>
+                  →
+                </div>
+              )}
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Result highlight */}
+        {step === maxSteps - 1 && (
+          <motion.div
+            className="workflow-demo__result"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+          >
+            <div className="workflow-demo__time-saved">
+              ⏱️ {workflow.timeSaved}
+            </div>
+            <div className="workflow-demo__insight">
+              💡 {workflow.insight}
+            </div>
+          </motion.div>
+        )}
+
+        {/* Progress indicator */}
+        <div className="workflow-demo__progress">
+          {workflow.steps.map((_, i) => (
+            <div
+              key={i}
+              className={`workflow-demo__dot ${step >= i ? 'workflow-demo__dot--active' : ''}`}
+            />
+          ))}
+        </div>
+
+        {step < maxSteps - 1 && (
+          <motion.p
+            className="workflow-demo__cta"
+            animate={{ opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+          >
+            Click to continue →
+          </motion.p>
+        )}
+      </div>
+    </Slide>
+  );
+};
+
+// =============================================
+// AI FAILURE CASES SLIDE - Warning stories
+// =============================================
+export const AIFailureCasesSlide = ({ data, index }) => {
+  const [activeCase, setActiveCase] = useState(0);
+
+  const cases = [
+    {
+      company: 'Air Canada',
+      icon: '✈️',
+      headline: 'Chatbot promised refund that didn\'t exist',
+      story: 'Customer asked about bereavement refund. AI made up a policy. Court ruled Air Canada had to honor it.',
+      cost: 'Legal fees + forced refund',
+      lesson: 'AI will confidently lie to please users'
+    },
+    {
+      company: 'Chevrolet',
+      icon: '🚗',
+      headline: '$1 Tahoe offer via prompt injection',
+      story: 'Hacker tricked AI chatbot into offering a $76,000 Tahoe for $1.',
+      cost: 'Reputation damage',
+      lesson: 'Unsupervised AI can be manipulated'
+    },
+    {
+      company: 'DPD',
+      icon: '📦',
+      headline: 'AI swore at customers',
+      story: 'Delivery company\'s AI started cursing at frustrated customers. System disabled.',
+      cost: 'PR nightmare + shutdown',
+      lesson: 'AI can go off-script spectacularly'
+    }
+  ];
+
+  return (
+    <Slide variant="warning" id={`slide-${data.id}`} index={index}>
+      <div className="failure-cases-slide">
+        <motion.div
+          className="failure-cases-slide__header"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <span className="failure-cases-slide__eyebrow">⚠️ CAUTIONARY TALES</span>
+          <h2 className="failure-cases-slide__title">When AI Goes Wrong</h2>
+          <p className="failure-cases-slide__subtitle">Real companies. Real consequences.</p>
+        </motion.div>
+
+        <div className="failure-cases-slide__cases">
+          {cases.map((c, i) => (
+            <motion.div
+              key={i}
+              className={`failure-case ${activeCase === i ? 'failure-case--active' : ''}`}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 + i * 0.1 }}
+              onClick={() => setActiveCase(i)}
+            >
+              <div className="failure-case__header">
+                <span className="failure-case__icon">{c.icon}</span>
+                <span className="failure-case__company">{c.company}</span>
+              </div>
+              <h3 className="failure-case__headline">{c.headline}</h3>
+
+              {activeCase === i && (
+                <motion.div
+                  className="failure-case__details"
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                >
+                  <p className="failure-case__story">{c.story}</p>
+                  <div className="failure-case__cost">💸 {c.cost}</div>
+                  <div className="failure-case__lesson">📚 {c.lesson}</div>
+                </motion.div>
+              )}
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.div
+          className="failure-cases-slide__warning"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8 }}
+        >
+          <div className="failure-cases-slide__warning-box">
+            ⚖️ The law requires <strong>reasonable care</strong>. Unsupervised AI is <strong>NOT</strong> reasonable care.
+          </div>
+        </motion.div>
+      </div>
+    </Slide>
+  );
+};
+
+// =============================================
+// HUMAN IN LOOP SLIDE - Visual diagram
+// =============================================
+export const HumanInLoopSlide = ({ data, index }) => (
+  <Slide variant="success" id={`slide-${data.id}`} index={index}>
+    <div className="human-loop-slide">
+      <motion.div
+        className="human-loop-slide__header"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        <span className="human-loop-slide__eyebrow">THE SOLUTION</span>
+        <h2 className="human-loop-slide__title">Human-in-the-Loop</h2>
+        <p className="human-loop-slide__subtitle">Speed of AI + Safety of Human</p>
+      </motion.div>
+
+      {/* Visual flow */}
+      <div className="human-loop-slide__flow">
+        <motion.div
+          className="loop-node loop-node--ai"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.3 }}
+        >
+          <div className="loop-node__icon">🤖</div>
+          <div className="loop-node__label">AI</div>
+          <div className="loop-node__role">Creates Draft</div>
+          <div className="loop-node__speed">⚡ 2 minutes</div>
+        </motion.div>
+
+        <motion.div
+          className="loop-arrow"
+          initial={{ opacity: 0, scaleX: 0 }}
+          animate={{ opacity: 1, scaleX: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          →
+        </motion.div>
+
+        <motion.div
+          className="loop-node loop-node--human"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.6 }}
+        >
+          <div className="loop-node__icon">👤</div>
+          <div className="loop-node__label">Human</div>
+          <div className="loop-node__role">Verifies</div>
+          <div className="loop-node__speed">🔍 10 minutes</div>
+        </motion.div>
+
+        <motion.div
+          className="loop-arrow"
+          initial={{ opacity: 0, scaleX: 0 }}
+          animate={{ opacity: 1, scaleX: 1 }}
+          transition={{ delay: 0.8 }}
+        >
+          →
+        </motion.div>
+
+        <motion.div
+          className="loop-node loop-node--output"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.9 }}
+        >
+          <div className="loop-node__icon">✅</div>
+          <div className="loop-node__label">Safe Output</div>
+          <div className="loop-node__role">Fast & Verified</div>
+          <div className="loop-node__speed">🎯 Quality</div>
+        </motion.div>
+      </div>
+
+      {/* Example */}
+      <motion.div
+        className="human-loop-slide__example"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.1 }}
+      >
+        <div className="example-comparison">
+          <div className="example-comparison__old">
+            <span>5 articles yourself:</span>
+            <span className="example-comparison__time">5-10 hours</span>
+          </div>
+          <div className="example-comparison__vs">→</div>
+          <div className="example-comparison__new">
+            <span>AI + Human review:</span>
+            <span className="example-comparison__time--highlight">50 minutes</span>
+          </div>
+        </div>
+      </motion.div>
+
+      <motion.p
+        className="human-loop-slide__quote"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.3 }}
+      >
+        "Is your hourly rate low enough to be a spell checker?"
+      </motion.p>
+    </div>
+  </Slide>
+);
+
+// =============================================
+// ROI CALCULATOR SLIDE - Visual ROI
+// =============================================
+export const ROICalculatorSlide = ({ data, index }) => (
+  <Slide variant="offer" id={`slide-${data.id}`} index={index}>
+    <div className="roi-slide">
+      <motion.div
+        className="roi-slide__header"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        <span className="roi-slide__eyebrow">THE MATH</span>
+        <h2 className="roi-slide__title">Return on Investment</h2>
+      </motion.div>
+
+      <div className="roi-slide__calculation">
+        <motion.div
+          className="roi-item"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          <span className="roi-item__value">10</span>
+          <span className="roi-item__label">hours/week saved</span>
+        </motion.div>
+
+        <motion.span className="roi-operator" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>×</motion.span>
+
+        <motion.div
+          className="roi-item"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.5 }}
+        >
+          <span className="roi-item__value">$200</span>
+          <span className="roi-item__label">your hourly value</span>
+        </motion.div>
+
+        <motion.span className="roi-operator" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}>=</motion.span>
+
+        <motion.div
+          className="roi-item roi-item--result"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.7, type: "spring" }}
+        >
+          <span className="roi-item__value text-gradient">$8,000</span>
+          <span className="roi-item__label">value per month</span>
+        </motion.div>
+      </div>
+
+      <motion.div
+        className="roi-slide__comparison"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.9 }}
+      >
+        <div className="roi-comparison">
+          <div className="roi-comparison__item">
+            <span>VA Cost: ~$2,000/mo</span>
+          </div>
+          <div className="roi-comparison__arrow">→</div>
+          <div className="roi-comparison__item roi-comparison__item--highlight">
+            <span>Value: $8,000/mo</span>
+          </div>
+        </div>
+        <div className="roi-comparison__multiplier">
+          <span className="roi-comparison__multiplier-value">4x</span>
+          <span>return on investment</span>
+        </div>
+      </motion.div>
+    </div>
+  </Slide>
+);
