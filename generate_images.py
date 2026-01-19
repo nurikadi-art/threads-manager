@@ -22,7 +22,7 @@ API_KEY = "YOUR_GEMINI_API_KEY_HERE"
 
 # Repository settings
 REPO_URL = "https://github.com/nurikadi-art/threads-manager.git"
-BRANCH = "claude/review-presentation-slides-Py5IS"
+BRANCH = "claude/analyze-presentation-slides-52RjT"
 OUTPUT_FOLDER = "public/images/generated"
 
 # All prompts with cinematographer-level detail
