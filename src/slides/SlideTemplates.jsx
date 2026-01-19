@@ -1,4 +1,4 @@
-import { Suspense, lazy, useState, useEffect, useRef } from 'react';
+import { Suspense, lazy, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Slide, { FadeIn, ScaleIn, StaggerContainer, StaggerItem } from '../components/Slide';
 import { Spotlight } from '../components/Spotlight';
@@ -10,59 +10,28 @@ const Spline = lazy(() => import('@splinetool/react-spline'));
 // =============================================
 // FLOATING PARTICLES - Luxury ambient effect
 // =============================================
-// Pre-generate particle positions to avoid impure function calls during render
-const PARTICLE_DATA = [...Array(20)].map((_, i) => ({
-  id: i,
-  left: (i * 5 + 7) % 100,
-  top: (i * 7 + 13) % 100,
-  width: 2 + ((i * 3) % 4),
-  height: 2 + ((i * 3) % 4),
-  xOffset: ((i * 11) % 50) - 25,
-  duration: 5 + ((i * 7) % 5),
-  delay: (i * 3) % 5,
-}));
-
-// Pre-generate confetti data to avoid impure function calls during render
-const CONFETTI_COLORS = ['#c9a962', '#e4d4a5', '#fff', '#ff6b6b', '#4ecdc4'];
-const CONFETTI_DATA = [...Array(40)].map((_, i) => ({
-  id: i,
-  x: ((i * 31 + 17) % 600) - 300,
-  y: ((i * 23 + 11) % 400) - 300,
-  rotate: ((i * 47) % 720) - 360,
-  duration: 2 + (i % 2),
-  color: CONFETTI_COLORS[i % 5],
-  size: 8 + ((i * 3) % 8),
-  borderRadius: i % 2 === 0 ? '50%' : '2px',
-}));
-
-// Pre-generate sparkle positions for paradox slide
-const SPARKLE_POSITIONS = [...Array(12)].map((_, i) => ({
-  left: 10 + ((i * 7 + 13) % 80),
-  top: 10 + ((i * 11 + 7) % 80),
-}));
-
 const FloatingParticles = () => (
   <div className="floating-particles">
-    {PARTICLE_DATA.map((particle) => (
+    {[...Array(20)].map((_, i) => (
       <motion.div
-        key={particle.id}
+        key={i}
         className="floating-particle"
         style={{
-          left: `${particle.left}%`,
-          top: `${particle.top}%`,
-          width: `${particle.width}px`,
-          height: `${particle.height}px`,
+          left: `${Math.random() * 100}%`,
+          top: `${Math.random() * 100}%`,
+          width: `${2 + Math.random() * 4}px`,
+          height: `${2 + Math.random() * 4}px`,
         }}
         animate={{
           y: [0, -100, 0],
-          x: [0, particle.xOffset, 0],
+          x: [0, Math.random() * 50 - 25, 0],
           opacity: [0, 1, 0],
           scale: [0, 1, 0],
         }}
         transition={{
-          duration: particle.duration,
+          duration: 5 + Math.random() * 5,
           repeat: Infinity,
-          delay: particle.delay,
+          delay: Math.random() * 5,
           ease: "easeInOut"
         }}
       />
@@ -99,11 +68,12 @@ const AnimatedLines = () => (
 // =============================================
 // SPLINE 3D ROBOT SCENE - Full screen dramatic
 // =============================================
-const SplineRobot = () => {
+const SplineRobot = ({ onLoaded }) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   const handleLoad = () => {
     setIsLoaded(true);
+    if (onLoaded) onLoaded();
   };
 
   return (
@@ -154,6 +124,8 @@ const SplineRobot = () => {
 // HERO SLIDE - Cinematic opening with 3D Robot
 // =============================================
 export const HeroSlide = ({ data, index }) => {
+  const [robotLoaded, setRobotLoaded] = useState(false);
+
   return (
     <Slide variant="hero" id={`slide-${data.id}`} index={index}>
       <div className="hero-cinematic">
@@ -181,7 +153,7 @@ export const HeroSlide = ({ data, index }) => {
 
         {/* 3D Robot - Center/Right positioned, large */}
         <div className="hero-cinematic__robot">
-          <SplineRobot />
+          <SplineRobot onLoaded={() => setRobotLoaded(true)} />
         </div>
 
         {/* Content Overlay */}
@@ -256,275 +228,100 @@ export const HeroSlide = ({ data, index }) => {
 // =============================================
 // GIFT SLIDE - Spectacular 3D Gift Experience
 // =============================================
-export const GiftSlide = ({ data, index }) => {
-  const [stage, setStage] = useState(0); // 0: initial, 1: hover, 2: opened, 3: full reveal
-  const [count, setCount] = useState(0);
+export const GiftSlide = ({ data, index }) => (
+  <Slide variant="offer" id={`slide-${data.id}`} index={index}>
+    <div className="gift-slide-new">
+      {/* Subtle background glow */}
+      <div className="gift-slide-new__glow" />
 
-  const handleOpen = () => {
-    if (stage < 2) {
-      setStage(2);
-      // Animate count up
-      let current = 0;
-      const target = 5000;
-      const duration = 2000;
-      const step = target / (duration / 16);
-      const counter = setInterval(() => {
-        current += step;
-        if (current >= target) {
-          setCount(target);
-          clearInterval(counter);
-          setTimeout(() => setStage(3), 500);
-        } else {
-          setCount(Math.floor(current));
-        }
-      }, 16);
-    }
-  };
-
-  return (
-    <Slide variant="offer" id={`slide-${data.id}`} index={index}>
-      <div className="gift-spectacular">
-        {/* Ambient background effects */}
-        <div className="gift-spectacular__ambient">
-          <motion.div
-            className="ambient-orb ambient-orb--1"
-            animate={{
-              scale: [1, 1.3, 1],
-              opacity: [0.3, 0.5, 0.3],
-              x: [0, 30, 0],
-              y: [0, -20, 0],
-            }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.div
-            className="ambient-orb ambient-orb--2"
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.2, 0.4, 0.2],
-              x: [0, -40, 0],
-              y: [0, 30, 0],
-            }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          />
-          <motion.div
-            className="ambient-orb ambient-orb--3"
-            animate={{
-              scale: [1, 1.4, 1],
-              opacity: [0.15, 0.3, 0.15],
-            }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          />
-        </div>
-
-        {/* Floating bonus icons */}
-        <div className="gift-spectacular__floating-icons">
-          {['📝', '🎯', '💡', '🚀', '⚡', '💰'].map((emoji, i) => (
-            <motion.div
-              key={i}
-              className="floating-icon"
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{
-                opacity: stage >= 2 ? [0, 1, 1, 0] : 0,
-                scale: stage >= 2 ? [0, 1.2, 1, 0.8] : 0,
-                y: stage >= 2 ? [50, 0, -20, -100] : 50,
-                x: stage >= 2 ? [0, (i % 2 === 0 ? 1 : -1) * (20 + i * 10), (i % 2 === 0 ? 1 : -1) * (40 + i * 15)] : 0,
-              }}
-              transition={{
-                duration: 2.5,
-                delay: i * 0.15,
-                ease: "easeOut"
-              }}
-              style={{
-                left: `${15 + i * 12}%`,
-              }}
-            >
-              {emoji}
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Header section */}
+      {/* Main content */}
+      <div className="gift-slide-new__content">
+        {/* Badge */}
         <motion.div
-          className="gift-spectacular__header"
-          initial={{ opacity: 0, y: -30 }}
+          className="gift-slide-new__badge"
+          initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
         >
-          <div className="gift-badge">
+          <motion.span
+            className="gift-slide-new__badge-dot"
+            animate={{ scale: [1, 1.3, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          />
+          <span>FREE GIFT</span>
+        </motion.div>
+
+        {/* Main heading */}
+        <motion.h2
+          className="gift-slide-new__title"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+        >
+          Stay Until Q&A
+        </motion.h2>
+
+        {/* Gift value card */}
+        <motion.div
+          className="gift-slide-new__card"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          <div className="gift-slide-new__card-header">
+            <span className="gift-slide-new__card-icon">🎁</span>
+            <span className="gift-slide-new__card-label">You'll Receive</span>
+          </div>
+
+          <div className="gift-slide-new__card-value">
+            <span className="gift-slide-new__number">5,000</span>
+            <span className="gift-slide-new__label">AI Business Prompts</span>
+          </div>
+
+          <div className="gift-slide-new__card-details">
+            <div className="gift-slide-new__detail">
+              <span>Email Templates</span>
+              <span>500+</span>
+            </div>
+            <div className="gift-slide-new__detail">
+              <span>Marketing Scripts</span>
+              <span>1,200+</span>
+            </div>
+            <div className="gift-slide-new__detail">
+              <span>Sales Frameworks</span>
+              <span>800+</span>
+            </div>
+            <div className="gift-slide-new__detail">
+              <span>Business Strategy</span>
+              <span>2,500+</span>
+            </div>
+          </div>
+
+          <div className="gift-slide-new__card-footer">
+            <span className="gift-slide-new__value-strike">$297 Value</span>
             <motion.span
-              className="gift-badge__dot"
-              animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            />
-            <span>EXCLUSIVE BONUS</span>
-          </div>
-          <h2 className="gift-spectacular__title">
-            Stay Until Q&A<br />
-            <span className="title-highlight">Unlock Your Free Gift</span>
-          </h2>
-          <p className="gift-spectacular__subtitle">
-            We've prepared something special for dedicated attendees
-          </p>
-        </motion.div>
-
-        {/* 2D Gift Container */}
-        <motion.div
-          className={`gift-2d-container ${stage >= 2 ? 'gift-2d-container--opened' : ''}`}
-          onClick={handleOpen}
-          whileHover={{ scale: stage < 2 ? 1.05 : 1 }}
-          whileTap={{ scale: stage < 2 ? 0.95 : 1 }}
-          onHoverStart={() => stage === 0 && setStage(1)}
-        >
-          {/* Simple 2D Gift Box */}
-          <div className="gift-2d">
-            {/* Gift base */}
-            <div className="gift-2d__base">
-              <div className="gift-2d__ribbon-v" />
-              <div className="gift-2d__ribbon-h" />
-            </div>
-
-            {/* Gift lid */}
-            <motion.div
-              className="gift-2d__lid"
-              animate={stage >= 2 ? {
-                y: -60,
-                rotate: -15,
-                opacity: 0.7,
-              } : {
-                y: 0,
-                rotate: 0,
-                opacity: 1,
-              }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="gift-slide-new__value-free"
+              animate={{ scale: [1, 1.05, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
             >
-              <div className="gift-2d__lid-ribbon" />
-              {/* Bow */}
-              <div className="gift-2d__bow">
-                <div className="bow-2d-loop bow-2d-loop--left" />
-                <div className="bow-2d-loop bow-2d-loop--right" />
-                <div className="bow-2d-center" />
-              </div>
-            </motion.div>
-
-            {/* Light rays when opened */}
-            {stage >= 2 && (
-              <motion.div
-                className="gift-2d__glow"
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
-              />
-            )}
-          </div>
-
-          {/* Click prompt */}
-          <motion.div
-            className="gift-click-prompt"
-            animate={{
-              opacity: stage < 2 ? [0.5, 1, 0.5] : 0,
-              y: stage < 2 ? [0, -5, 0] : 10,
-            }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-          >
-            {stage === 0 ? '✨ Hover to preview' : '👆 Click to open!'}
-          </motion.div>
-        </motion.div>
-
-        {/* Revealed content */}
-        <motion.div
-          className="gift-spectacular__reveal"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{
-            opacity: stage >= 2 ? 1 : 0,
-            y: stage >= 2 ? 0 : 30,
-          }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-        >
-          <div className="reveal-counter">
-            <motion.span className="counter-number">
-              {count.toLocaleString()}
+              FREE
             </motion.span>
-            <span className="counter-label">AI Business Prompts</span>
           </div>
-
-          <motion.div
-            className="reveal-details"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: stage >= 3 ? 1 : 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <p className="reveal-tagline">Everything you need to supercharge your business with AI</p>
-
-            <div className="reveal-grid">
-              <div className="reveal-item">
-                <span className="reveal-item__icon">📧</span>
-                <span className="reveal-item__text">Email Templates</span>
-                <span className="reveal-item__count">500+</span>
-              </div>
-              <div className="reveal-item">
-                <span className="reveal-item__icon">📊</span>
-                <span className="reveal-item__text">Marketing Scripts</span>
-                <span className="reveal-item__count">1,200+</span>
-              </div>
-              <div className="reveal-item">
-                <span className="reveal-item__icon">🎯</span>
-                <span className="reveal-item__text">Sales Frameworks</span>
-                <span className="reveal-item__count">800+</span>
-              </div>
-              <div className="reveal-item">
-                <span className="reveal-item__icon">💼</span>
-                <span className="reveal-item__text">Business Strategy</span>
-                <span className="reveal-item__count">2,500+</span>
-              </div>
-            </div>
-
-            <div className="reveal-value">
-              <span className="value-label">Total Value:</span>
-              <span className="value-strike">$297</span>
-              <span className="value-free">FREE</span>
-            </div>
-
-            <p className="reveal-cta">Just stay until the end of Q&A to claim!</p>
-          </motion.div>
         </motion.div>
 
-        {/* Confetti particles */}
-        {stage >= 2 && (
-          <div className="gift-confetti">
-            {CONFETTI_DATA.map((confetti) => (
-              <motion.div
-                key={confetti.id}
-                className="confetti-piece"
-                initial={{
-                  x: 0,
-                  y: 0,
-                  rotate: 0,
-                  opacity: 1,
-                }}
-                animate={{
-                  x: confetti.x,
-                  y: confetti.y,
-                  rotate: confetti.rotate,
-                  opacity: 0,
-                }}
-                transition={{
-                  duration: confetti.duration,
-                  ease: "easeOut",
-                }}
-                style={{
-                  background: confetti.color,
-                  width: `${confetti.size}px`,
-                  height: `${confetti.size}px`,
-                  borderRadius: confetti.borderRadius,
-                }}
-              />
-            ))}
-          </div>
-        )}
+        {/* CTA */}
+        <motion.p
+          className="gift-slide-new__cta"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
+          Claim yours at the end of Q&A
+        </motion.p>
       </div>
-    </Slide>
-  );
-};
+    </div>
+  </Slide>
+);
 
 // =============================================
 // PARADOX SLIDE - Interactive split-screen comparison
@@ -601,7 +398,7 @@ export const ParadoxSlide = ({ data, index }) => {
           >
             {/* Sparkle effects */}
             <div className="paradox-panel__sparkles">
-              {SPARKLE_POSITIONS.map((pos, i) => (
+              {[...Array(12)].map((_, i) => (
                 <motion.div
                   key={i}
                   className="panel-sparkle"
@@ -616,8 +413,8 @@ export const ParadoxSlide = ({ data, index }) => {
                     delay: i * 0.2
                   }}
                   style={{
-                    left: `${pos.left}%`,
-                    top: `${pos.top}%`,
+                    left: `${10 + Math.random() * 80}%`,
+                    top: `${10 + Math.random() * 80}%`,
                   }}
                 />
               ))}
@@ -1297,7 +1094,7 @@ export const InsightSlide = ({ data, index }) => {
   const [isAnimating, setIsAnimating] = useState(false);
 
   // Animate calculator display on mount
-  useEffect(() => {
+  useState(() => {
     if (data.icon === 'calculator') {
       const sequence = ['W', 'WO', 'WOR', 'WORD', 'WORDS'];
       let i = 0;
@@ -1311,9 +1108,8 @@ export const InsightSlide = ({ data, index }) => {
           setIsAnimating(false);
         }
       }, 400);
-      return () => clearInterval(timer);
     }
-  }, [data.icon]);
+  });
 
   return (
     <Slide variant="default" id={`slide-${data.id}`} index={index}>
@@ -1376,46 +1172,37 @@ export const InsightSlide = ({ data, index }) => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
           >
-            {/* AI Generated Image if available, otherwise CSS Robot */}
-            {data.image ? (
-              <div className="insight-illustration__image">
-                <img src={data.image} alt={data.title} />
-              </div>
-            ) : (
-              <>
-                {/* CSS Robot that's a people pleaser */}
-                <div className="css-robot">
-                  <div className="css-robot__antenna" />
-                  <div className="css-robot__head">
-                    <div className="css-robot__eyes">
-                      <div className="css-robot__eye" />
-                      <div className="css-robot__eye" />
-                    </div>
-                  </div>
-                  <div className="css-robot__body">
-                    <div className="css-robot__chest">
-                      <div className="css-robot__light" />
-                      <div className="css-robot__light" />
-                      <div className="css-robot__light" />
-                      <div className="css-robot__light" />
-                    </div>
-                  </div>
-                  <div className="css-robot__arm css-robot__arm--left" />
-                  <div className="css-robot__arm css-robot__arm--right" />
-                  <div className="css-robot__legs">
-                    <div className="css-robot__leg" />
-                    <div className="css-robot__leg" />
-                  </div>
+            {/* CSS Robot that's a people pleaser */}
+            <div className="css-robot">
+              <div className="css-robot__antenna" />
+              <div className="css-robot__head">
+                <div className="css-robot__eyes">
+                  <div className="css-robot__eye" />
+                  <div className="css-robot__eye" />
                 </div>
-              </>
-            )}
+              </div>
+              <div className="css-robot__body">
+                <div className="css-robot__chest">
+                  <div className="css-robot__light" />
+                  <div className="css-robot__light" />
+                  <div className="css-robot__light" />
+                  <div className="css-robot__light" />
+                </div>
+              </div>
+              <div className="css-robot__arm css-robot__arm--left" />
+              <div className="css-robot__arm css-robot__arm--right" />
+              <div className="css-robot__legs">
+                <div className="css-robot__leg" />
+                <div className="css-robot__leg" />
+              </div>
+            </div>
             <motion.div
               className="insight-robot-speech"
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.5 }}
             >
-              "I'll say whatever makes you happy!"
+              "I'll say whatever makes you happy!" 😊
             </motion.div>
           </motion.div>
         )}
@@ -1623,77 +1410,24 @@ export const ToolSlide = ({ data, index }) => {
 // =============================================
 // WORKFLOW INTRO SLIDE
 // =============================================
-export const WorkflowIntroSlide = ({ data, index }) => {
-  const isInboxTriage = data.title && data.title.includes('Inbox Triage');
-  const isCommuteCure = data.title && data.title.includes('Commute Cure');
-
-  return (
-    <Slide variant="hero" id={`slide-${data.id}`} index={index}>
-      <div className="workflow-intro-slide-enhanced">
-        {/* Animated waves background for Commute Cure (Slide 22) */}
-        {isCommuteCure && (
-          <div className="commute-waves">
-            <div className="commute-waves__layer commute-waves__layer--1" />
-            <div className="commute-waves__layer commute-waves__layer--2" />
-            <div className="commute-waves__layer commute-waves__layer--3" />
-            <div className="commute-waves__gradient" />
-          </div>
-        )}
-
-        <ScaleIn>
-          <div className="workflow-intro-slide__number">
-            <span>Workflow</span>
-            <span className="workflow-intro-slide__number-value">#{data.number}</span>
-          </div>
-        </ScaleIn>
-        <FadeIn delay={0.3}>
-          <h2 className="workflow-intro-slide__title text-gradient">{data.title}</h2>
-        </FadeIn>
-        <FadeIn delay={0.5}>
-          <p className="workflow-intro-slide__subtitle">{data.subtitle}</p>
-        </FadeIn>
-
-        {/* AI-generated image for Inbox Triage */}
-        {isInboxTriage && (
-          <motion.div
-            className="ai-editorial-image"
-            initial={{ opacity: 0, y: 30, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ delay: 0.7, duration: 0.8 }}
-          >
-            <div className="ai-editorial-image__wrapper">
-              <img
-                src="/images/generated/inbox-triage.png"
-                alt="Executive professionally managing inbox with AI assistance"
-                className="ai-editorial-image__img"
-              />
-              <div className="ai-editorial-image__overlay" />
-            </div>
-          </motion.div>
-        )}
-
-        {/* AI-generated image for Commute Cure */}
-        {isCommuteCure && (
-          <motion.div
-            className="ai-editorial-image ai-editorial-image--cinematic"
-            initial={{ opacity: 0, y: 30, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ delay: 0.7, duration: 0.8 }}
-          >
-            <div className="ai-editorial-image__wrapper">
-              <img
-                src="/images/generated/commute-cure.png"
-                alt="Entrepreneur capturing ideas while driving at golden hour"
-                className="ai-editorial-image__img"
-              />
-              <div className="ai-editorial-image__overlay ai-editorial-image__overlay--warm" />
-            </div>
-          </motion.div>
-        )}
-      </div>
-    </Slide>
-  );
-};
+export const WorkflowIntroSlide = ({ data, index }) => (
+  <Slide variant="hero" id={`slide-${data.id}`} index={index}>
+    <div className="workflow-intro-slide-enhanced">
+      <ScaleIn>
+        <div className="workflow-intro-slide__number">
+          <span>Workflow</span>
+          <span className="workflow-intro-slide__number-value">#{data.number}</span>
+        </div>
+      </ScaleIn>
+      <FadeIn delay={0.3}>
+        <h2 className="workflow-intro-slide__title text-gradient">{data.title}</h2>
+      </FadeIn>
+      <FadeIn delay={0.5}>
+        <p className="workflow-intro-slide__subtitle">{data.subtitle}</p>
+      </FadeIn>
+    </div>
+  </Slide>
+);
 
 // =============================================
 // PROBLEM SLIDE
@@ -1701,8 +1435,6 @@ export const WorkflowIntroSlide = ({ data, index }) => {
 export const ProblemSlide = ({ data, index }) => {
   // Check if this is the Financial X-Ray problem slide (slide 14)
   const isFinancialSlide = data.heading && data.heading.includes('Data Blindness');
-  // Check if this is the Monday Morning Panic slide (slide 19)
-  const isMondayPanic = data.title && data.title.includes('Monday Morning');
 
   return (
     <Slide variant="warning" id={`slide-${data.id}`} index={index}>
@@ -1724,25 +1456,6 @@ export const ProblemSlide = ({ data, index }) => {
             </motion.h3>
           )}
         </motion.div>
-
-        {/* AI-generated editorial image for Monday Morning Panic slide */}
-        {isMondayPanic && (
-          <motion.div
-            className="ai-editorial-image"
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
-          >
-            <div className="ai-editorial-image__wrapper">
-              <img
-                src="/images/generated/monday-panic.png"
-                alt="Stressed executive at dawn receiving urgent email"
-                className="ai-editorial-image__img"
-              />
-              <div className="ai-editorial-image__overlay ai-editorial-image__overlay--dramatic" />
-            </div>
-          </motion.div>
-        )}
 
         {/* Spreadsheet visualization for Financial X-Ray slide */}
         {isFinancialSlide && (
@@ -1860,9 +1573,10 @@ export const SolutionStepSlide = ({ data, index }) => {
   const videoRef = useRef(null);
   const isSlide15 = data.id === 15;
 
-  const handleVideoClick = () => {
+  const handleVideoToggle = () => {
     const video = videoRef.current;
     if (!video) return;
+
     if (video.paused) {
       video.play();
       setIsPlaying(true);
@@ -1890,11 +1604,12 @@ export const SolutionStepSlide = ({ data, index }) => {
         {/* Video for Slide 15 */}
         {isSlide15 && (
           <ScaleIn delay={0.6}>
-            <div className="slide-video-container">
+            <div className="slide-video-container slide-video-container--centered">
               <motion.div
                 className={`slide-video-wrapper ${isPlaying ? 'playing' : ''}`}
                 whileHover={{ scale: 1.02 }}
-                onClick={handleVideoClick}
+                onClick={handleVideoToggle}
+                style={{ cursor: 'pointer' }}
               >
                 <video
                   ref={videoRef}
@@ -1970,9 +1685,10 @@ export const PromptSlide = ({ data, index }) => {
   const videoRef = useRef(null);
   const isSlide16 = data.id === 16;
 
-  const handleVideoClick = () => {
+  const handleVideoToggle = () => {
     const video = videoRef.current;
     if (!video) return;
+
     if (video.paused) {
       video.play();
       setIsPlaying(true);
@@ -2007,11 +1723,12 @@ export const PromptSlide = ({ data, index }) => {
         {/* Video for Slide 16 */}
         {isSlide16 && (
           <ScaleIn delay={0.5}>
-            <div className="slide-video-container">
+            <div className="slide-video-container slide-video-container--centered">
               <motion.div
                 className={`slide-video-wrapper ${isPlaying ? 'playing' : ''}`}
                 whileHover={{ scale: 1.02 }}
-                onClick={handleVideoClick}
+                onClick={handleVideoToggle}
+                style={{ cursor: 'pointer' }}
               >
                 <video
                   ref={videoRef}
@@ -2064,11 +1781,11 @@ export const ResultSlide = ({ data, index }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef(null);
   const isSlide17 = data.id === 17;
-  const isSlide21 = data.id === 21; // Choose Your Path slide
 
-  const handleVideoClick = () => {
+  const handleVideoToggle = () => {
     const video = videoRef.current;
     if (!video) return;
+
     if (video.paused) {
       video.play();
       setIsPlaying(true);
@@ -2099,62 +1816,8 @@ export const ResultSlide = ({ data, index }) => {
             <div className="result-slide__highlight text-gradient">{data.highlight}</div>
           </ScaleIn>
         )}
-
-        {/* Branching Path Animation for Choose Your Path (Slide 21) */}
-        {isSlide21 && (
-          <motion.div
-            className="branching-path"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-          >
-            <div className="branching-path__main-road">
-              <motion.div
-                className="branching-path__marker"
-                animate={{ x: [0, 60, 60], opacity: [1, 1, 0] }}
-                transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
-              />
-            </div>
-            <div className="branching-path__fork">
-              <motion.div
-                className="branching-path__branch branching-path__branch--top"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.6, duration: 0.5 }}
-              >
-                <div className="branching-path__line" />
-                <span className="branching-path__label">Professional</span>
-              </motion.div>
-              <motion.div
-                className="branching-path__branch branching-path__branch--middle"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.8, duration: 0.5 }}
-              >
-                <div className="branching-path__line" />
-                <span className="branching-path__label">Empathetic</span>
-              </motion.div>
-              <motion.div
-                className="branching-path__branch branching-path__branch--bottom"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1.0, duration: 0.5 }}
-              >
-                <div className="branching-path__line" />
-                <span className="branching-path__label">Casual</span>
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
-
-        {!isSlide17 && !isSlide21 && (
+        {!isSlide17 && (
           <FadeIn delay={0.5}>
-            <p className="result-slide__content">{data.content}</p>
-          </FadeIn>
-        )}
-
-        {isSlide21 && (
-          <FadeIn delay={0.6}>
             <p className="result-slide__content">{data.content}</p>
           </FadeIn>
         )}
@@ -2162,11 +1825,12 @@ export const ResultSlide = ({ data, index }) => {
         {/* Video for Slide 17 */}
         {isSlide17 && (
           <ScaleIn delay={0.5}>
-            <div className="slide-video-container slide-video-container--large">
+            <div className="slide-video-container slide-video-container--centered">
               <motion.div
                 className={`slide-video-wrapper ${isPlaying ? 'playing' : ''}`}
                 whileHover={{ scale: 1.02 }}
-                onClick={handleVideoClick}
+                onClick={handleVideoToggle}
+                style={{ cursor: 'pointer' }}
               >
                 <video
                   ref={videoRef}
@@ -2269,311 +1933,91 @@ export const SummarySlide = ({ data, index }) => (
 // =============================================
 // TRANSITION SLIDE
 // =============================================
-export const TransitionSlide = ({ data, index }) => {
-  const isHighMaintenance = data.title && data.title.includes('High Maintenance');
-  const isPilotSlide = data.icon === 'pilot';
-
-  return (
-    <Slide
-      variant={data.style === 'warning' ? 'warning' : data.style === 'solution' ? 'success' : 'dark'}
-      id={`slide-${data.id}`}
-      index={index}
-    >
-      <div className="transition-slide">
-        {/* Slide 39: High Maintenance - Juggling tools animation */}
-        {isHighMaintenance && (
-          <motion.div
-            className="juggler-scene"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-          >
-            <div className="juggler-scene__figure">
-              <svg viewBox="0 0 40 80" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <circle cx="20" cy="10" r="8" />
-                <line x1="20" y1="18" x2="20" y2="45" />
-                <line x1="20" y1="25" x2="5" y2="35" />
-                <line x1="20" y1="25" x2="35" y2="35" />
-                <line x1="20" y1="45" x2="10" y2="70" />
-                <line x1="20" y1="45" x2="30" y2="70" />
+export const TransitionSlide = ({ data, index }) => (
+  <Slide
+    variant={data.style === 'warning' ? 'warning' : data.style === 'solution' ? 'success' : 'dark'}
+    id={`slide-${data.id}`}
+    index={index}
+  >
+    <div className="transition-slide">
+      {data.icon && (
+        <ScaleIn>
+          <div className="transition-slide__icon">
+            {data.icon === 'pilot' && (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <circle cx="12" cy="8" r="4"/>
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
               </svg>
-            </div>
-            <motion.div
-              className="juggler-scene__orbit juggler-scene__orbit--1"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-            >
-              <div className="juggler-scene__tool">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                </svg>
-              </div>
-            </motion.div>
-            <motion.div
-              className="juggler-scene__orbit juggler-scene__orbit--2"
-              animate={{ rotate: -360 }}
-              transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-            >
-              <div className="juggler-scene__tool">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <ellipse cx="12" cy="5" rx="9" ry="3" />
-                  <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
-                </svg>
-              </div>
-            </motion.div>
-            <motion.div
-              className="juggler-scene__orbit juggler-scene__orbit--3"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 3.5, repeat: Infinity, ease: "linear" }}
-            >
-              <div className="juggler-scene__tool">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
-                </svg>
-              </div>
-            </motion.div>
-            <motion.div
-              className="juggler-scene__orbit juggler-scene__orbit--4"
-              animate={{ rotate: -360 }}
-              transition={{ duration: 4.5, repeat: Infinity, ease: "linear" }}
-            >
-              <div className="juggler-scene__tool">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                  <polyline points="14 2 14 8 20 8" />
-                </svg>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-
-        {/* Slide 42: Pilot - Puzzle piece animation */}
-        {isPilotSlide && (
-          <motion.div
-            className="puzzle-scene"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-          >
-            <div className="puzzle-scene__board">
-              <div className="puzzle-scene__piece puzzle-scene__piece--1" />
-              <div className="puzzle-scene__piece puzzle-scene__piece--2" />
-              <div className="puzzle-scene__piece puzzle-scene__piece--3" />
-              <motion.div
-                className="puzzle-scene__piece puzzle-scene__piece--final"
-                initial={{ x: 60, y: -40, opacity: 0, scale: 0.8 }}
-                animate={{ x: 0, y: 0, opacity: 1, scale: 1 }}
-                transition={{ delay: 0.8, duration: 0.6, type: "spring", stiffness: 150 }}
-              />
-              <motion.div
-                className="puzzle-scene__glow"
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: [0, 0.8, 0], scale: [0.5, 1.2, 1.5] }}
-                transition={{ delay: 1.3, duration: 0.8 }}
-              />
-            </div>
-          </motion.div>
-        )}
-
-        {/* AI Generated Image for slide 28 and others with images */}
-        {data.image && (
-          <FadeIn delay={0.2}>
-            <div className="transition-slide__image">
-              <img src={data.image} alt={data.title} />
-            </div>
-          </FadeIn>
-        )}
-
-        {data.icon && (
-          <ScaleIn>
-            <div className="transition-slide__icon">
-              {data.icon === 'pilot' && (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <circle cx="12" cy="8" r="4"/>
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                </svg>
-              )}
-            </div>
-          </ScaleIn>
-        )}
-        <ScaleIn delay={0.2}>
-          <h2 className={`transition-slide__title ${data.style === 'dramatic' ? 'text-gradient' : ''}`}>
-            {data.title}
-          </h2>
+            )}
+          </div>
         </ScaleIn>
-      </div>
-    </Slide>
-  );
-};
+      )}
+      <ScaleIn delay={0.2}>
+        <h2 className={`transition-slide__title ${data.style === 'dramatic' ? 'text-gradient' : ''}`}>
+          {data.title}
+        </h2>
+      </ScaleIn>
+    </div>
+  </Slide>
+);
 
 // =============================================
 // QUESTION SLIDE
 // =============================================
-export const QuestionSlide = ({ data, index }) => {
-  const isTimeQuestion = data.id === 29; // "Do you have time to do this every day?"
-
-  return (
-    <Slide variant="default" id={`slide-${data.id}`} index={index}>
-      <div className="question-slide">
-        <ScaleIn>
-          <h2 className="question-slide__title">{data.title}</h2>
-        </ScaleIn>
-
-        {/* Hourglass animation for Slide 29 */}
-        {isTimeQuestion && (
-          <motion.div
-            className="hourglass-visual"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-          >
-            <div className="hourglass">
-              <div className="hourglass__frame" />
-              <div className="hourglass__top">
-                <div className="hourglass__sand hourglass__sand--draining" />
-              </div>
-              <div className="hourglass__neck" />
-              <div className="hourglass__bottom">
-                <div className="hourglass__sand hourglass__sand--filling" />
-              </div>
-              <div className="hourglass__particles">
-                <div className="hourglass__particle" />
-                <div className="hourglass__particle" />
-                <div className="hourglass__particle" />
-              </div>
-            </div>
-          </motion.div>
-        )}
-
-        {data.content && (
-          <FadeIn delay={0.3}>
-            <p className="question-slide__content">{data.content}</p>
-          </FadeIn>
-        )}
-        {data.answer && (
-          <FadeIn delay={0.5}>
-            <p className="question-slide__answer text-gradient">{data.answer}</p>
-          </FadeIn>
-        )}
-      </div>
-    </Slide>
-  );
-};
+export const QuestionSlide = ({ data, index }) => (
+  <Slide variant="default" id={`slide-${data.id}`} index={index}>
+    <div className="question-slide">
+      <ScaleIn>
+        <h2 className="question-slide__title">{data.title}</h2>
+      </ScaleIn>
+      {data.content && (
+        <FadeIn delay={0.3}>
+          <p className="question-slide__content">{data.content}</p>
+        </FadeIn>
+      )}
+      {data.answer && (
+        <FadeIn delay={0.5}>
+          <p className="question-slide__answer text-gradient">{data.answer}</p>
+        </FadeIn>
+      )}
+    </div>
+  </Slide>
+);
 
 // =============================================
 // CASE STUDY SLIDE
 // =============================================
-export const CaseStudySlide = ({ data, index }) => {
-  const isAirCanada = data.title && data.title.includes('Air Canada');
-  const isChevyTahoe = data.title && data.title.includes('Chevy');
-  const isDPD = data.title && data.title.includes('DPD');
-
-  return (
-    <Slide variant="warning" id={`slide-${data.id}`} index={index}>
-      <div className="case-study-slide">
-        {/* Slide 37: DPD - AI Generated Image */}
-        {isDPD && data.image && (
-          <FadeIn delay={0.2}>
-            <div className="case-study-slide__image">
-              <img src={data.image} alt={data.title} />
-            </div>
-          </FadeIn>
-        )}
-
-        {/* Slide 32: Air Canada - Airplane with caution sign */}
-        {isAirCanada && (
-          <motion.div
-            className="airplane-caution"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-          >
-            <div className="airplane-caution__plane">
-              <svg viewBox="0 0 100 40" fill="none">
-                <path
-                  d="M5 20 L25 20 L35 10 L85 10 Q95 10 95 20 Q95 30 85 30 L35 30 L25 20"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  fill="rgba(201, 169, 98, 0.1)"
-                />
-                <path d="M35 10 L35 30" stroke="currentColor" strokeWidth="1" />
-                <path d="M25 15 L15 5 L25 18" stroke="currentColor" strokeWidth="1.5" fill="rgba(201, 169, 98, 0.05)" />
-                <path d="M25 25 L15 35 L25 22" stroke="currentColor" strokeWidth="1.5" fill="rgba(201, 169, 98, 0.05)" />
-                <circle cx="75" cy="20" r="3" fill="currentColor" opacity="0.5" />
-              </svg>
-            </div>
-            <motion.div
-              className="airplane-caution__warning"
-              animate={{ scale: [1, 1.1, 1], opacity: [0.8, 1, 0.8] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M12 2L2 22h20L12 2z" fill="rgba(239, 68, 68, 0.2)" />
-                <line x1="12" y1="9" x2="12" y2="13" />
-                <line x1="12" y1="17" x2="12.01" y2="17" />
-              </svg>
-            </motion.div>
-          </motion.div>
-        )}
-
-        {/* Slide 35: Chevy Tahoe - Chat bubble with price */}
-        {isChevyTahoe && (
-          <motion.div
-            className="chat-bubble-scene"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-          >
-            <motion.div
-              className="chat-bubble-scene__bubble chat-bubble-scene__bubble--main"
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.4, type: "spring", stiffness: 200 }}
-            >
-              <span className="chat-bubble-scene__text">"Chevy Tahoe for $1"</span>
-              <div className="chat-bubble-scene__tail" />
-            </motion.div>
-            <motion.div
-              className="chat-bubble-scene__bubble chat-bubble-scene__bubble--reaction"
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.8, type: "spring", stiffness: 200 }}
-            >
-              <span className="chat-bubble-scene__emoji">😱</span>
-              <div className="chat-bubble-scene__tail chat-bubble-scene__tail--right" />
-            </motion.div>
-          </motion.div>
-        )}
-
-        <FadeIn>
-          <h2 className="case-study-slide__title">{data.title}</h2>
+export const CaseStudySlide = ({ data, index }) => (
+  <Slide variant="warning" id={`slide-${data.id}`} index={index}>
+    <div className="case-study-slide">
+      <FadeIn>
+        <h2 className="case-study-slide__title">{data.title}</h2>
+      </FadeIn>
+      {data.subtitle && (
+        <FadeIn delay={0.2}>
+          <p className="case-study-slide__subtitle">{data.subtitle}</p>
         </FadeIn>
-        {data.subtitle && (
-          <FadeIn delay={0.2}>
-            <p className="case-study-slide__subtitle">{data.subtitle}</p>
-          </FadeIn>
-        )}
-        {data.headline && (
-          <FadeIn delay={0.3}>
-            <p className="case-study-slide__headline">{data.headline}</p>
-          </FadeIn>
-        )}
-        {data.steps && (
-          <StaggerContainer className="case-study-slide__timeline">
-            {data.steps.map((step, i) => (
-              <StaggerItem key={i}>
-                <div className="case-study-slide__step">
-                  <div className="case-study-slide__step-number">{i + 1}</div>
-                  <p className="case-study-slide__step-text">{step}</p>
-                </div>
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
-        )}
-      </div>
-    </Slide>
-  );
-};
+      )}
+      {data.headline && (
+        <FadeIn delay={0.3}>
+          <p className="case-study-slide__headline">{data.headline}</p>
+        </FadeIn>
+      )}
+      {data.steps && (
+        <StaggerContainer className="case-study-slide__timeline">
+          {data.steps.map((step, i) => (
+            <StaggerItem key={i}>
+              <div className="case-study-slide__step">
+                <div className="case-study-slide__step-number">{i + 1}</div>
+                <p className="case-study-slide__step-text">{step}</p>
+              </div>
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
+      )}
+    </div>
+  </Slide>
+);
 
 // =============================================
 // HEADLINE SLIDE
@@ -2599,68 +2043,27 @@ export const HeadlineSlide = ({ data, index }) => (
 // =============================================
 // PRINCIPLE SLIDE
 // =============================================
-export const PrincipleSlide = ({ data, index }) => {
-  const isGavelSlide = data.icon === 'gavel';
-
-  return (
-    <Slide variant="default" id={`slide-${data.id}`} index={index}>
-      <div className="principle-slide">
-        {/* Slide 34: Scales of Justice animation */}
-        {isGavelSlide && (
-          <motion.div
-            className="justice-visual"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-          >
-            <div className="justice-visual__scales">
-              <div className="justice-visual__beam">
-                <motion.div
-                  className="justice-visual__beam-bar"
-                  animate={{ rotate: [-5, 5, -5] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                />
-              </div>
-              <div className="justice-visual__pillar" />
-              <motion.div
-                className="justice-visual__pan justice-visual__pan--left"
-                animate={{ y: [0, 8, 0] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <div className="justice-visual__pan-dish" />
-                <div className="justice-visual__chain" />
-              </motion.div>
-              <motion.div
-                className="justice-visual__pan justice-visual__pan--right"
-                animate={{ y: [8, 0, 8] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <div className="justice-visual__pan-dish" />
-                <div className="justice-visual__chain" />
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
-
-        <ScaleIn>
-          <div className="principle-slide__icon">
-            {data.icon === 'gavel' && (
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M14.5 2L18 5.5M9 9l6-6M16 16l-6 6M2 22l4-4M22 12l-4 4"/>
-              </svg>
-            )}
-          </div>
-        </ScaleIn>
-        <FadeIn delay={0.3}>
-          <h2 className="principle-slide__title text-gradient">{data.title}</h2>
-        </FadeIn>
-        <FadeIn delay={0.5}>
-          <p className="principle-slide__content">{data.content}</p>
-        </FadeIn>
-      </div>
-    </Slide>
-  );
-};
+export const PrincipleSlide = ({ data, index }) => (
+  <Slide variant="default" id={`slide-${data.id}`} index={index}>
+    <div className="principle-slide">
+      <ScaleIn>
+        <div className="principle-slide__icon">
+          {data.icon === 'gavel' && (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M14.5 2L18 5.5M9 9l6-6M16 16l-6 6M2 22l4-4M22 12l-4 4"/>
+            </svg>
+          )}
+        </div>
+      </ScaleIn>
+      <FadeIn delay={0.3}>
+        <h2 className="principle-slide__title text-gradient">{data.title}</h2>
+      </FadeIn>
+      <FadeIn delay={0.5}>
+        <p className="principle-slide__content">{data.content}</p>
+      </FadeIn>
+    </div>
+  </Slide>
+);
 
 // =============================================
 // WARNING SLIDE
@@ -2668,14 +2071,6 @@ export const PrincipleSlide = ({ data, index }) => {
 export const WarningSlide = ({ data, index }) => (
   <Slide variant="warning" id={`slide-${data.id}`} index={index}>
     <div className="warning-slide">
-      {/* AI Generated Image for slide 36 */}
-      {data.image && (
-        <FadeIn delay={0.2}>
-          <div className="warning-slide__image">
-            <img src={data.image} alt={data.title} />
-          </div>
-        </FadeIn>
-      )}
       <ScaleIn>
         <div className="warning-slide__icon">
           {data.icon === 'shield-alert' && (
@@ -2859,14 +2254,6 @@ export const SolutionSlide = ({ data, index }) => {
 export const IntroductionSlide = ({ data, index }) => (
   <Slide variant="hero" id={`slide-${data.id}`} index={index}>
     <div className="introduction-slide">
-      {/* AI Generated Image for slide 43 */}
-      {data.image && (
-        <FadeIn delay={0.2}>
-          <div className="introduction-slide__image">
-            <img src={data.image} alt={data.title} />
-          </div>
-        </FadeIn>
-      )}
       <ScaleIn>
         <h2 className="introduction-slide__title text-gradient">{data.title}</h2>
       </ScaleIn>
@@ -2931,302 +2318,90 @@ export const StatSlide = ({ data, index }) => (
 // =============================================
 // FEATURE SLIDE
 // =============================================
-export const FeatureSlide = ({ data, index }) => {
-  // Slide 54: Three pillars - Recruitment, Training, Mediation
-  const isPillarsSlide = data.items && data.items.includes('Recruitment') && data.items.includes('Training');
-
-  // Icons for the three pillars
-  const pillarIcons = {
-    'Recruitment': (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-        <circle cx="9" cy="7" r="4" />
-        <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-      </svg>
-    ),
-    'Training': (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-        <path d="M6 12v5c3 3 9 3 12 0v-5" />
-      </svg>
-    ),
-    'Mediation': (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <circle cx="12" cy="12" r="10" />
-        <path d="M8 14s1.5 2 4 2 4-2 4-2" />
-        <line x1="9" y1="9" x2="9.01" y2="9" />
-        <line x1="15" y1="9" x2="15.01" y2="9" />
-      </svg>
-    ),
-  };
-
-  return (
-    <Slide variant="default" id={`slide-${data.id}`} index={index}>
-      <div className="feature-slide">
-        {data.badge && (
-          <FadeIn>
-            <div className="slide-badge">{data.badge}</div>
-          </FadeIn>
-        )}
-
-        {/* AI Generated Images for slides 46, 47, 62 */}
-        {data.image && (
-          <FadeIn delay={0.2}>
-            <div className="feature-slide__image">
-              <img src={data.image} alt={data.title} />
-            </div>
-          </FadeIn>
-        )}
-
-        {/* Slide 54: Three Pillars animation */}
-        {isPillarsSlide && (
-          <motion.div
-            className="pillars-visual"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-          >
-            {data.items.map((item, i) => (
-              <motion.div
-                key={item}
-                className="pillars-visual__pillar"
-                initial={{ y: 50, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.4 + i * 0.15, duration: 0.5, type: "spring", stiffness: 150 }}
-              >
-                <motion.div
-                  className="pillars-visual__icon"
-                  animate={{ boxShadow: ['0 0 0 rgba(201, 169, 98, 0)', '0 0 20px rgba(201, 169, 98, 0.4)', '0 0 0 rgba(201, 169, 98, 0)'] }}
-                  transition={{ delay: 0.8 + i * 0.15, duration: 1.5, repeat: Infinity, repeatDelay: 2 }}
-                >
-                  {pillarIcons[item]}
-                </motion.div>
-                <span className="pillars-visual__label">{item}</span>
-              </motion.div>
-            ))}
-          </motion.div>
-        )}
-
-        {data.icon && (
-          <ScaleIn>
-            <div className="feature-slide__icon">
-              {data.icon === 'tools' && (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
-                </svg>
-              )}
-              {data.icon === 'shield' && (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                  <path d="M9 12l2 2 4-4"/>
-                </svg>
-              )}
-              {data.icon === 'phone' && (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                </svg>
-              )}
-            </div>
-          </ScaleIn>
-        )}
-        <FadeIn delay={0.2}>
-          <h2 className="feature-slide__title">{data.title}</h2>
+export const FeatureSlide = ({ data, index }) => (
+  <Slide variant="default" id={`slide-${data.id}`} index={index}>
+    <div className="feature-slide">
+      {data.badge && (
+        <FadeIn>
+          <div className="slide-badge">{data.badge}</div>
         </FadeIn>
-        {data.steps && (
-          <StaggerContainer className="feature-slide__steps">
-            {data.steps.map((step, i) => (
-              <StaggerItem key={i}>
-                <div className="feature-slide__step">{step}</div>
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
-        )}
-        {data.items && !isPillarsSlide && (
-          <StaggerContainer className="feature-slide__items">
-            {data.items.map((item, i) => (
-              <StaggerItem key={i}>
-                <div className="feature-slide__item">{item}</div>
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
-        )}
-        <FadeIn delay={0.5}>
-          <p className="feature-slide__content">{data.content}</p>
-        </FadeIn>
-      </div>
-    </Slide>
-  );
-};
+      )}
+      {data.icon && (
+        <ScaleIn>
+          <div className="feature-slide__icon">
+            {data.icon === 'tools' && (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+              </svg>
+            )}
+            {data.icon === 'shield' && (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="M9 12l2 2 4-4"/>
+              </svg>
+            )}
+            {data.icon === 'phone' && (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+            )}
+          </div>
+        </ScaleIn>
+      )}
+      <FadeIn delay={0.2}>
+        <h2 className="feature-slide__title">{data.title}</h2>
+      </FadeIn>
+      {data.steps && (
+        <StaggerContainer className="feature-slide__steps">
+          {data.steps.map((step, i) => (
+            <StaggerItem key={i}>
+              <div className="feature-slide__step">{step}</div>
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
+      )}
+      {data.items && (
+        <StaggerContainer className="feature-slide__items">
+          {data.items.map((item, i) => (
+            <StaggerItem key={i}>
+              <div className="feature-slide__item">{item}</div>
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
+      )}
+      <FadeIn delay={0.5}>
+        <p className="feature-slide__content">{data.content}</p>
+      </FadeIn>
+    </div>
+  </Slide>
+);
 
 // =============================================
 // USE CASE SLIDE
 // =============================================
-export const UseCaseSlide = ({ data, index }) => {
-  const isFunnelSlide = data.number === 1; // Candidate Screening
-  const isPipelineSlide = data.number === 2; // Content Repurposing
-  const isCalendarSlide = data.number === 3; // Content Calendar
-
-  return (
-    <Slide variant="default" id={`slide-${data.id}`} index={index}>
-      <div className="use-case-slide">
-        {/* Slide 50: Funnel filter animation */}
-        {isFunnelSlide && (
-          <motion.div
-            className="funnel-visual"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-          >
-            <div className="funnel-visual__funnel">
-              <div className="funnel-visual__top" />
-              <div className="funnel-visual__middle" />
-              <div className="funnel-visual__bottom" />
-            </div>
-            <div className="funnel-visual__particles">
-              {[...Array(6)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className={`funnel-visual__particle funnel-visual__particle--${i + 1}`}
-                  animate={{
-                    y: [0, 80, 120],
-                    x: [(i - 2.5) * 15, (i - 2.5) * 5, 0],
-                    scale: [1, 0.8, 0.6],
-                    opacity: [1, 0.8, 0],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    delay: i * 0.3,
-                    ease: "easeIn",
-                  }}
-                />
-              ))}
-            </div>
-            <motion.div
-              className="funnel-visual__output"
-              animate={{ scale: [1, 1.1, 1], opacity: [0.6, 1, 0.6] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                <path d="M9 14l2 2 4-4" />
-              </svg>
-            </motion.div>
-          </motion.div>
-        )}
-
-        {/* Slide 51: Content pipeline animation */}
-        {isPipelineSlide && (
-          <motion.div
-            className="content-pipeline"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-          >
-            <motion.div
-              className="content-pipeline__input"
-              animate={{ scale: [1, 1.05, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
-                <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
-                <line x1="12" y1="19" x2="12" y2="23" />
-                <line x1="8" y1="23" x2="16" y2="23" />
-              </svg>
-              <div className="content-pipeline__waveform">
-                {[...Array(5)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className="content-pipeline__wave-bar"
-                    animate={{ scaleY: [0.3, 1, 0.3] }}
-                    transition={{ duration: 0.5, repeat: Infinity, delay: i * 0.1 }}
-                  />
-                ))}
-              </div>
-            </motion.div>
-            <motion.div
-              className="content-pipeline__processor"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <circle cx="12" cy="12" r="3" />
-                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
-              </svg>
-            </motion.div>
-            <div className="content-pipeline__outputs">
-              {['Blog', 'LinkedIn', 'Newsletter', 'Tweet'].map((label, i) => (
-                <motion.div
-                  key={label}
-                  className="content-pipeline__output-item"
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: 0.6 + i * 0.15, duration: 0.4 }}
-                >
-                  <span>{label}</span>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        )}
-
-        {/* Slide 52: Calendar checkmarks animation */}
-        {isCalendarSlide && (
-          <motion.div
-            className="calendar-visual"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-          >
-            <div className="calendar-visual__grid">
-              {[...Array(7)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="calendar-visual__day"
-                  initial={{ scale: 0.8, opacity: 0.5 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: 0.5 + i * 0.1, duration: 0.3 }}
-                >
-                  <span className="calendar-visual__date">{i + 1}</span>
-                  <motion.div
-                    className="calendar-visual__check"
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.8 + i * 0.12, type: "spring", stiffness: 300 }}
-                  >
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                  </motion.div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        )}
-
-        <ScaleIn>
-          <div className="use-case-slide__number">
-            <span>Use Case</span>
-            <span className="use-case-slide__number-value">#{data.number}</span>
-          </div>
-        </ScaleIn>
-        <FadeIn delay={0.2}>
-          <h2 className="use-case-slide__title">{data.title}</h2>
+export const UseCaseSlide = ({ data, index }) => (
+  <Slide variant="default" id={`slide-${data.id}`} index={index}>
+    <div className="use-case-slide">
+      <ScaleIn>
+        <div className="use-case-slide__number">
+          <span>Use Case</span>
+          <span className="use-case-slide__number-value">#{data.number}</span>
+        </div>
+      </ScaleIn>
+      <FadeIn delay={0.2}>
+        <h2 className="use-case-slide__title">{data.title}</h2>
+      </FadeIn>
+      {data.subtitle && (
+        <FadeIn delay={0.3}>
+          <p className="use-case-slide__subtitle">{data.subtitle}</p>
         </FadeIn>
-        {data.subtitle && (
-          <FadeIn delay={0.3}>
-            <p className="use-case-slide__subtitle">{data.subtitle}</p>
-          </FadeIn>
-        )}
-        <FadeIn delay={0.4}>
-          <p className="use-case-slide__content">{data.content}</p>
-        </FadeIn>
-      </div>
-    </Slide>
-  );
-};
+      )}
+      <FadeIn delay={0.4}>
+        <p className="use-case-slide__content">{data.content}</p>
+      </FadeIn>
+    </div>
+  </Slide>
+);
 
 // =============================================
 // ROI SLIDE
@@ -3253,14 +2428,6 @@ export const ROISlide = ({ data, index }) => (
 export const OfferSlide = ({ data, index }) => (
   <Slide variant="offer" id={`slide-${data.id}`} index={index}>
     <div className="offer-slide">
-      {/* AI Generated Image for slide 58 */}
-      {data.image && (
-        <FadeIn delay={0.2}>
-          <div className="offer-slide__image">
-            <img src={data.image} alt={data.title} />
-          </div>
-        </FadeIn>
-      )}
       <FadeIn>
         <div className="offer-slide__badge">{data.badge}</div>
       </FadeIn>
@@ -3283,14 +2450,6 @@ export const OfferSlide = ({ data, index }) => (
 export const PricingSlide = ({ data, index }) => (
   <Slide variant="offer" id={`slide-${data.id}`} index={index}>
     <div className="pricing-slide">
-      {/* AI Generated Image for slide 59 */}
-      {data.image && (
-        <FadeIn delay={0.2}>
-          <div className="pricing-slide__image">
-            <img src={data.image} alt="Expert Assistant" />
-          </div>
-        </FadeIn>
-      )}
       <FadeIn>
         <div className="pricing-slide__badge">{data.badge}</div>
       </FadeIn>
@@ -3307,97 +2466,29 @@ export const PricingSlide = ({ data, index }) => (
 // =============================================
 // BENEFITS SLIDE
 // =============================================
-export const BenefitsSlide = ({ data, index }) => {
-  // Animated icons for slide 60 benefit items
-  const benefitIcons = [
-    // "Real person who'll help you" - person icon with pulse
-    <motion.svg
-      key="person"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      animate={{ scale: [1, 1.1, 1] }}
-      transition={{ duration: 2, repeat: Infinity }}
-    >
-      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-      <circle cx="12" cy="7" r="4" />
-    </motion.svg>,
-    // "Payment after job is done" - calendar icon with flip
-    <motion.svg
-      key="calendar"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      animate={{ rotateY: [0, 180, 360] }}
-      transition={{ duration: 3, repeat: Infinity }}
-    >
-      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-      <line x1="16" y1="2" x2="16" y2="6" />
-      <line x1="8" y1="2" x2="8" y2="6" />
-      <line x1="3" y1="10" x2="21" y2="10" />
-      <path d="M9 16l2 2 4-4" />
-    </motion.svg>,
-    // "Free replacement" - recycling icon with spin
-    <motion.svg
-      key="recycle"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      animate={{ rotate: 360 }}
-      transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-    >
-      <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3" />
-    </motion.svg>,
-    // "Managing payroll" - dollar/count animation
-    <motion.svg
-      key="payroll"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      animate={{ y: [0, -3, 0] }}
-      transition={{ duration: 1.5, repeat: Infinity }}
-    >
-      <line x1="12" y1="1" x2="12" y2="23" />
-      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-    </motion.svg>,
-  ];
-
-  return (
-    <Slide variant="offer" id={`slide-${data.id}`} index={index}>
-      <div className="benefits-slide">
-        <FadeIn>
-          <div className="benefits-slide__badge">{data.badge}</div>
-        </FadeIn>
-        <StaggerContainer className="benefits-slide__items">
-          {data.items.map((item, i) => (
-            <StaggerItem key={i}>
-              <div className="benefits-slide__item benefits-slide__item--animated">
-                <motion.span
-                  className="benefits-slide__icon-animated"
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: 0.3 + i * 0.1, type: "spring", stiffness: 200 }}
-                >
-                  {benefitIcons[i]}
-                </motion.span>
-                <span className="benefits-slide__check">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                    <polyline points="20 6 9 17 4 12"/>
-                  </svg>
-                </span>
-                <span>{item}</span>
-              </div>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
-      </div>
-    </Slide>
-  );
-};
+export const BenefitsSlide = ({ data, index }) => (
+  <Slide variant="offer" id={`slide-${data.id}`} index={index}>
+    <div className="benefits-slide">
+      <FadeIn>
+        <div className="benefits-slide__badge">{data.badge}</div>
+      </FadeIn>
+      <StaggerContainer className="benefits-slide__items">
+        {data.items.map((item, i) => (
+          <StaggerItem key={i}>
+            <div className="benefits-slide__item">
+              <span className="benefits-slide__check">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              </span>
+              <span>{item}</span>
+            </div>
+          </StaggerItem>
+        ))}
+      </StaggerContainer>
+    </div>
+  </Slide>
+);
 
 // =============================================
 // SAVINGS SLIDE
@@ -3425,81 +2516,42 @@ export const SavingsSlide = ({ data, index }) => (
 // =============================================
 // PACKAGE SLIDE
 // =============================================
-export const PackageSlide = ({ data, index }) => {
-  // Icons for bonus items in slide 63
-  const bonusIcons = [
-    // Access to VA Students
-    <svg key="students" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-      <circle cx="9" cy="7" r="4" />
-      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-    </svg>,
-    // QA Calls
-    <svg key="calls" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-    </svg>,
-    // Library access
-    <svg key="library" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-    </svg>,
-    // Community access
-    <svg key="community" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-      <circle cx="12" cy="12" r="10" />
-      <line x1="2" y1="12" x2="22" y2="12" />
-      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-    </svg>,
-  ];
-
-  return (
-    <Slide variant="offer" id={`slide-${data.id}`} index={index}>
-      <div className="package-slide">
-        <FadeIn>
-          <h2 className="package-slide__title text-gradient">{data.title}</h2>
-        </FadeIn>
-        <ScaleIn delay={0.2}>
-          <div className="package-slide__main">
-            <span className="package-slide__check">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                <polyline points="20 6 9 17 4 12"/>
-              </svg>
-            </span>
-            <span>{data.mainItem}</span>
-          </div>
-        </ScaleIn>
-        <div className="package-slide__bonuses package-slide__bonuses--animated">
-          {data.bonuses.map((bonus, i) => (
-            <motion.div
-              key={i}
-              className="package-slide__bonus package-slide__bonus--animated"
-              initial={{ x: i % 2 === 0 ? -100 : 100, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ delay: 0.4 + i * 0.15, duration: 0.5, type: "spring", stiffness: 100 }}
-            >
-              <motion.span
-                className="package-slide__bonus-icon"
-                animate={{ rotate: [0, 5, -5, 0] }}
-                transition={{ delay: 1 + i * 0.1, duration: 0.5, repeat: Infinity, repeatDelay: 3 }}
-              >
-                {bonusIcons[i]}
-              </motion.span>
+export const PackageSlide = ({ data, index }) => (
+  <Slide variant="offer" id={`slide-${data.id}`} index={index}>
+    <div className="package-slide">
+      <FadeIn>
+        <h2 className="package-slide__title text-gradient">{data.title}</h2>
+      </FadeIn>
+      <ScaleIn delay={0.2}>
+        <div className="package-slide__main">
+          <span className="package-slide__check">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </span>
+          <span>{data.mainItem}</span>
+        </div>
+      </ScaleIn>
+      <StaggerContainer className="package-slide__bonuses">
+        {data.bonuses.map((bonus, i) => (
+          <StaggerItem key={i}>
+            <div className="package-slide__bonus">
               <span className="package-slide__gift">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7"/>
                 </svg>
               </span>
               <span>{bonus}</span>
-            </motion.div>
-          ))}
-        </div>
-        <FadeIn delay={0.8}>
-          <div className="package-slide__fast-action">{data.fastAction}</div>
-        </FadeIn>
-      </div>
-    </Slide>
-  );
-};
+            </div>
+          </StaggerItem>
+        ))}
+      </StaggerContainer>
+      <FadeIn delay={0.8}>
+        <div className="package-slide__fast-action">{data.fastAction}</div>
+      </FadeIn>
+    </div>
+  </Slide>
+);
 
 // =============================================
 // TESTIMONIAL SLIDE - Enhanced with premium styling
