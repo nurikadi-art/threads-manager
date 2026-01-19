@@ -226,109 +226,229 @@ export const HeroSlide = ({ data, index }) => {
 };
 
 // =============================================
-// GIFT SLIDE - Spectacular 3D Gift Experience
+// GIFT SLIDE - Spectacular 3D Gift Experience (Enhanced)
 // =============================================
-export const GiftSlide = ({ data, index }) => (
-  <Slide variant="offer" id={`slide-${data.id}`} index={index}>
-    <div className="gift-slide-new">
-      {/* Subtle background glow */}
-      <div className="gift-slide-new__glow" />
+export const GiftSlide = ({ data, index }) => {
+  const [expandedCategory, setExpandedCategory] = useState(null);
+  const [copiedIndex, setCopiedIndex] = useState(null);
 
-      {/* Main content */}
-      <div className="gift-slide-new__content">
-        {/* Badge */}
+  const categories = [
+    { icon: '✉️', label: 'Email Templates', count: '500+', examples: 'Cold outreach, follow-ups, newsletters' },
+    { icon: '📢', label: 'Marketing Scripts', count: '1,200+', examples: 'Social posts, ad copy, landing pages' },
+    { icon: '💼', label: 'Sales Frameworks', count: '800+', examples: 'Objection handling, closing scripts' },
+    { icon: '🎯', label: 'Business Strategy', count: '2,500+', examples: 'Planning, analysis, decision frameworks' }
+  ];
+
+  const handleCopy = (category, i) => {
+    navigator.clipboard.writeText(`${category.label}: ${category.count} prompts`);
+    setCopiedIndex(i);
+    setTimeout(() => setCopiedIndex(null), 2000);
+  };
+
+  return (
+    <Slide variant="offer" id={`slide-${data.id}`} index={index}>
+      <div className="gift-slide-new" role="region" aria-label="Free gift offer">
+        {/* Subtle background glow */}
+        <div className="gift-slide-new__glow" aria-hidden="true" />
+
+        {/* Shimmer effect overlay */}
         <motion.div
-          className="gift-slide-new__badge"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <motion.span
-            className="gift-slide-new__badge-dot"
-            animate={{ scale: [1, 1.3, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          />
-          <span>FREE GIFT</span>
-        </motion.div>
+          className="gift-slide-new__shimmer"
+          animate={{
+            backgroundPosition: ['200% 0', '-200% 0'],
+          }}
+          transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'linear-gradient(90deg, transparent 0%, rgba(201, 169, 98, 0.1) 50%, transparent 100%)',
+            backgroundSize: '200% 100%',
+            pointerEvents: 'none',
+          }}
+          aria-hidden="true"
+        />
 
-        {/* Main heading */}
-        <motion.h2
-          className="gift-slide-new__title"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-        >
-          Stay Until Q&A
-        </motion.h2>
-
-        {/* Gift value card */}
-        <motion.div
-          className="gift-slide-new__card"
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          <div className="gift-slide-new__card-header">
-            <span className="gift-slide-new__card-icon">🎁</span>
-            <span className="gift-slide-new__card-label">You'll Receive</span>
-          </div>
-
-          <div className="gift-slide-new__card-value">
-            <span className="gift-slide-new__number">5,000</span>
-            <span className="gift-slide-new__label">AI Business Prompts</span>
-          </div>
-
-          <div className="gift-slide-new__card-details">
-            <div className="gift-slide-new__detail">
-              <span>Email Templates</span>
-              <span>500+</span>
-            </div>
-            <div className="gift-slide-new__detail">
-              <span>Marketing Scripts</span>
-              <span>1,200+</span>
-            </div>
-            <div className="gift-slide-new__detail">
-              <span>Sales Frameworks</span>
-              <span>800+</span>
-            </div>
-            <div className="gift-slide-new__detail">
-              <span>Business Strategy</span>
-              <span>2,500+</span>
-            </div>
-          </div>
-
-          <div className="gift-slide-new__card-footer">
-            <span className="gift-slide-new__value-strike">$297 Value</span>
+        {/* Main content */}
+        <div className="gift-slide-new__content">
+          {/* Enhanced Badge with bounce effect */}
+          <motion.div
+            className="gift-slide-new__badge"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
             <motion.span
-              className="gift-slide-new__value-free"
-              animate={{ scale: [1, 1.05, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
+              className="gift-slide-new__badge-dot"
+              animate={{
+                scale: [1, 1.5, 1],
+                boxShadow: [
+                  '0 0 0 0 rgba(201, 169, 98, 0.4)',
+                  '0 0 0 10px rgba(201, 169, 98, 0)',
+                  '0 0 0 0 rgba(201, 169, 98, 0)'
+                ]
+              }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            />
+            <motion.span
+              animate={{
+                y: [0, -3, 0],
+              }}
+              transition={{ duration: 0.5, repeat: Infinity, repeatDelay: 2 }}
             >
-              FREE
+              FREE GIFT
             </motion.span>
-          </div>
-        </motion.div>
+          </motion.div>
 
-        {/* CTA */}
-        <motion.p
-          className="gift-slide-new__cta"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
-          Claim yours at the end of Q&A
-        </motion.p>
+          {/* Main heading */}
+          <motion.h2
+            className="gift-slide-new__title"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            Stay Until Q&A
+          </motion.h2>
+
+          {/* Gift value card with 3D flip entrance */}
+          <motion.div
+            className="gift-slide-new__card"
+            initial={{ opacity: 0, scale: 0.9, rotateY: 90 }}
+            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, type: "spring" }}
+            style={{ transformStyle: 'preserve-3d' }}
+          >
+            <div className="gift-slide-new__card-header">
+              <motion.span
+                className="gift-slide-new__card-icon"
+                animate={{ rotate: [0, -10, 10, 0] }}
+                transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+              >
+                🎁
+              </motion.span>
+              <span className="gift-slide-new__card-label">You'll Receive</span>
+            </div>
+
+            <div className="gift-slide-new__card-value">
+              <motion.span
+                className="gift-slide-new__number"
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.5, type: "spring" }}
+              >
+                5,000
+              </motion.span>
+              <span className="gift-slide-new__label">AI Business Prompts</span>
+            </div>
+
+            {/* Enhanced expandable categories with shimmer */}
+            <div className="gift-slide-new__card-details">
+              {categories.map((category, i) => (
+                <motion.div
+                  key={i}
+                  className={`gift-slide-new__detail ${expandedCategory === i ? 'gift-slide-new__detail--expanded' : ''}`}
+                  onClick={() => setExpandedCategory(expandedCategory === i ? null : i)}
+                  whileHover={{
+                    x: 10,
+                    backgroundColor: 'rgba(201, 169, 98, 0.1)'
+                  }}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.4 + i * 0.1 }}
+                  style={{ cursor: 'pointer', position: 'relative' }}
+                  role="button"
+                  aria-expanded={expandedCategory === i}
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === 'Enter' && setExpandedCategory(expandedCategory === i ? null : i)}
+                >
+                  <span className="detail-icon">{category.icon}</span>
+                  <span className="detail-label">{category.label}</span>
+                  <span className="detail-count">{category.count}</span>
+
+                  {/* Copy button */}
+                  <motion.button
+                    className="detail-copy"
+                    onClick={(e) => { e.stopPropagation(); handleCopy(category, i); }}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    style={{
+                      marginLeft: 'auto',
+                      padding: '4px 8px',
+                      background: 'transparent',
+                      border: 'none',
+                      color: '#c9a962',
+                      cursor: 'pointer',
+                      fontSize: '12px',
+                    }}
+                    aria-label={`Copy ${category.label} info`}
+                  >
+                    {copiedIndex === i ? '✓' : '📋'}
+                  </motion.button>
+
+                  {/* Expanded content */}
+                  {expandedCategory === i && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="detail-expanded"
+                      style={{
+                        width: '100%',
+                        marginTop: '8px',
+                        paddingTop: '8px',
+                        borderTop: '1px solid rgba(201, 169, 98, 0.2)',
+                        fontSize: '14px',
+                        color: 'rgba(255, 255, 255, 0.7)',
+                      }}
+                    >
+                      {category.examples}
+                    </motion.div>
+                  )}
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Enhanced footer with shimmer on FREE */}
+            <div className="gift-slide-new__card-footer">
+              <span className="gift-slide-new__value-strike">$297 Value</span>
+              <motion.span
+                className="gift-slide-new__value-free"
+                animate={{
+                  scale: [1, 1.05, 1],
+                  textShadow: [
+                    '0 0 10px rgba(201, 169, 98, 0.5)',
+                    '0 0 20px rgba(201, 169, 98, 0.8)',
+                    '0 0 10px rgba(201, 169, 98, 0.5)'
+                  ]
+                }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                FREE
+              </motion.span>
+            </div>
+          </motion.div>
+
+          {/* CTA */}
+          <motion.p
+            className="gift-slide-new__cta"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            Claim yours at the end of Q&A
+          </motion.p>
+        </div>
       </div>
-    </div>
-  </Slide>
-);
+    </Slide>
+  );
+};
 
 // =============================================
-// PARADOX SLIDE - Interactive split-screen comparison
+// PARADOX SLIDE - Interactive split-screen comparison (Enhanced)
 // =============================================
 export const ParadoxSlide = ({ data, index }) => {
   const [activePanel, setActivePanel] = useState(null);
   const [bothExplored, setBothExplored] = useState({ left: false, right: false });
+  const slideRef = useRef(null);
 
   const handlePanelClick = (panelIndex) => {
     setActivePanel(activePanel === panelIndex ? null : panelIndex);
@@ -336,13 +456,33 @@ export const ParadoxSlide = ({ data, index }) => {
     if (panelIndex === 1) setBothExplored(prev => ({ ...prev, right: true }));
   };
 
+  // Keyboard navigation for accessibility
+  const handleKeyDown = (e) => {
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      handlePanelClick(0);
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      handlePanelClick(1);
+    } else if (e.key === 'Escape') {
+      setActivePanel(null);
+    }
+  };
+
   const showInsight = bothExplored.left && bothExplored.right;
 
   return (
     <Slide variant="default" id={`slide-${data.id}`} index={index}>
-      <div className="paradox-slide-wow">
+      <div
+        className="paradox-slide-wow"
+        ref={slideRef}
+        onKeyDown={handleKeyDown}
+        tabIndex={0}
+        role="region"
+        aria-label="AI Paradox comparison - use arrow keys to navigate"
+      >
         {/* Background elements */}
-        <div className="paradox-bg-effects">
+        <div className="paradox-bg-effects" aria-hidden="true">
           <motion.div
             className="paradox-bg-orb paradox-bg-orb--1"
             animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.2, 0.1] }}
@@ -384,6 +524,16 @@ export const ParadoxSlide = ({ data, index }) => {
           >
             Every founder faces this disconnect. Let's explore both sides.
           </motion.p>
+          {/* Keyboard hint */}
+          <motion.p
+            className="paradox-keyboard-hint"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.6 }}
+            transition={{ delay: 1 }}
+            style={{ fontSize: '14px', marginTop: '8px' }}
+          >
+            Use ← → arrow keys to navigate
+          </motion.p>
         </motion.div>
 
         {/* Split screen panels */}
@@ -393,12 +543,22 @@ export const ParadoxSlide = ({ data, index }) => {
             className={`paradox-panel paradox-panel--promise ${activePanel === 0 ? 'paradox-panel--active' : ''} ${activePanel === 1 ? 'paradox-panel--inactive' : ''}`}
             onClick={() => handlePanelClick(0)}
             initial={{ x: -100, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
+            animate={{
+              x: 0,
+              opacity: 1,
+              filter: activePanel === 1 ? 'blur(3px)' : 'blur(0px)',
+              scale: activePanel === 1 ? 0.98 : 1,
+            }}
             transition={{ delay: 0.3, duration: 0.5 }}
+            role="button"
+            aria-pressed={activePanel === 0}
+            aria-label="What marketing promises"
+            tabIndex={0}
+            onKeyDown={(e) => e.key === 'Enter' && handlePanelClick(0)}
           >
-            {/* Sparkle effects */}
-            <div className="paradox-panel__sparkles">
-              {[...Array(12)].map((_, i) => (
+            {/* Enhanced Sparkle effects - 20 sparkles */}
+            <div className="paradox-panel__sparkles" aria-hidden="true">
+              {[...Array(20)].map((_, i) => (
                 <motion.div
                   key={i}
                   className="panel-sparkle"
@@ -410,11 +570,11 @@ export const ParadoxSlide = ({ data, index }) => {
                   transition={{
                     duration: 2,
                     repeat: Infinity,
-                    delay: i * 0.2
+                    delay: i * 0.15
                   }}
                   style={{
-                    left: `${10 + Math.random() * 80}%`,
-                    top: `${10 + Math.random() * 80}%`,
+                    left: `${5 + Math.random() * 90}%`,
+                    top: `${5 + Math.random() * 90}%`,
                   }}
                 />
               ))}
@@ -508,12 +668,22 @@ export const ParadoxSlide = ({ data, index }) => {
             className={`paradox-panel paradox-panel--reality ${activePanel === 1 ? 'paradox-panel--active' : ''} ${activePanel === 0 ? 'paradox-panel--inactive' : ''}`}
             onClick={() => handlePanelClick(1)}
             initial={{ x: 100, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
+            animate={{
+              x: 0,
+              opacity: 1,
+              filter: activePanel === 0 ? 'blur(3px)' : 'blur(0px)',
+              scale: activePanel === 0 ? 0.98 : 1,
+            }}
             transition={{ delay: 0.4, duration: 0.5 }}
+            role="button"
+            aria-pressed={activePanel === 1}
+            aria-label="What you feel"
+            tabIndex={0}
+            onKeyDown={(e) => e.key === 'Enter' && handlePanelClick(1)}
           >
-            {/* Confusion effects */}
-            <div className="paradox-panel__confusion">
-              {[...Array(6)].map((_, i) => (
+            {/* Enhanced Confusion effects - 10 marks */}
+            <div className="paradox-panel__confusion" aria-hidden="true">
+              {[...Array(10)].map((_, i) => (
                 <motion.div
                   key={i}
                   className="confusion-mark"
@@ -525,11 +695,11 @@ export const ParadoxSlide = ({ data, index }) => {
                   transition={{
                     duration: 1.5,
                     repeat: Infinity,
-                    delay: i * 0.15
+                    delay: i * 0.12
                   }}
                   style={{
-                    left: `${15 + i * 14}%`,
-                    top: `${20 + (i % 3) * 20}%`,
+                    left: `${10 + (i % 5) * 18}%`,
+                    top: `${15 + Math.floor(i / 5) * 35}%`,
                   }}
                 >
                   ?
@@ -599,23 +769,78 @@ export const ParadoxSlide = ({ data, index }) => {
           </motion.div>
         </div>
 
-        {/* Bottom revelation/insight */}
+        {/* Bottom revelation/insight - Enhanced */}
         <motion.div
           className={`paradox-slide-wow__revelation ${showInsight ? 'paradox-slide-wow__revelation--highlighted' : ''}`}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}
+          role="status"
+          aria-live="polite"
         >
           {showInsight ? (
             <motion.div
-              className="paradox-insight"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
+              className="paradox-insight paradox-insight--enhanced"
+              initial={{ opacity: 0, scale: 0.8, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.6, type: "spring", stiffness: 200 }}
             >
-              <span className="insight-icon">💡</span>
-              <h4>Here's the truth:</h4>
-              <p>{data.content}</p>
-              <p className="insight-emphasis">This webinar will bridge that gap.</p>
+              {/* Glow effect behind insight */}
+              <motion.div
+                className="insight-glow"
+                animate={{
+                  scale: [1, 1.1, 1],
+                  opacity: [0.3, 0.5, 0.3]
+                }}
+                transition={{ duration: 2, repeat: Infinity }}
+                style={{
+                  position: 'absolute',
+                  inset: '-20px',
+                  background: 'radial-gradient(circle, rgba(201, 169, 98, 0.3) 0%, transparent 70%)',
+                  borderRadius: '20px',
+                  pointerEvents: 'none',
+                  zIndex: -1,
+                }}
+                aria-hidden="true"
+              />
+              <motion.span
+                className="insight-icon"
+                animate={{
+                  rotate: [0, -10, 10, 0],
+                  scale: [1, 1.1, 1]
+                }}
+                transition={{ duration: 1, delay: 0.3 }}
+              >
+                💡
+              </motion.span>
+              <motion.h4
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                Here's the truth:
+              </motion.h4>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+              >
+                {data.content}
+              </motion.p>
+              <motion.p
+                className="insight-emphasis"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+                style={{
+                  background: 'linear-gradient(90deg, #c9a962, #e8d4a8, #c9a962)',
+                  backgroundClip: 'text',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}
+              >
+                This webinar will bridge that gap.
+              </motion.p>
             </motion.div>
           ) : (
             <p className="revelation-placeholder">
@@ -1408,26 +1633,127 @@ export const ToolSlide = ({ data, index }) => {
 };
 
 // =============================================
-// WORKFLOW INTRO SLIDE
+// WORKFLOW INTRO SLIDE - Enhanced with step progression
 // =============================================
-export const WorkflowIntroSlide = ({ data, index }) => (
-  <Slide variant="hero" id={`slide-${data.id}`} index={index}>
-    <div className="workflow-intro-slide-enhanced">
-      <ScaleIn>
-        <div className="workflow-intro-slide__number">
+export const WorkflowIntroSlide = ({ data, index }) => {
+  const [step, setStep] = useState(0);
+
+  return (
+    <Slide variant="hero" id={`slide-${data.id}`} index={index}>
+      <div
+        className="workflow-intro-slide-enhanced"
+        role="region"
+        aria-label={`Workflow ${data.number}: ${data.title}`}
+      >
+        {/* Step progression indicator */}
+        <motion.div
+          className="workflow-progress-steps"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          aria-hidden="true"
+        >
+          {[1, 2, 3].map((s) => (
+            <motion.div
+              key={s}
+              className={`workflow-step-dot ${step >= s ? 'workflow-step-dot--active' : ''}`}
+              initial={{ scale: 0 }}
+              animate={{
+                scale: 1,
+                backgroundColor: step >= s ? '#c9a962' : 'rgba(255,255,255,0.2)'
+              }}
+              transition={{ delay: 0.2 + s * 0.1 }}
+              style={{
+                width: '12px',
+                height: '12px',
+                borderRadius: '50%',
+                margin: '0 8px',
+              }}
+            />
+          ))}
+        </motion.div>
+
+        {/* Animated workflow number */}
+        <motion.div
+          className="workflow-intro-slide__number"
+          initial={{ opacity: 0, scale: 0.5, rotateY: -90 }}
+          animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+          transition={{ duration: 0.6, type: "spring" }}
+          onClick={() => setStep(prev => (prev + 1) % 4)}
+          style={{ cursor: 'pointer' }}
+        >
           <span>Workflow</span>
-          <span className="workflow-intro-slide__number-value">#{data.number}</span>
-        </div>
-      </ScaleIn>
-      <FadeIn delay={0.3}>
-        <h2 className="workflow-intro-slide__title text-gradient">{data.title}</h2>
-      </FadeIn>
-      <FadeIn delay={0.5}>
-        <p className="workflow-intro-slide__subtitle">{data.subtitle}</p>
-      </FadeIn>
-    </div>
-  </Slide>
-);
+          <motion.span
+            className="workflow-intro-slide__number-value"
+            animate={{
+              textShadow: [
+                '0 0 20px rgba(201, 169, 98, 0.5)',
+                '0 0 40px rgba(201, 169, 98, 0.8)',
+                '0 0 20px rgba(201, 169, 98, 0.5)'
+              ]
+            }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            #{data.number}
+          </motion.span>
+        </motion.div>
+
+        {/* Title with gradient animation */}
+        <motion.h2
+          className="workflow-intro-slide__title text-gradient"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.6 }}
+        >
+          {data.title}
+        </motion.h2>
+
+        {/* Subtitle with emphasis */}
+        <motion.p
+          className="workflow-intro-slide__subtitle"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+        >
+          {data.subtitle}
+        </motion.p>
+
+        {/* Visual step preview */}
+        <motion.div
+          className="workflow-step-preview"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7 }}
+          style={{
+            display: 'flex',
+            gap: '20px',
+            marginTop: '40px',
+            justifyContent: 'center',
+          }}
+        >
+          {['📤 Upload', '💬 Ask', '✨ Result'].map((label, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.8 + i * 0.15 }}
+              whileHover={{ scale: 1.05, y: -5 }}
+              style={{
+                padding: '12px 24px',
+                background: 'rgba(201, 169, 98, 0.1)',
+                border: '1px solid rgba(201, 169, 98, 0.3)',
+                borderRadius: '8px',
+                fontSize: '14px',
+              }}
+            >
+              {label}
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+    </Slide>
+  );
+};
 
 // =============================================
 // PROBLEM SLIDE
@@ -1678,12 +2004,34 @@ export const SolutionStepSlide = ({ data, index }) => {
 };
 
 // =============================================
-// PROMPT SLIDE
+// PROMPT SLIDE - Enhanced with copy-to-clipboard
 // =============================================
 export const PromptSlide = ({ data, index }) => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
+  const [isTyping, setIsTyping] = useState(true);
+  const [displayedText, setDisplayedText] = useState('');
   const videoRef = useRef(null);
   const isSlide16 = data.id === 16;
+
+  // Typewriter effect for prompt text
+  useState(() => {
+    if (data.promptText && !isSlide16) {
+      const text = data.promptText;
+      let i = 0;
+      setIsTyping(true);
+      const timer = setInterval(() => {
+        if (i < text.length) {
+          setDisplayedText(text.slice(0, i + 1));
+          i++;
+        } else {
+          clearInterval(timer);
+          setIsTyping(false);
+        }
+      }, 20);
+      return () => clearInterval(timer);
+    }
+  });
 
   const handleVideoToggle = () => {
     const video = videoRef.current;
@@ -1698,12 +2046,29 @@ export const PromptSlide = ({ data, index }) => {
     }
   };
 
+  const handleCopyPrompt = async () => {
+    if (data.promptText) {
+      try {
+        await navigator.clipboard.writeText(data.promptText);
+        setIsCopied(true);
+        setTimeout(() => setIsCopied(false), 2000);
+      } catch (err) {
+        console.error('Failed to copy:', err);
+      }
+    }
+  };
+
   return (
     <Slide variant="default" id={`slide-${data.id}`} index={index}>
-      <div className="prompt-slide">
+      <div className="prompt-slide" role="region" aria-label="AI Prompt example">
         {data.tool && (
           <FadeIn>
-            <div className="prompt-slide__tool">{data.tool}</div>
+            <motion.div
+              className="prompt-slide__tool"
+              whileHover={{ scale: 1.05 }}
+            >
+              {data.tool}
+            </motion.div>
           </FadeIn>
         )}
         <FadeIn delay={0.2}>
@@ -1716,7 +2081,19 @@ export const PromptSlide = ({ data, index }) => {
         )}
         {data.highlight && (
           <FadeIn delay={0.4}>
-            <p className="prompt-slide__highlight">{data.highlight}</p>
+            <motion.p
+              className="prompt-slide__highlight"
+              animate={{
+                textShadow: [
+                  '0 0 10px rgba(201, 169, 98, 0.3)',
+                  '0 0 20px rgba(201, 169, 98, 0.5)',
+                  '0 0 10px rgba(201, 169, 98, 0.3)'
+                ]
+              }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              {data.highlight}
+            </motion.p>
           </FadeIn>
         )}
 
@@ -1759,14 +2136,67 @@ export const PromptSlide = ({ data, index }) => {
 
         {!isSlide16 && (
           <ScaleIn delay={0.5}>
-            <div className="prompt-slide__box">
+            <motion.div
+              className="prompt-slide__box"
+              whileHover={{ boxShadow: '0 0 30px rgba(201, 169, 98, 0.3)' }}
+            >
               <div className="prompt-slide__box-header">
-                <span className="prompt-slide__box-dot" />
-                <span className="prompt-slide__box-dot" />
-                <span className="prompt-slide__box-dot" />
+                <div style={{ display: 'flex', gap: '6px' }}>
+                  <span className="prompt-slide__box-dot" />
+                  <span className="prompt-slide__box-dot" />
+                  <span className="prompt-slide__box-dot" />
+                </div>
+                {/* Copy button */}
+                <motion.button
+                  onClick={handleCopyPrompt}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  style={{
+                    background: 'transparent',
+                    border: '1px solid rgba(201, 169, 98, 0.3)',
+                    borderRadius: '4px',
+                    padding: '4px 12px',
+                    color: isCopied ? '#22c55e' : '#c9a962',
+                    cursor: 'pointer',
+                    fontSize: '12px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    transition: 'all 0.2s',
+                  }}
+                  aria-label="Copy prompt to clipboard"
+                >
+                  {isCopied ? (
+                    <>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                      Copied!
+                    </>
+                  ) : (
+                    <>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                      </svg>
+                      Copy
+                    </>
+                  )}
+                </motion.button>
               </div>
-              <p className="prompt-slide__text">{data.promptText}</p>
-            </div>
+              <p className="prompt-slide__text">
+                {displayedText || data.promptText}
+                {isTyping && (
+                  <motion.span
+                    animate={{ opacity: [0, 1, 0] }}
+                    transition={{ duration: 0.8, repeat: Infinity }}
+                    style={{ marginLeft: '2px' }}
+                  >
+                    |
+                  </motion.span>
+                )}
+              </p>
+            </motion.div>
           </ScaleIn>
         )}
       </div>

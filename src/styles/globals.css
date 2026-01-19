@@ -356,15 +356,189 @@ body {
   z-index: 9999;
 }
 
-/* Responsive Typography */
+/* ===================================
+   GPU ACCELERATION & PERFORMANCE
+   Use transform/opacity for smooth 60fps
+   =================================== */
+
+/* GPU-accelerated elements */
+.gpu-accelerated,
+.floating-particle,
+.panel-sparkle,
+.confusion-mark,
+.slide-content,
+.hero-cinematic__robot,
+.gift-slide-new__card,
+.paradox-panel {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Remove will-change after animation completes */
+.animation-done {
+  will-change: auto;
+}
+
+/* Focus states for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(201, 169, 98, 0.2);
+}
+
+/* Screen reader only utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Skip link for accessibility */
+.skip-link:focus {
+  top: 0 !important;
+}
+
+/* ===================================
+   REDUCED MOTION PREFERENCES
+   Respect user preferences for less motion
+   =================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Disable parallax and floating effects */
+  .floating-particle,
+  .panel-sparkle,
+  .confusion-mark,
+  .starfield__layer {
+    animation: none !important;
+    opacity: 0.5;
+  }
+
+  /* Disable complex background animations */
+  .starfield__nebula,
+  .paradox-bg-orb {
+    animation: none !important;
+  }
+
+  /* Simplify card transitions */
+  .gift-slide-new__card,
+  .paradox-panel {
+    transform: none !important;
+    filter: none !important;
+  }
+
+  /* Static shimmer */
+  .gift-slide-new__shimmer {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --color-text-secondary: rgba(255, 255, 255, 0.9);
+    --color-text-tertiary: rgba(255, 255, 255, 0.8);
+    --color-text-muted: rgba(255, 255, 255, 0.7);
+  }
+
+  .gold-border {
+    border-width: 2px;
+    border-color: var(--color-gold);
+  }
+}
+
+/* ===================================
+   RESPONSIVE TYPOGRAPHY & LAYOUT
+   =================================== */
+
+@media (max-width: 1024px) {
+  html {
+    font-size: 16px;
+  }
+
+  :root {
+    --spacing-lg: 3rem;
+    --spacing-xl: 4rem;
+    --spacing-2xl: 6rem;
+  }
+}
+
 @media (max-width: 768px) {
   html {
     font-size: 14px;
+  }
+
+  :root {
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+  }
+
+  /* Stack panels vertically on mobile */
+  .paradox-panels {
+    flex-direction: column !important;
+    gap: 1rem;
+  }
+
+  .paradox-panel {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Reduce particle count on mobile via CSS */
+  .floating-particle:nth-child(n+11) {
+    display: none;
+  }
+
+  .panel-sparkle:nth-child(n+11) {
+    display: none;
   }
 }
 
 @media (max-width: 480px) {
   html {
     font-size: 12px;
+  }
+
+  :root {
+    --spacing-sm: 0.75rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+  }
+
+  /* Further reduce animations on small screens */
+  .floating-particle:nth-child(n+6) {
+    display: none;
+  }
+
+  .panel-sparkle:nth-child(n+6) {
+    display: none;
+  }
+
+  .confusion-mark:nth-child(n+5) {
+    display: none;
   }
 }
