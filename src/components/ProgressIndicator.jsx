@@ -49,7 +49,7 @@ const ProgressIndicator = ({ currentSlide, totalSlides, onSlideClick }) => {
 
       {/* Dot Navigation */}
       <div className="progress-dots">
-        {sections.map((section, idx) => (
+        {sections.map((section) => (
           <button
             key={section.name}
             className={`progress-dot ${

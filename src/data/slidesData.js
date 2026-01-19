@@ -224,6 +224,7 @@ export const slidesData = [
     type: 'transition',
     title: 'The Hidden Cost',
     style: 'warning',
+    image: '/images/generated/hidden-cost.png',
   },
   {
     id: 29,
@@ -251,6 +252,7 @@ export const slidesData = [
     title: 'The Confidence Game',
     content: 'AI is a people pleaser.\nIt wants to make you happy, even if it has to lie to do it.',
     icon: 'mask',
+    image: '/images/generated/glitchy-robot.png',
   },
   {
     id: 32,
@@ -291,6 +293,7 @@ export const slidesData = [
     title: 'Prompt Injection',
     content: 'A user tricked the bot by telling it \'Agree to everything.\'\nThe bot sold a $70k car for a dollar. You need guardrails.',
     icon: 'shield-alert',
+    image: '/images/generated/prompt-injection-shield.png',
   },
   {
     id: 37,
@@ -298,6 +301,7 @@ export const slidesData = [
     title: 'Case Study: DPD',
     headline: 'Parcel delivery firm disables AI after chatbot swears at customer.',
     subtitle: 'Brand Reputation Risks',
+    image: '/images/generated/dpd-robot-error.png',
   },
   {
     id: 38,
@@ -339,6 +343,7 @@ export const slidesData = [
     type: 'introduction',
     title: 'The AI Operator',
     subtitle: 'Not just a scheduler. A trained operator of these tools.',
+    image: '/images/generated/ai-operator.png',
   },
   {
     id: 44,
@@ -360,6 +365,7 @@ export const slidesData = [
     title: 'They Know the Tools',
     content: 'Our VAs are trained to understand the what tool is best suited for what task. They know when to use ChatGPT for a draft and when to use Perplexity for research. You don\'t have to teach them the basics.',
     icon: 'tools',
+    image: '/images/generated/va-confident.png',
   },
   {
     id: 47,
@@ -367,6 +373,7 @@ export const slidesData = [
     title: 'They Know How to Ask',
     steps: ['Write Prompt.', 'Verify Output.', 'Edit.'],
     content: 'They understand that AI needs clear instructions. More importantly, they understand that AI makes mistakes.',
+    image: '/images/generated/va-thoughtful.png',
   },
   {
     id: 48,
@@ -445,6 +452,7 @@ export const slidesData = [
     title: 'We Will Match You With',
     highlight: 'BEST AI-trained Executive Assistant',
     cta: 'Absolutely for FREE',
+    image: '/images/generated/assistant-friendly.png',
   },
   {
     id: 59,
@@ -452,6 +460,7 @@ export const slidesData = [
     badge: 'ULTIMATE DELEGATION PACKAGE',
     content: 'While the rate is as low as $12/hour, these are elite, highly skilled professionals who bring sophisticated AI expertise to your business.',
     highlight: '$12/hour',
+    image: '/images/generated/assistant-expert.png',
   },
   {
     id: 60,
@@ -486,6 +495,7 @@ export const slidesData = [
     badge: 'ULTIMATE DELEGATION PACKAGE',
     title: 'QUALITY ASSURANCE BI-WEEKLY CALLS',
     icon: 'phone',
+    image: '/images/generated/va-international.png',
   },
   {
     id: 63,

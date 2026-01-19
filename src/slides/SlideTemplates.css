@@ -703,14 +703,14 @@
   height: 180px;
 }
 
-/* 2D Gift Base */
+/* 2D Gift Base - Blue box to match PDF */
 .gift-2d__base {
   position: absolute;
   width: 160px;
   height: 120px;
   bottom: 0;
   left: 10px;
-  background: linear-gradient(135deg, #c9a962 0%, #a88b4a 100%);
+  background: linear-gradient(135deg, #4a90d9 0%, #2e5e99 100%);
   border-radius: 8px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
@@ -742,9 +742,9 @@
   left: 0;
   width: 180px;
   height: 35px;
-  background: linear-gradient(180deg, #e4d4a5 0%, #d4b872 100%);
+  background: linear-gradient(180deg, #6ab0f7 0%, #4a90d9 100%);
   border-radius: 6px 6px 0 0;
-  box-shadow: 0 -3px 15px rgba(201, 169, 98, 0.3);
+  box-shadow: 0 -3px 15px rgba(74, 144, 217, 0.3);
 }
 
 .gift-2d__lid-ribbon {
@@ -2560,6 +2560,20 @@
   font-weight: 700;
 }
 
+.transition-slide__image {
+  max-width: 300px;
+  margin: 0 auto var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.transition-slide__image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 /* =============================================
    QUESTION SLIDE
    ============================================= */
@@ -2664,6 +2678,20 @@
 .case-study-slide__step-text {
   color: var(--color-text-secondary);
   line-height: 1.6;
+}
+
+.case-study-slide__image {
+  max-width: 200px;
+  margin: 0 auto var(--spacing-md);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(239, 68, 68, 0.2);
+}
+
+.case-study-slide__image img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* =============================================
@@ -2773,6 +2801,20 @@
   line-height: 1.8;
 }
 
+.warning-slide__image {
+  max-width: 200px;
+  margin: 0 auto var(--spacing-md);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(239, 68, 68, 0.2);
+}
+
+.warning-slide__image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 /* =============================================
    SOLUTION SLIDE
    ============================================= */
@@ -2829,6 +2871,20 @@
 .introduction-slide__subtitle {
   font-size: 1.5rem;
   color: var(--color-text-secondary);
+}
+
+.introduction-slide__image {
+  max-width: 250px;
+  margin: 0 auto var(--spacing-lg);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(201, 169, 98, 0.3);
+}
+
+.introduction-slide__image img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* =============================================
@@ -2989,6 +3045,20 @@
   line-height: 1.8;
 }
 
+.feature-slide__image {
+  max-width: 180px;
+  margin: 0 auto var(--spacing-md);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(201, 169, 98, 0.2);
+}
+
+.feature-slide__image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 /* =============================================
    USE CASE SLIDE
    ============================================= */
@@ -3119,6 +3189,20 @@
   font-weight: 600;
 }
 
+.offer-slide__image {
+  max-width: 200px;
+  margin: 0 auto var(--spacing-md);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(201, 169, 98, 0.25);
+}
+
+.offer-slide__image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 /* =============================================
    PRICING SLIDE
    ============================================= */
@@ -3153,6 +3237,20 @@
 .pricing-slide__content {
   font-size: 1.25rem;
   color: var(--color-text-secondary);
+}
+
+.pricing-slide__image {
+  max-width: 180px;
+  margin: 0 auto var(--spacing-md);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(201, 169, 98, 0.2);
+}
+
+.pricing-slide__image img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* =============================================
@@ -3202,6 +3300,24 @@
 }
 
 .benefits-slide__check svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Animated benefit items for slide 60 */
+.benefits-slide__item--animated {
+  position: relative;
+}
+
+.benefits-slide__icon-animated {
+  width: 32px;
+  height: 32px;
+  color: var(--color-gold);
+  flex-shrink: 0;
+  margin-right: var(--spacing-sm);
+}
+
+.benefits-slide__icon-animated svg {
   width: 100%;
   height: 100%;
 }
@@ -3319,6 +3435,28 @@
 }
 
 .package-slide__gift svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Animated bonus items for slide 63 */
+.package-slide__bonuses--animated {
+  overflow: hidden;
+}
+
+.package-slide__bonus--animated {
+  position: relative;
+}
+
+.package-slide__bonus-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--color-gold);
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+
+.package-slide__bonus-icon svg {
   width: 100%;
   height: 100%;
 }
@@ -4769,7 +4907,8 @@
   left: 10px;
   right: 10px;
   height: 80px;
-  background: linear-gradient(180deg, #0a2463 0%, #1e3a5f 50%, #3d5a80 100%);
+  /* Sunset sky gradient matching PDF */
+  background: linear-gradient(180deg, #1a1a3e 0%, #4a2c5a 20%, #8b4b6b 40%, #e67e50 60%, #f4a460 80%, #ffd89b 100%);
   border-radius: 12px 12px 50% 50% / 12px 12px 20% 20%;
   overflow: hidden;
   box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
@@ -5805,6 +5944,19 @@
   max-width: 300px;
 }
 
+.insight-illustration__image {
+  max-width: 280px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.insight-illustration__image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 .insight-robot-speech {
   position: absolute;
   top: -30px;
@@ -6675,6 +6827,53 @@
   margin-top: var(--spacing-lg);
 }
 
+/* AI-generated image styling */
+.inbox-illustration--ai-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: var(--spacing-xl);
+}
+
+.inbox-ai-image-wrapper {
+  position: relative;
+  max-width: 700px;
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow:
+    0 25px 80px rgba(0, 0, 0, 0.5),
+    0 0 60px rgba(201, 169, 98, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(201, 169, 98, 0.3);
+}
+
+.inbox-ai-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.inbox-ai-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    transparent 70%,
+    rgba(26, 26, 46, 0.4) 100%
+  );
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .inbox-ai-image-wrapper {
+    max-width: 100%;
+    border-radius: 12px;
+  }
+}
+
 .inbox-scene {
   position: relative;
   width: 400px;
@@ -7126,7 +7325,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 1.5rem;
+  justify-content: center;
+  margin: 1.5rem auto 0;
   width: 100%;
   max-width: 600px;
 }
@@ -7263,5 +7463,1566 @@
 
   .slide-video-wrapper {
     border-radius: 12px;
+  }
+}
+
+/* =============================================
+   AI EDITORIAL IMAGE STYLES
+   Premium photorealistic images with luxury framing
+   ============================================= */
+
+.ai-editorial-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: var(--spacing-xl);
+  padding: 0 var(--spacing-md);
+}
+
+.ai-editorial-image__wrapper {
+  position: relative;
+  max-width: 800px;
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  /* Luxury frame effect */
+  box-shadow:
+    0 30px 100px rgba(0, 0, 0, 0.6),
+    0 0 80px rgba(201, 169, 98, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(201, 169, 98, 0.25);
+  /* Subtle inner glow */
+  background: linear-gradient(135deg, rgba(201, 169, 98, 0.05), transparent);
+}
+
+.ai-editorial-image__wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  padding: 2px;
+  background: linear-gradient(135deg, rgba(201, 169, 98, 0.3), transparent, rgba(201, 169, 98, 0.1));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.ai-editorial-image__img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.ai-editorial-image__overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Default overlay - subtle vignette */
+.ai-editorial-image__overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 50%,
+    rgba(26, 26, 46, 0.3) 100%
+  );
+}
+
+/* Dramatic overlay for stress/problem slides */
+.ai-editorial-image__overlay--dramatic {
+  background: linear-gradient(
+    180deg,
+    rgba(26, 26, 46, 0.1) 0%,
+    transparent 30%,
+    transparent 70%,
+    rgba(26, 26, 46, 0.4) 100%
+  );
+}
+
+.ai-editorial-image__overlay--dramatic::after {
+  background: radial-gradient(
+    ellipse at center,
+    transparent 40%,
+    rgba(26, 26, 46, 0.5) 100%
+  );
+}
+
+/* Success overlay - warm and optimistic */
+.ai-editorial-image__overlay--success {
+  background: linear-gradient(
+    180deg,
+    rgba(201, 169, 98, 0.05) 0%,
+    transparent 30%,
+    transparent 70%,
+    rgba(26, 26, 46, 0.3) 100%
+  );
+}
+
+.ai-editorial-image__overlay--success::after {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(201, 169, 98, 0.03) 0%,
+    transparent 50%,
+    rgba(26, 26, 46, 0.4) 100%
+  );
+}
+
+/* Warm overlay for golden hour/cinematic shots */
+.ai-editorial-image__overlay--warm {
+  background: linear-gradient(
+    180deg,
+    rgba(244, 164, 96, 0.08) 0%,
+    transparent 40%,
+    transparent 60%,
+    rgba(26, 26, 46, 0.35) 100%
+  );
+}
+
+.ai-editorial-image__overlay--warm::after {
+  background: radial-gradient(
+    ellipse at 70% 30%,
+    rgba(244, 164, 96, 0.1) 0%,
+    transparent 50%
+  );
+}
+
+/* Cinematic variant - wider aspect */
+.ai-editorial-image--cinematic .ai-editorial-image__wrapper {
+  max-width: 900px;
+}
+
+/* Success variant - subtle gold accent */
+.ai-editorial-image--success .ai-editorial-image__wrapper {
+  border-color: rgba(201, 169, 98, 0.35);
+  box-shadow:
+    0 30px 100px rgba(0, 0, 0, 0.5),
+    0 0 100px rgba(201, 169, 98, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .ai-editorial-image {
+    margin-top: var(--spacing-lg);
+    padding: 0 var(--spacing-sm);
+  }
+
+  .ai-editorial-image__wrapper {
+    border-radius: 14px;
+    max-width: 100%;
+  }
+
+  .ai-editorial-image--cinematic .ai-editorial-image__wrapper {
+    max-width: 100%;
+  }
+}
+
+/* =============================================
+   SLIDE-SPECIFIC CUSTOM ANIMATIONS & KEYFRAMES
+   ============================================= */
+
+/* === KEYFRAMES === */
+
+/* Slide 21 - Branching Path */
+@keyframes marker-pulse {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(201, 169, 98, 0.8), 0 0 20px rgba(201, 169, 98, 0.4);
+    transform: translateY(-50%) scale(1);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(201, 169, 98, 1), 0 0 40px rgba(201, 169, 98, 0.6);
+    transform: translateY(-50%) scale(1.2);
+  }
+}
+
+@keyframes path-draw {
+  0% { width: 0; }
+  100% { width: 100%; }
+}
+
+@keyframes branch-glow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* Slide 22 - Commute Waves */
+@keyframes wave-flow {
+  0% { transform: translateX(0) translateY(0); }
+  50% { transform: translateX(-25px) translateY(10px); }
+  100% { transform: translateX(0) translateY(0); }
+}
+
+@keyframes gradient-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Slide 29 - Hourglass */
+@keyframes sand-fall {
+  0% { height: 100%; }
+  100% { height: 0%; }
+}
+
+@keyframes sand-accumulate {
+  0% { height: 0%; }
+  100% { height: 100%; }
+}
+
+@keyframes sand-particle {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(60px) scale(0.5); opacity: 0; }
+}
+
+@keyframes hourglass-glow {
+  0%, 100% { filter: drop-shadow(0 0 5px rgba(201, 169, 98, 0.3)); }
+  50% { filter: drop-shadow(0 0 20px rgba(201, 169, 98, 0.8)); }
+}
+
+/* Slide 32 - Airplane Caution */
+@keyframes plane-hover {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-8px) rotate(2deg); }
+}
+
+@keyframes caution-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.15); opacity: 0.7; }
+}
+
+@keyframes caution-flash {
+  0%, 100% { background: #ef4444; }
+  50% { background: #fbbf24; }
+}
+
+/* Slide 34 - Scales of Justice */
+@keyframes scale-tip {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-8deg); }
+  75% { transform: rotate(8deg); }
+}
+
+@keyframes gavel-strike {
+  0%, 70%, 100% { transform: rotate(0deg); }
+  80% { transform: rotate(-35deg); }
+  90% { transform: rotate(0deg); }
+}
+
+/* Slide 35 - Chat Bubble */
+@keyframes bubble-pop {
+  0% { transform: scale(0) rotate(-10deg); opacity: 0; }
+  60% { transform: scale(1.1) rotate(2deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+@keyframes emoji-bounce {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.2) rotate(-10deg); }
+  75% { transform: scale(1.2) rotate(10deg); }
+}
+
+@keyframes text-type {
+  0% { width: 0; }
+  100% { width: 100%; }
+}
+
+/* Slide 39 - Juggling Tools */
+@keyframes juggle-orbit {
+  0% { transform: rotate(0deg) translateX(70px) rotate(0deg); }
+  100% { transform: rotate(360deg) translateX(70px) rotate(-360deg); }
+}
+
+@keyframes juggler-sway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+/* Slide 42 - Puzzle Piece */
+@keyframes puzzle-slide {
+  0% { transform: translateX(-80px) rotate(-15deg); opacity: 0; }
+  70% { transform: translateX(5px) rotate(3deg); opacity: 1; }
+  100% { transform: translateX(0) rotate(0deg); opacity: 1; }
+}
+
+@keyframes puzzle-lock {
+  0%, 80% { filter: drop-shadow(0 0 0 transparent); }
+  100% { filter: drop-shadow(0 0 25px rgba(201, 169, 98, 0.8)); }
+}
+
+/* Slide 50 - Funnel Filter */
+@keyframes circle-drop {
+  0% { transform: translateY(-20px); opacity: 0; }
+  10% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateY(150px); opacity: 0; }
+}
+
+@keyframes funnel-pulse {
+  0%, 100% { stroke-opacity: 0.5; }
+  50% { stroke-opacity: 1; }
+}
+
+/* Slide 51 - Content Pipeline */
+@keyframes waveform-bar {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
+
+@keyframes gear-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes icon-pop {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes flow-line {
+  0% { stroke-dashoffset: 100; }
+  100% { stroke-dashoffset: 0; }
+}
+
+/* Slide 52 - Calendar Checkmarks */
+@keyframes check-pop {
+  0% { transform: scale(0) rotate(-45deg); opacity: 0; }
+  50% { transform: scale(1.3) rotate(0deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+@keyframes day-fade {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Slides 54 & 55 - Three Pillars */
+@keyframes pillar-rise {
+  0% { transform: scaleY(0); }
+  100% { transform: scaleY(1); }
+}
+
+@keyframes pillar-glow {
+  0%, 100% { box-shadow: 0 0 10px rgba(201, 169, 98, 0.2); }
+  50% { box-shadow: 0 0 30px rgba(201, 169, 98, 0.6); }
+}
+
+@keyframes icon-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Slide 60 - Benefit Icons */
+@keyframes icon-bounce-in {
+  0% { transform: translateX(-20px) scale(0); opacity: 0; }
+  60% { transform: translateX(5px) scale(1.15); opacity: 1; }
+  100% { transform: translateX(0) scale(1); opacity: 1; }
+}
+
+@keyframes person-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes calendar-flip {
+  0%, 100% { transform: rotateX(0deg); }
+  50% { transform: rotateX(180deg); }
+}
+
+@keyframes recycle-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Slide 63 - Bonus Slide-In */
+@keyframes slide-in-left {
+  0% { transform: translateX(-100px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slide-in-right {
+  0% { transform: translateX(100px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes bonus-glow {
+  0%, 100% { box-shadow: 0 0 5px rgba(201, 169, 98, 0.2); }
+  50% { box-shadow: 0 0 15px rgba(201, 169, 98, 0.5); }
+}
+
+/* =============================================
+   SLIDE 21 - BRANCHING PATH DIAGRAM
+   ============================================= */
+
+.branching-path {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  height: 280px;
+  margin: var(--spacing-lg) auto;
+}
+
+.branching-path__main-road {
+  position: absolute;
+  bottom: 50%;
+  left: 5%;
+  width: 25%;
+  height: 6px;
+  background: linear-gradient(90deg, rgba(201, 169, 98, 0.3), rgba(201, 169, 98, 0.8));
+  border-radius: 3px;
+  transform: translateY(50%);
+}
+
+.branching-path__marker {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: var(--color-gold);
+  border-radius: 50%;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  animation: marker-pulse 2s ease-in-out infinite;
+  z-index: 10;
+}
+
+.branching-path__fork {
+  position: absolute;
+  left: 30%;
+  top: 0;
+  bottom: 0;
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 0;
+}
+
+.branching-path__branch {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 50px;
+}
+
+.branching-path__line {
+  height: 4px;
+  background: linear-gradient(90deg, rgba(201, 169, 98, 0.6), rgba(201, 169, 98, 0.2));
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.branching-path__branch--top .branching-path__line {
+  width: 70%;
+  transform: rotate(-15deg);
+  transform-origin: left center;
+}
+
+.branching-path__branch--middle .branching-path__line {
+  width: 85%;
+}
+
+.branching-path__branch--bottom .branching-path__line {
+  width: 60%;
+  transform: rotate(15deg);
+  transform-origin: left center;
+}
+
+.branching-path__label {
+  position: absolute;
+  right: 0;
+  padding: 8px 16px;
+  background: rgba(201, 169, 98, 0.1);
+  border: 1px solid rgba(201, 169, 98, 0.3);
+  border-radius: 20px;
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-gold);
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.branching-path__branch:hover .branching-path__label {
+  background: rgba(201, 169, 98, 0.2);
+  border-color: var(--color-gold);
+  box-shadow: 0 0 20px rgba(201, 169, 98, 0.3);
+}
+
+.branching-path__branch:hover .branching-path__line {
+  background: linear-gradient(90deg, rgba(201, 169, 98, 1), rgba(201, 169, 98, 0.5));
+  box-shadow: 0 0 10px rgba(201, 169, 98, 0.5);
+}
+
+/* =============================================
+   SLIDE 22 - COMMUTE CURE WAVES
+   ============================================= */
+
+.commute-waves {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.commute-waves__layer {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  left: -50%;
+  top: -50%;
+  background: linear-gradient(
+    135deg,
+    transparent 0%,
+    rgba(201, 169, 98, 0.02) 25%,
+    rgba(201, 169, 98, 0.05) 50%,
+    rgba(201, 169, 98, 0.02) 75%,
+    transparent 100%
+  );
+  background-size: 200px 200px;
+}
+
+.commute-waves__layer--1 {
+  animation: wave-flow 10s ease-in-out infinite;
+}
+
+.commute-waves__layer--2 {
+  animation: wave-flow 14s ease-in-out infinite;
+  animation-delay: -3s;
+  opacity: 0.7;
+}
+
+.commute-waves__layer--3 {
+  animation: wave-flow 18s ease-in-out infinite;
+  animation-delay: -6s;
+  opacity: 0.5;
+}
+
+.commute-waves__gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    45deg,
+    rgba(201, 169, 98, 0.03) 0%,
+    transparent 30%,
+    transparent 70%,
+    rgba(201, 169, 98, 0.03) 100%
+  );
+  background-size: 400% 400%;
+  animation: gradient-flow 8s ease-in-out infinite;
+}
+
+/* =============================================
+   SLIDE 29 - HOURGLASS VISUAL
+   ============================================= */
+
+.hourglass-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: var(--spacing-lg) auto;
+}
+
+.hourglass {
+  position: relative;
+  width: 80px;
+  height: 160px;
+  animation: hourglass-glow 3s ease-in-out infinite;
+}
+
+.hourglass__frame {
+  position: absolute;
+  inset: 0;
+  border: 3px solid rgba(201, 169, 98, 0.6);
+  border-radius: 40px 40px 40px 40px / 80px 80px 80px 80px;
+  background: rgba(201, 169, 98, 0.05);
+}
+
+.hourglass__top,
+.hourglass__bottom {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  overflow: hidden;
+}
+
+.hourglass__top {
+  top: 10%;
+  height: 35%;
+  clip-path: polygon(0 0, 100% 0, 70% 100%, 30% 100%);
+}
+
+.hourglass__bottom {
+  bottom: 10%;
+  height: 35%;
+  clip-path: polygon(30% 0, 70% 0, 100% 100%, 0 100%);
+}
+
+.hourglass__sand {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: linear-gradient(180deg, #c9a962, #e4d4a5);
+}
+
+.hourglass__sand--draining {
+  top: 0;
+  height: 100%;
+  animation: sand-fall 4s linear infinite;
+}
+
+.hourglass__sand--filling {
+  bottom: 0;
+  height: 0%;
+  animation: sand-accumulate 4s linear infinite;
+}
+
+.hourglass__neck {
+  position: absolute;
+  top: 45%;
+  left: 35%;
+  width: 30%;
+  height: 10%;
+  background: rgba(201, 169, 98, 0.3);
+}
+
+.hourglass__particles {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+}
+
+.hourglass__particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: var(--color-gold);
+  border-radius: 50%;
+  animation: sand-particle 0.8s linear infinite;
+}
+
+.hourglass__particle:nth-child(2) { animation-delay: 0.2s; left: 3px; }
+.hourglass__particle:nth-child(3) { animation-delay: 0.4s; left: -3px; }
+
+/* =============================================
+   SLIDE 32 - AIRPLANE CAUTION
+   ============================================= */
+
+.airplane-caution {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: var(--spacing-lg) auto;
+  height: 200px;
+}
+
+.airplane-caution__plane {
+  position: relative;
+  animation: plane-hover 4s ease-in-out infinite;
+}
+
+.airplane-caution__plane svg {
+  width: 120px;
+  height: 60px;
+  fill: rgba(201, 169, 98, 0.8);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.airplane-caution__warning {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: caution-pulse 1.5s ease-in-out infinite;
+}
+
+.airplane-caution__warning-icon {
+  width: 40px;
+  height: 40px;
+  background: #ef4444;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: caution-flash 2s ease-in-out infinite;
+}
+
+.airplane-caution__warning-icon::after {
+  content: '!';
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-top: 10px;
+}
+
+/* =============================================
+   SLIDE 34 - SCALES OF JUSTICE
+   ============================================= */
+
+.justice-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: var(--spacing-lg) auto;
+  height: 180px;
+}
+
+.scales {
+  position: relative;
+  width: 160px;
+  height: 140px;
+}
+
+.scales__pillar {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 100px;
+  background: linear-gradient(180deg, rgba(201, 169, 98, 0.8), rgba(201, 169, 98, 0.4));
+  border-radius: 4px;
+}
+
+.scales__beam {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 140px;
+  height: 6px;
+  background: var(--color-gold);
+  border-radius: 3px;
+  transform-origin: center center;
+  animation: scale-tip 4s ease-in-out infinite;
+}
+
+.scales__pan {
+  position: absolute;
+  top: 20px;
+  width: 40px;
+  height: 25px;
+  background: rgba(201, 169, 98, 0.3);
+  border: 2px solid rgba(201, 169, 98, 0.6);
+  border-radius: 0 0 20px 20px;
+}
+
+.scales__pan--left {
+  left: 5px;
+}
+
+.scales__pan--right {
+  right: 5px;
+}
+
+.scales__chain {
+  position: absolute;
+  top: 6px;
+  width: 2px;
+  height: 14px;
+  background: rgba(201, 169, 98, 0.5);
+}
+
+.scales__pan--left .scales__chain { left: 50%; transform: translateX(-50%); }
+.scales__pan--right .scales__chain { left: 50%; transform: translateX(-50%); }
+
+.gavel {
+  position: absolute;
+  right: -60px;
+  bottom: 20px;
+  width: 50px;
+  height: 70px;
+  transform-origin: bottom center;
+  animation: gavel-strike 3s ease-in-out infinite;
+}
+
+.gavel__head {
+  width: 50px;
+  height: 25px;
+  background: linear-gradient(135deg, #8b7340, #c9a962);
+  border-radius: 5px;
+}
+
+.gavel__handle {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 50px;
+  background: linear-gradient(180deg, #5a4a2a, #8b7340);
+  border-radius: 4px;
+}
+
+/* =============================================
+   SLIDE 35 - CHAT BUBBLE SCENE
+   ============================================= */
+
+.chat-bubble-scene {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin: var(--spacing-lg) auto;
+}
+
+.chat-bubble {
+  position: relative;
+  padding: 16px 24px;
+  border-radius: 20px;
+  font-family: var(--font-body);
+  max-width: 280px;
+}
+
+.chat-bubble--deal {
+  background: linear-gradient(135deg, rgba(201, 169, 98, 0.2), rgba(201, 169, 98, 0.1));
+  border: 1px solid rgba(201, 169, 98, 0.4);
+  animation: bubble-pop 0.6s ease-out forwards;
+}
+
+.chat-bubble--deal::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 30px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid rgba(201, 169, 98, 0.3);
+}
+
+.chat-bubble__text {
+  font-size: 1.1rem;
+  color: var(--color-gold);
+  font-weight: 600;
+}
+
+.chat-bubble--reaction {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  padding: 12px 20px;
+  animation: bubble-pop 0.6s ease-out 0.8s both;
+}
+
+.chat-bubble--reaction .emoji-shocked {
+  font-size: 2rem;
+  display: block;
+  animation: emoji-bounce 1s ease-in-out infinite;
+  animation-delay: 1.4s;
+}
+
+/* =============================================
+   SLIDE 39 - JUGGLING TOOLS
+   ============================================= */
+
+.juggler-scene {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 220px;
+  margin: var(--spacing-lg) auto;
+}
+
+.juggler {
+  position: relative;
+  width: 60px;
+  height: 120px;
+}
+
+.juggler__head {
+  width: 30px;
+  height: 30px;
+  background: linear-gradient(135deg, rgba(201, 169, 98, 0.6), rgba(201, 169, 98, 0.3));
+  border-radius: 50%;
+  margin: 0 auto;
+}
+
+.juggler__body {
+  width: 40px;
+  height: 50px;
+  background: linear-gradient(180deg, rgba(201, 169, 98, 0.4), rgba(201, 169, 98, 0.2));
+  border-radius: 20px 20px 10px 10px;
+  margin: 5px auto 0;
+  animation: juggler-sway 2s ease-in-out infinite;
+}
+
+.juggler__arms {
+  position: absolute;
+  top: 35px;
+  left: -20px;
+  right: -20px;
+  height: 8px;
+  background: linear-gradient(90deg,
+    rgba(201, 169, 98, 0.4),
+    transparent 20%,
+    transparent 80%,
+    rgba(201, 169, 98, 0.4)
+  );
+  border-radius: 4px;
+}
+
+.juggler__items {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+}
+
+.juggle-item {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(201, 169, 98, 0.2);
+  border: 2px solid rgba(201, 169, 98, 0.5);
+  border-radius: 10px;
+  animation: juggle-orbit 3s linear infinite;
+}
+
+.juggle-item:nth-child(1) { animation-delay: 0s; }
+.juggle-item:nth-child(2) { animation-delay: -0.75s; }
+.juggle-item:nth-child(3) { animation-delay: -1.5s; }
+.juggle-item:nth-child(4) { animation-delay: -2.25s; }
+
+.juggle-item svg {
+  width: 20px;
+  height: 20px;
+  fill: var(--color-gold);
+}
+
+/* =============================================
+   SLIDE 42 - PUZZLE PIECE
+   ============================================= */
+
+.puzzle-scene {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: var(--spacing-lg) auto;
+}
+
+.puzzle-board {
+  position: relative;
+  width: 200px;
+  height: 150px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 4px;
+}
+
+.puzzle-piece {
+  background: rgba(201, 169, 98, 0.2);
+  border: 2px solid rgba(201, 169, 98, 0.4);
+  border-radius: 8px;
+  position: relative;
+}
+
+.puzzle-piece--placed {
+  background: rgba(201, 169, 98, 0.3);
+  border-color: rgba(201, 169, 98, 0.6);
+}
+
+.puzzle-piece--missing {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px dashed rgba(201, 169, 98, 0.3);
+}
+
+.puzzle-piece--sliding {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: calc(33.33% - 3px);
+  height: calc(50% - 2px);
+  background: linear-gradient(135deg, rgba(201, 169, 98, 0.4), rgba(201, 169, 98, 0.2));
+  border: 2px solid var(--color-gold);
+  animation: puzzle-slide 2s ease-out forwards, puzzle-lock 2s ease-out forwards;
+}
+
+.puzzle-piece--sliding::before {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  color: var(--color-gold);
+  opacity: 0;
+  animation: check-pop 0.5s ease-out 1.8s forwards;
+}
+
+/* =============================================
+   SLIDE 50 - FUNNEL FILTER
+   ============================================= */
+
+.funnel-visual {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: var(--spacing-lg) auto;
+  height: 220px;
+}
+
+.funnel {
+  position: relative;
+  width: 180px;
+  height: 160px;
+}
+
+.funnel__shape {
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(0 0, 100% 0, 70% 100%, 30% 100%);
+  background: linear-gradient(180deg,
+    rgba(201, 169, 98, 0.1) 0%,
+    rgba(201, 169, 98, 0.2) 100%
+  );
+  border: 2px solid rgba(201, 169, 98, 0.4);
+}
+
+.funnel__circles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.funnel__circle {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  animation: circle-drop 3s ease-in infinite;
+}
+
+.funnel__circle--gold {
+  background: var(--color-gold);
+  box-shadow: 0 0 10px rgba(201, 169, 98, 0.5);
+}
+
+.funnel__circle--gray {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.funnel__circle:nth-child(1) { left: 20%; animation-delay: 0s; }
+.funnel__circle:nth-child(2) { left: 40%; animation-delay: 0.3s; }
+.funnel__circle:nth-child(3) { left: 60%; animation-delay: 0.6s; }
+.funnel__circle:nth-child(4) { left: 30%; animation-delay: 0.9s; }
+.funnel__circle:nth-child(5) { left: 50%; animation-delay: 1.2s; }
+.funnel__circle:nth-child(6) { left: 70%; animation-delay: 1.5s; }
+
+.funnel__output {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 50px;
+  background: rgba(201, 169, 98, 0.2);
+  border: 2px solid rgba(201, 169, 98, 0.5);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.funnel__output svg {
+  width: 24px;
+  height: 24px;
+  fill: var(--color-gold);
+}
+
+/* =============================================
+   SLIDE 51 - CONTENT PIPELINE
+   ============================================= */
+
+.content-pipeline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+  margin: var(--spacing-lg) auto;
+  flex-wrap: wrap;
+}
+
+.pipeline-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.pipeline-stage__icon {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(201, 169, 98, 0.15);
+  border: 2px solid rgba(201, 169, 98, 0.4);
+  border-radius: 12px;
+}
+
+.pipeline-stage__icon svg {
+  width: 28px;
+  height: 28px;
+  fill: var(--color-gold);
+}
+
+.pipeline-waveform {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 30px;
+}
+
+.pipeline-waveform__bar {
+  width: 4px;
+  height: 100%;
+  background: var(--color-gold);
+  border-radius: 2px;
+  animation: waveform-bar 0.6s ease-in-out infinite;
+}
+
+.pipeline-waveform__bar:nth-child(1) { animation-delay: 0s; }
+.pipeline-waveform__bar:nth-child(2) { animation-delay: 0.1s; }
+.pipeline-waveform__bar:nth-child(3) { animation-delay: 0.2s; }
+.pipeline-waveform__bar:nth-child(4) { animation-delay: 0.3s; }
+.pipeline-waveform__bar:nth-child(5) { animation-delay: 0.4s; }
+
+.pipeline-arrow {
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(201, 169, 98, 0.3), rgba(201, 169, 98, 0.8));
+  position: relative;
+}
+
+.pipeline-arrow::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  border-left: 8px solid rgba(201, 169, 98, 0.8);
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+}
+
+.pipeline-gear {
+  animation: gear-rotate 3s linear infinite;
+}
+
+.pipeline-outputs {
+  display: flex;
+  gap: 12px;
+}
+
+.pipeline-output-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(201, 169, 98, 0.1);
+  border: 1px solid rgba(201, 169, 98, 0.3);
+  border-radius: 8px;
+  animation: icon-pop 0.5s ease-out both;
+}
+
+.pipeline-output-icon:nth-child(1) { animation-delay: 1s; }
+.pipeline-output-icon:nth-child(2) { animation-delay: 1.2s; }
+.pipeline-output-icon:nth-child(3) { animation-delay: 1.4s; }
+.pipeline-output-icon:nth-child(4) { animation-delay: 1.6s; }
+
+.pipeline-output-icon svg {
+  width: 20px;
+  height: 20px;
+  fill: var(--color-gold);
+}
+
+/* =============================================
+   SLIDE 52 - CALENDAR CHECKMARKS
+   ============================================= */
+
+.calendar-visual {
+  display: flex;
+  justify-content: center;
+  margin: var(--spacing-lg) auto;
+}
+
+.calendar {
+  background: rgba(201, 169, 98, 0.05);
+  border: 2px solid rgba(201, 169, 98, 0.3);
+  border-radius: 12px;
+  padding: 16px;
+  width: 280px;
+}
+
+.calendar__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(201, 169, 98, 0.2);
+  margin-bottom: 12px;
+}
+
+.calendar__title {
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  color: var(--color-gold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.calendar__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.calendar__day {
+  position: relative;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  border-radius: 4px;
+  animation: day-fade 0.3s ease-out both;
+}
+
+.calendar__day:nth-child(1) { animation-delay: 0s; }
+.calendar__day:nth-child(2) { animation-delay: 0.02s; }
+.calendar__day:nth-child(3) { animation-delay: 0.04s; }
+/* ... continues for all days */
+
+.calendar__check {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 12px;
+  height: 12px;
+  color: var(--color-accent-green);
+  font-size: 10px;
+  animation: check-pop 0.4s ease-out both;
+}
+
+.calendar__day:nth-child(1) .calendar__check { animation-delay: 0.5s; }
+.calendar__day:nth-child(2) .calendar__check { animation-delay: 0.6s; }
+.calendar__day:nth-child(3) .calendar__check { animation-delay: 0.7s; }
+/* ... staggered delays */
+
+/* =============================================
+   SLIDES 54 & 55 - THREE PILLARS
+   ============================================= */
+
+.pillars-visual {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: var(--spacing-lg);
+  margin: var(--spacing-lg) auto;
+  height: 200px;
+}
+
+.pillar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100px;
+  transform-origin: bottom center;
+}
+
+.pillar__column {
+  width: 60px;
+  height: 120px;
+  background: linear-gradient(180deg, rgba(201, 169, 98, 0.3), rgba(201, 169, 98, 0.1));
+  border: 2px solid rgba(201, 169, 98, 0.4);
+  border-radius: 8px 8px 0 0;
+  animation: pillar-rise 0.8s ease-out both;
+}
+
+.pillar:nth-child(1) .pillar__column { animation-delay: 0s; }
+.pillar:nth-child(2) .pillar__column { animation-delay: 0.3s; }
+.pillar:nth-child(3) .pillar__column { animation-delay: 0.6s; }
+
+.pillar__icon {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(201, 169, 98, 0.2);
+  border: 2px solid var(--color-gold);
+  border-radius: 50%;
+  margin-bottom: -25px;
+  z-index: 1;
+  animation: icon-float 3s ease-in-out infinite, pillar-glow 2s ease-in-out infinite;
+}
+
+.pillar:nth-child(1) .pillar__icon { animation-delay: 0.8s, 0s; }
+.pillar:nth-child(2) .pillar__icon { animation-delay: 1.1s, 0.5s; }
+.pillar:nth-child(3) .pillar__icon { animation-delay: 1.4s, 1s; }
+
+.pillar__icon svg {
+  width: 26px;
+  height: 26px;
+  fill: var(--color-gold);
+}
+
+.pillar__label {
+  margin-top: 35px;
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+/* =============================================
+   SLIDE 60 - BENEFIT ICONS
+   ============================================= */
+
+.benefit-icon-animated {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-right: 12px;
+  background: rgba(201, 169, 98, 0.15);
+  border-radius: 6px;
+  animation: icon-bounce-in 0.5s ease-out both;
+}
+
+.benefit-icon-animated svg {
+  width: 16px;
+  height: 16px;
+  fill: var(--color-gold);
+}
+
+.benefit-icon-animated--person svg {
+  animation: person-pulse 2s ease-in-out infinite;
+}
+
+.benefit-icon-animated--calendar svg {
+  animation: calendar-flip 3s ease-in-out infinite;
+}
+
+.benefit-icon-animated--recycle svg {
+  animation: recycle-spin 4s linear infinite;
+}
+
+.benefit-icon-animated--payroll svg {
+  animation: person-pulse 1.5s ease-in-out infinite;
+}
+
+/* =============================================
+   SLIDE 63 - BONUS SLIDE-IN
+   ============================================= */
+
+.bonus-item-animated {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(201, 169, 98, 0.05);
+  border: 1px solid rgba(201, 169, 98, 0.2);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  animation-fill-mode: both;
+}
+
+.bonus-item-animated:nth-child(odd) {
+  animation: slide-in-left 0.5s ease-out;
+}
+
+.bonus-item-animated:nth-child(even) {
+  animation: slide-in-right 0.5s ease-out;
+}
+
+.bonus-item-animated:nth-child(1) { animation-delay: 0.1s; }
+.bonus-item-animated:nth-child(2) { animation-delay: 0.2s; }
+.bonus-item-animated:nth-child(3) { animation-delay: 0.3s; }
+.bonus-item-animated:nth-child(4) { animation-delay: 0.4s; }
+.bonus-item-animated:nth-child(5) { animation-delay: 0.5s; }
+.bonus-item-animated:nth-child(6) { animation-delay: 0.6s; }
+
+.bonus-item-animated:hover {
+  animation: bonus-glow 1s ease-in-out infinite;
+  border-color: rgba(201, 169, 98, 0.5);
+}
+
+.bonus-icon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(201, 169, 98, 0.2);
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.bonus-icon svg {
+  width: 20px;
+  height: 20px;
+  fill: var(--color-gold);
+}
+
+/* =============================================
+   RESPONSIVE ADJUSTMENTS FOR NEW ANIMATIONS
+   ============================================= */
+
+@media (max-width: 768px) {
+  .branching-path {
+    max-width: 350px;
+    height: 240px;
+  }
+
+  .branching-path__label {
+    font-size: 0.7rem;
+    padding: 6px 12px;
+  }
+
+  .hourglass {
+    width: 60px;
+    height: 120px;
+  }
+
+  .airplane-caution__plane svg {
+    width: 90px;
+    height: 45px;
+  }
+
+  .justice-visual {
+    height: 150px;
+  }
+
+  .scales {
+    width: 130px;
+    height: 110px;
+  }
+
+  .gavel {
+    display: none;
+  }
+
+  .chat-bubble {
+    max-width: 240px;
+    padding: 12px 18px;
+  }
+
+  .juggler-scene {
+    height: 180px;
+  }
+
+  .juggle-item {
+    width: 30px;
+    height: 30px;
+  }
+
+  .puzzle-board {
+    width: 160px;
+    height: 120px;
+  }
+
+  .funnel {
+    width: 140px;
+    height: 130px;
+  }
+
+  .content-pipeline {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .pipeline-arrow {
+    transform: rotate(90deg);
+    width: 30px;
+  }
+
+  .pipeline-outputs {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .calendar {
+    width: 260px;
+    padding: 12px;
+  }
+
+  .pillars-visual {
+    gap: var(--spacing-md);
+  }
+
+  .pillar {
+    width: 80px;
+  }
+
+  .pillar__column {
+    width: 50px;
+    height: 100px;
+  }
+
+  .pillar__icon {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .branching-path {
+    max-width: 280px;
+    height: 200px;
+  }
+
+  .branching-path__label {
+    font-size: 0.6rem;
+    padding: 4px 8px;
+  }
+
+  .pillars-visual {
+    gap: var(--spacing-sm);
+  }
+
+  .pillar {
+    width: 70px;
+  }
+
+  .pillar__column {
+    width: 40px;
+    height: 80px;
+  }
+
+  .pillar__label {
+    font-size: 0.6rem;
+  }
+
+  .calendar {
+    width: 100%;
+    max-width: 240px;
   }
 }
