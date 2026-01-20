@@ -1,0 +1,83 @@
+/* SplineScene Component Styles */
+
+.spline-scene {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+}
+
+.spline-scene--error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Loader */
+.spline-scene__loader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  color: var(--color-text-tertiary);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  z-index: 5;
+}
+
+.spline-scene__loader-ring {
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(201, 169, 98, 0.2);
+  border-top-color: var(--color-gold);
+  border-radius: 50%;
+}
+
+/* Fallback animated shapes */
+.spline-fallback {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1000px;
+}
+
+.spline-fallback__shape {
+  position: absolute;
+  border: 2px solid var(--color-gold);
+  transform-style: preserve-3d;
+}
+
+.spline-fallback__shape--1 {
+  width: 150px;
+  height: 150px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(201, 169, 98, 0.1) 0%, transparent 100%);
+}
+
+.spline-fallback__shape--2 {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(201, 169, 98, 0.05) 0%, transparent 100%);
+}
+
+.spline-fallback__glow {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201, 169, 98, 0.3) 0%, transparent 70%);
+  filter: blur(40px);
+}
+
+/* Ensure spline canvas is interactive */
+.spline-scene canvas {
+  outline: none;
+}
