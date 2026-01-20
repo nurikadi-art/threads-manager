@@ -50,6 +50,7 @@ export const slidesData = [
     title: 'You are the Airline Executive. Not the Pilot',
     content: 'The biggest mistake founders make is trying to fly the plane. You decide the destination. You need a system (the plane) and a pilot to get you there.',
     icon: 'plane',
+    image: '/images/generated/cockpit-control.png',
   },
   {
     id: 7,
@@ -116,6 +117,7 @@ export const slidesData = [
     title: 'The Problem',
     heading: 'Data Blindness.',
     content: 'You get your Profits & Losses, you glance at the bottom line, and you file it. You\'re missing the story.',
+    image: '/images/generated/data-overwhelm.png',
   },
   {
     id: 15,
@@ -146,6 +148,7 @@ export const slidesData = [
     number: 2,
     title: 'The Inbox Triage.',
     subtitle: 'Protecting your emotional battery.',
+    image: '/images/generated/inbox-2am.png',
   },
   {
     id: 19,
@@ -153,6 +156,7 @@ export const slidesData = [
     title: 'The Monday Morning Panic',
     content: 'We\'ve all received this email. It ruins your day.\nYou spend an hour writing a defensive reply.',
     animation: 'email',
+    image: '/images/generated/monday-panic.png',
   },
   {
     id: 20,
@@ -176,6 +180,7 @@ export const slidesData = [
     number: 3,
     title: 'The Commute Cure.',
     subtitle: 'Stop losing your best ideas.',
+    image: '/images/generated/voice-capture.png',
   },
   {
     id: 23,
@@ -184,6 +189,7 @@ export const slidesData = [
     heading: 'I had a great idea on the freeway...',
     content: '...and by the time I parked, it was gone.',
     icon: 'lightbulb-off',
+    image: '/images/generated/lost-idea-driving.png',
   },
   {
     id: 24,
@@ -191,6 +197,7 @@ export const slidesData = [
     step: 'Step 1: Ramble.',
     content: 'Just talk. Don\'t worry about structure.\nRecord 5 minutes of your messy thoughts.',
     animation: 'voice',
+    image: '/images/generated/idea-lost-shower.png',
   },
   {
     id: 25,
@@ -206,6 +213,7 @@ export const slidesData = [
     heading: 'From Chaos to Clarity',
     highlight: 'FROM CHAOS TO CLARITY',
     animation: 'transform',
+    image: '/images/generated/chaos-to-clarity.png',
   },
   {
     id: 27,
@@ -245,6 +253,7 @@ export const slidesData = [
       'Iterating',
     ],
     animation: 'list-scroll',
+    image: '/images/generated/screen-overload.png',
   },
   {
     id: 31,
@@ -322,6 +331,7 @@ export const slidesData = [
     title: 'Human-in-the-Loop (HITL)',
     content: 'This is the industry standard for safety. AI does the draft.\nA Human does the verification. You get the speed of AI with the safety of a human.',
     highlight: 'HITL',
+    image: '/images/generated/ai-partnership.png',
   },
   {
     id: 41,
@@ -395,6 +405,7 @@ export const slidesData = [
     title: 'The Gatekeeper',
     subtitle: 'Lead Scoring & Filtering.',
     content: 'Your VA uses AI to score every lead. You only talk to the top 10%. They handle the rest.',
+    image: '/images/generated/lead-qualification.png',
   },
   {
     id: 51,
@@ -410,6 +421,7 @@ export const slidesData = [
     title: 'Meeting Follow-Up',
     subtitle: 'Never drop the ball',
     content: 'They ensure every action item from your meetings is tracked and done.',
+    image: '/images/generated/board-prep.png',
   },
   {
     id: 53,
@@ -431,6 +443,7 @@ export const slidesData = [
     title: 'Let them fly. You pick the destination.',
     icon: 'compass',
     style: 'closing',
+    image: '/images/generated/compass-navigation.png',
   },
   {
     id: 56,
@@ -438,6 +451,7 @@ export const slidesData = [
     title: 'The Choice',
     content: 'How will you grow in 2026?',
     style: 'call-to-action',
+    image: '/images/generated/founder-arena.png',
   },
   {
     id: 57,
@@ -525,6 +539,7 @@ export const slidesData = [
     name: 'Latte',
     role: 'founder of Lolly Gig',
     company: 'The Break Through Studio',
+    image: '/images/generated/first-customer.png',
   },
   {
     id: 66,
