@@ -7469,3 +7469,218 @@
     height: 400px;
   }
 }
+
+/* =============================================
+   SLIDE IMAGE STYLES - Photorealistic Images
+   ============================================= */
+
+/* Common image styles */
+.metaphor-slide__image,
+.problem-slide__image,
+.workflow-intro-slide__image,
+.result-slide__image,
+.question-slide__image,
+.solution-slide__image,
+.use-case-slide__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* Metaphor slide with image */
+.metaphor-illustration--image {
+  max-width: 600px;
+  max-height: 400px;
+  margin: 0 auto var(--spacing-lg);
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(201, 169, 98, 0.2);
+}
+
+/* Problem slide with image */
+.problem-slide-enhanced--with-image {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-xl);
+  align-items: center;
+}
+
+.problem-slide__image-container {
+  width: 100%;
+  max-height: 450px;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(201, 169, 98, 0.2);
+}
+
+/* Workflow intro slide with image */
+.workflow-intro-slide-enhanced--with-image {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-xl);
+  align-items: center;
+}
+
+.workflow-intro-slide__image-container {
+  width: 100%;
+  max-height: 500px;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(201, 169, 98, 0.2);
+}
+
+.workflow-intro-slide__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+/* Result slide with image */
+.result-slide__image-container {
+  width: 100%;
+  max-width: 700px;
+  max-height: 400px;
+  margin: var(--spacing-lg) auto;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(201, 169, 98, 0.2);
+}
+
+/* Question slide with image */
+.question-slide--with-image {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-xl);
+  align-items: center;
+}
+
+.question-slide__image-container {
+  width: 100%;
+  max-height: 500px;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(201, 169, 98, 0.2);
+}
+
+.question-slide__content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+/* Solution slide with image */
+.solution-slide__image-container {
+  width: 100%;
+  max-width: 700px;
+  max-height: 400px;
+  margin: var(--spacing-lg) auto;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(201, 169, 98, 0.2);
+}
+
+/* Use case slide with image */
+.use-case-slide--with-image {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-xl);
+  align-items: center;
+}
+
+.use-case-slide__image-container {
+  width: 100%;
+  max-height: 450px;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(201, 169, 98, 0.2);
+}
+
+.use-case-slide__content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+/* Image hover effects */
+.metaphor-slide__image,
+.problem-slide__image,
+.workflow-intro-slide__image,
+.result-slide__image,
+.question-slide__image,
+.solution-slide__image,
+.use-case-slide__image {
+  transition: transform 0.5s ease, filter 0.5s ease;
+}
+
+.metaphor-illustration--image:hover .metaphor-slide__image,
+.problem-slide__image-container:hover .problem-slide__image,
+.workflow-intro-slide__image-container:hover .workflow-intro-slide__image,
+.result-slide__image-container:hover .result-slide__image,
+.question-slide__image-container:hover .question-slide__image,
+.solution-slide__image-container:hover .solution-slide__image,
+.use-case-slide__image-container:hover .use-case-slide__image {
+  transform: scale(1.03);
+  filter: brightness(1.05);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .problem-slide-enhanced--with-image,
+  .workflow-intro-slide-enhanced--with-image,
+  .question-slide--with-image,
+  .use-case-slide--with-image {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .problem-slide__image-container,
+  .workflow-intro-slide__image-container,
+  .question-slide__image-container,
+  .use-case-slide__image-container {
+    max-height: 350px;
+    order: -1;
+  }
+
+  .metaphor-illustration--image {
+    max-width: 100%;
+    max-height: 350px;
+  }
+
+  .result-slide__image-container,
+  .solution-slide__image-container {
+    max-height: 300px;
+  }
+}
+
+/* Solution step slide image */
+.solution-step-slide__image-container {
+  width: 100%;
+  max-width: 700px;
+  max-height: 400px;
+  margin: var(--spacing-lg) auto;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(201, 169, 98, 0.2);
+}
+
+.solution-step-slide__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  transition: transform 0.5s ease, filter 0.5s ease;
+}
+
+.solution-step-slide__image-container:hover .solution-step-slide__image {
+  transform: scale(1.03);
+  filter: brightness(1.05);
+}
+
+@media (max-width: 1024px) {
+  .solution-step-slide__image-container {
+    max-height: 300px;
+  }
+}

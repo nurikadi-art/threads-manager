@@ -973,7 +973,21 @@ export const MetaphorSlide = ({ data, index }) => {
         <div className="slide-corner-decoration slide-corner-decoration--tl" />
         <div className="slide-corner-decoration slide-corner-decoration--br" />
 
-        {data.icon === 'plane' && (
+        {/* Use actual image if available */}
+        {data.image ? (
+          <motion.div
+            className="metaphor-illustration metaphor-illustration--image"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            <img
+              src={data.image}
+              alt={data.title}
+              className="metaphor-slide__image"
+            />
+          </motion.div>
+        ) : data.icon === 'plane' ? (
           <motion.div
             className="metaphor-illustration"
             initial={{ opacity: 0, scale: 0.8 }}
@@ -1027,9 +1041,7 @@ export const MetaphorSlide = ({ data, index }) => {
               You set the destination. The pilot flies.
             </motion.p>
           </motion.div>
-        )}
-
-        {data.icon === 'compass' && (
+        ) : data.icon === 'compass' ? (
           <motion.div
             className="metaphor-illustration"
             initial={{ opacity: 0, rotate: -180 }}
@@ -1044,7 +1056,7 @@ export const MetaphorSlide = ({ data, index }) => {
               />
             </div>
           </motion.div>
-        )}
+        ) : null}
 
         <motion.div
           className="metaphor-content"
@@ -1412,19 +1424,31 @@ export const ToolSlide = ({ data, index }) => {
 // =============================================
 export const WorkflowIntroSlide = ({ data, index }) => (
   <Slide variant="hero" id={`slide-${data.id}`} index={index}>
-    <div className="workflow-intro-slide-enhanced">
-      <ScaleIn>
-        <div className="workflow-intro-slide__number">
-          <span>Workflow</span>
-          <span className="workflow-intro-slide__number-value">#{data.number}</span>
-        </div>
-      </ScaleIn>
-      <FadeIn delay={0.3}>
-        <h2 className="workflow-intro-slide__title text-gradient">{data.title}</h2>
-      </FadeIn>
-      <FadeIn delay={0.5}>
-        <p className="workflow-intro-slide__subtitle">{data.subtitle}</p>
-      </FadeIn>
+    <div className={`workflow-intro-slide-enhanced ${data.image ? 'workflow-intro-slide-enhanced--with-image' : ''}`}>
+      {data.image && (
+        <motion.div
+          className="workflow-intro-slide__image-container"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          <img src={data.image} alt={data.title} className="workflow-intro-slide__image" />
+        </motion.div>
+      )}
+      <div className="workflow-intro-slide__content">
+        <ScaleIn>
+          <div className="workflow-intro-slide__number">
+            <span>Workflow</span>
+            <span className="workflow-intro-slide__number-value">#{data.number}</span>
+          </div>
+        </ScaleIn>
+        <FadeIn delay={0.3}>
+          <h2 className="workflow-intro-slide__title text-gradient">{data.title}</h2>
+        </FadeIn>
+        <FadeIn delay={0.5}>
+          <p className="workflow-intro-slide__subtitle">{data.subtitle}</p>
+        </FadeIn>
+      </div>
     </div>
   </Slide>
 );
@@ -1438,7 +1462,7 @@ export const ProblemSlide = ({ data, index }) => {
 
   return (
     <Slide variant="warning" id={`slide-${data.id}`} index={index}>
-      <div className="problem-slide-enhanced">
+      <div className={`problem-slide-enhanced ${data.image ? 'problem-slide-enhanced--with-image' : ''}`}>
         <motion.div
           className="problem-slide__header"
           initial={{ opacity: 0, y: -20 }}
@@ -1457,8 +1481,20 @@ export const ProblemSlide = ({ data, index }) => {
           )}
         </motion.div>
 
-        {/* Spreadsheet visualization for Financial X-Ray slide */}
-        {isFinancialSlide && (
+        {/* Show image if available */}
+        {data.image && (
+          <motion.div
+            className="problem-slide__image-container"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+          >
+            <img src={data.image} alt={data.title} className="problem-slide__image" />
+          </motion.div>
+        )}
+
+        {/* Spreadsheet visualization for Financial X-Ray slide (only if no image) */}
+        {isFinancialSlide && !data.image && (
           <motion.div
             className="spreadsheet-visual"
             initial={{ opacity: 0, scale: 0.9, rotateX: 10 }}
@@ -1652,7 +1688,7 @@ export const SolutionStepSlide = ({ data, index }) => {
             </div>
           </ScaleIn>
         )}
-        {data.animation === 'voice' && (
+        {data.animation === 'voice' && !data.image && (
           <ScaleIn delay={0.6}>
             <div className="solution-step-slide__animation voice-animation">
               <div className="voice-animation__waves">
@@ -1671,6 +1707,16 @@ export const SolutionStepSlide = ({ data, index }) => {
               </div>
             </div>
           </ScaleIn>
+        )}
+        {data.image && (
+          <motion.div
+            className="solution-step-slide__image-container"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5, duration: 0.6 }}
+          >
+            <img src={data.image} alt={data.step || data.title} className="solution-step-slide__image" />
+          </motion.div>
         )}
       </div>
     </Slide>
@@ -1875,7 +1921,7 @@ export const ResultSlide = ({ data, index }) => {
             </div>
           </ScaleIn>
         )}
-        {data.animation === 'transform' && (
+        {data.animation === 'transform' && !data.image && (
           <ScaleIn delay={0.6}>
             <div className="result-slide__transform">
               <div className="result-slide__transform-before">Chaos</div>
@@ -1891,6 +1937,16 @@ export const ResultSlide = ({ data, index }) => {
               <div className="result-slide__transform-after">Clarity</div>
             </div>
           </ScaleIn>
+        )}
+        {data.image && (
+          <motion.div
+            className="result-slide__image-container"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5, duration: 0.6 }}
+          >
+            <img src={data.image} alt={data.title} className="result-slide__image" />
+          </motion.div>
         )}
       </div>
     </Slide>
@@ -1966,20 +2022,32 @@ export const TransitionSlide = ({ data, index }) => (
 // =============================================
 export const QuestionSlide = ({ data, index }) => (
   <Slide variant="default" id={`slide-${data.id}`} index={index}>
-    <div className="question-slide">
-      <ScaleIn>
-        <h2 className="question-slide__title">{data.title}</h2>
-      </ScaleIn>
-      {data.content && (
-        <FadeIn delay={0.3}>
-          <p className="question-slide__content">{data.content}</p>
-        </FadeIn>
+    <div className={`question-slide ${data.image ? 'question-slide--with-image' : ''}`}>
+      {data.image && (
+        <motion.div
+          className="question-slide__image-container"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          <img src={data.image} alt={data.title} className="question-slide__image" />
+        </motion.div>
       )}
-      {data.answer && (
-        <FadeIn delay={0.5}>
-          <p className="question-slide__answer text-gradient">{data.answer}</p>
-        </FadeIn>
-      )}
+      <div className="question-slide__content-wrapper">
+        <ScaleIn>
+          <h2 className="question-slide__title">{data.title}</h2>
+        </ScaleIn>
+        {data.content && (
+          <FadeIn delay={0.3}>
+            <p className="question-slide__content">{data.content}</p>
+          </FadeIn>
+        )}
+        {data.answer && (
+          <FadeIn delay={0.5}>
+            <p className="question-slide__answer text-gradient">{data.answer}</p>
+          </FadeIn>
+        )}
+      </div>
     </div>
   </Slide>
 );
@@ -2127,8 +2195,8 @@ export const SolutionSlide = ({ data, index }) => {
           {data.title}
         </motion.h2>
 
-        {/* HITL Flow Diagram */}
-        {isHITL && (
+        {/* HITL Flow Diagram - only show if no image */}
+        {isHITL && !data.image && (
           <motion.div
             className="hitl-flow-diagram"
             initial={{ opacity: 0 }}
@@ -2224,7 +2292,7 @@ export const SolutionSlide = ({ data, index }) => {
           </motion.div>
         )}
 
-        {isHITL && (
+        {isHITL && !data.image && (
           <motion.p
             className="hitl-instruction"
             initial={{ opacity: 0 }}
@@ -2233,6 +2301,17 @@ export const SolutionSlide = ({ data, index }) => {
           >
             {step < 3 ? '👆 Click to see the flow' : 'Speed + Safety = Success'}
           </motion.p>
+        )}
+
+        {data.image && (
+          <motion.div
+            className="solution-slide__image-container"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5, duration: 0.6 }}
+          >
+            <img src={data.image} alt={data.title} className="solution-slide__image" />
+          </motion.div>
         )}
 
         <motion.p
@@ -2381,24 +2460,36 @@ export const FeatureSlide = ({ data, index }) => (
 // =============================================
 export const UseCaseSlide = ({ data, index }) => (
   <Slide variant="default" id={`slide-${data.id}`} index={index}>
-    <div className="use-case-slide">
-      <ScaleIn>
-        <div className="use-case-slide__number">
-          <span>Use Case</span>
-          <span className="use-case-slide__number-value">#{data.number}</span>
-        </div>
-      </ScaleIn>
-      <FadeIn delay={0.2}>
-        <h2 className="use-case-slide__title">{data.title}</h2>
-      </FadeIn>
-      {data.subtitle && (
-        <FadeIn delay={0.3}>
-          <p className="use-case-slide__subtitle">{data.subtitle}</p>
-        </FadeIn>
+    <div className={`use-case-slide ${data.image ? 'use-case-slide--with-image' : ''}`}>
+      {data.image && (
+        <motion.div
+          className="use-case-slide__image-container"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          <img src={data.image} alt={data.title} className="use-case-slide__image" />
+        </motion.div>
       )}
-      <FadeIn delay={0.4}>
-        <p className="use-case-slide__content">{data.content}</p>
-      </FadeIn>
+      <div className="use-case-slide__content-wrapper">
+        <ScaleIn>
+          <div className="use-case-slide__number">
+            <span>Use Case</span>
+            <span className="use-case-slide__number-value">#{data.number}</span>
+          </div>
+        </ScaleIn>
+        <FadeIn delay={0.2}>
+          <h2 className="use-case-slide__title">{data.title}</h2>
+        </FadeIn>
+        {data.subtitle && (
+          <FadeIn delay={0.3}>
+            <p className="use-case-slide__subtitle">{data.subtitle}</p>
+          </FadeIn>
+        )}
+        <FadeIn delay={0.4}>
+          <p className="use-case-slide__content">{data.content}</p>
+        </FadeIn>
+      </div>
     </div>
   </Slide>
 );
