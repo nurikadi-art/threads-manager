@@ -1650,7 +1650,7 @@ export const SolutionStepSlide = ({ data, index }) => {
                 <video
                   ref={videoRef}
                   className="slide-video"
-                  src="/videos/1230(1).mp4"
+                  src="./videos/1230(1).mp4"
                   playsInline
                   loop
                 />
@@ -1779,7 +1779,7 @@ export const PromptSlide = ({ data, index }) => {
                 <video
                   ref={videoRef}
                   className="slide-video"
-                  src="/videos/1230(2).mp4"
+                  src="./videos/1230(2).mp4"
                   playsInline
                   loop
                 />
@@ -1881,7 +1881,7 @@ export const ResultSlide = ({ data, index }) => {
                 <video
                   ref={videoRef}
                   className="slide-video"
-                  src="/videos/1230(4) (1).mp4"
+                  src="./videos/1230(4) (1).mp4"
                   playsInline
                   loop
                 />
