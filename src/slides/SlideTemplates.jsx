@@ -2085,10 +2085,23 @@ export const QuestionSlide = ({ data, index }) => (
 // =============================================
 export const CaseStudySlide = ({ data, index }) => {
   const isChevySlide = data.id === 35;
+  const hasImage = data.image && !isChevySlide;
 
   return (
     <Slide variant="warning" id={`slide-${data.id}`} index={index}>
-      <div className={`case-study-slide ${isChevySlide ? 'case-study-slide--with-phone' : ''}`}>
+      <div className={`case-study-slide ${isChevySlide ? 'case-study-slide--with-phone' : ''} ${hasImage ? 'case-study-slide--with-image' : ''}`}>
+        {/* Image for case study */}
+        {hasImage && (
+          <motion.div
+            className="case-study-slide__image-container"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+          >
+            <img src={data.image} alt={data.title} className="case-study-slide__image" />
+          </motion.div>
+        )}
+
         <div className="case-study-slide__content">
           <FadeIn>
             <h2 className="case-study-slide__title">{data.title}</h2>
@@ -2224,30 +2237,45 @@ export const PrincipleSlide = ({ data, index }) => (
 // =============================================
 export const WarningSlide = ({ data, index }) => (
   <Slide variant="warning" id={`slide-${data.id}`} index={index}>
-    <div className="warning-slide">
-      <ScaleIn>
-        <div className="warning-slide__icon">
-          {data.icon === 'shield-alert' && (
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              <line x1="12" y1="8" x2="12" y2="12"/>
-              <line x1="12" y1="16" x2="12.01" y2="16"/>
-            </svg>
-          )}
-          {data.icon === 'lock' && (
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-            </svg>
-          )}
-        </div>
-      </ScaleIn>
-      <FadeIn delay={0.3}>
-        <h2 className="warning-slide__title">{data.title}</h2>
-      </FadeIn>
-      <FadeIn delay={0.5}>
-        <p className="warning-slide__content">{data.content}</p>
-      </FadeIn>
+    <div className={`warning-slide ${data.image ? 'warning-slide--with-image' : ''}`}>
+      {/* Image if available */}
+      {data.image && (
+        <motion.div
+          className="warning-slide__image-container"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
+        >
+          <img src={data.image} alt={data.title} className="warning-slide__image" />
+        </motion.div>
+      )}
+      <div className="warning-slide__content-wrapper">
+        {!data.image && (
+          <ScaleIn>
+            <div className="warning-slide__icon">
+              {data.icon === 'shield-alert' && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  <line x1="12" y1="8" x2="12" y2="12"/>
+                  <line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+              )}
+              {data.icon === 'lock' && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              )}
+            </div>
+          </ScaleIn>
+        )}
+        <FadeIn delay={0.3}>
+          <h2 className="warning-slide__title">{data.title}</h2>
+        </FadeIn>
+        <FadeIn delay={0.5}>
+          <p className="warning-slide__content">{data.content}</p>
+        </FadeIn>
+      </div>
     </div>
   </Slide>
 );
@@ -2418,13 +2446,25 @@ export const SolutionSlide = ({ data, index }) => {
 // =============================================
 export const IntroductionSlide = ({ data, index }) => (
   <Slide variant="hero" id={`slide-${data.id}`} index={index}>
-    <div className="introduction-slide">
-      <ScaleIn>
-        <h2 className="introduction-slide__title text-gradient">{data.title}</h2>
-      </ScaleIn>
-      <FadeIn delay={0.3}>
-        <p className="introduction-slide__subtitle">{data.subtitle}</p>
-      </FadeIn>
+    <div className={`introduction-slide ${data.image ? 'introduction-slide--with-image' : ''}`}>
+      {data.image && (
+        <motion.div
+          className="introduction-slide__image-container"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
+        >
+          <img src={data.image} alt={data.title} className="introduction-slide__image" />
+        </motion.div>
+      )}
+      <div className="introduction-slide__text">
+        <ScaleIn>
+          <h2 className="introduction-slide__title text-gradient">{data.title}</h2>
+        </ScaleIn>
+        <FadeIn delay={0.3}>
+          <p className="introduction-slide__subtitle">{data.subtitle}</p>
+        </FadeIn>
+      </div>
     </div>
   </Slide>
 );
@@ -2679,16 +2719,28 @@ export const UseCaseSlide = ({ data, index }) => (
 // =============================================
 export const ROISlide = ({ data, index }) => (
   <Slide variant="success" id={`slide-${data.id}`} index={index}>
-    <div className="roi-slide">
-      <FadeIn>
-        <h2 className="roi-slide__title">{data.title}</h2>
-      </FadeIn>
-      <FadeIn delay={0.3}>
-        <p className="roi-slide__calculation">{data.calculation}</p>
-      </FadeIn>
-      <ScaleIn delay={0.5}>
-        <div className="roi-slide__highlight text-gradient">{data.highlight}</div>
-      </ScaleIn>
+    <div className={`roi-slide ${data.image ? 'roi-slide--with-image' : ''}`}>
+      {data.image && (
+        <motion.div
+          className="roi-slide__image-container"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
+        >
+          <img src={data.image} alt={data.title} className="roi-slide__image" />
+        </motion.div>
+      )}
+      <div className="roi-slide__content">
+        <FadeIn>
+          <h2 className="roi-slide__title">{data.title}</h2>
+        </FadeIn>
+        <FadeIn delay={0.3}>
+          <p className="roi-slide__calculation">{data.calculation}</p>
+        </FadeIn>
+        <ScaleIn delay={0.5}>
+          <div className="roi-slide__highlight text-gradient">{data.highlight}</div>
+        </ScaleIn>
+      </div>
     </div>
   </Slide>
 );
@@ -2828,65 +2880,107 @@ export const SavingsSlide = ({ data, index }) => (
 // =============================================
 // PACKAGE SLIDE
 // =============================================
-export const PackageSlide = ({ data, index }) => (
-  <Slide variant="offer" id={`slide-${data.id}`} index={index}>
-    <div className={`package-slide ${data.bundleImages ? 'package-slide--with-images' : ''}`}>
-      <FadeIn>
-        <h2 className="package-slide__title text-gradient">{data.title}</h2>
-      </FadeIn>
+export const PackageSlide = ({ data, index }) => {
+  const [visibleBonuses, setVisibleBonuses] = useState(0);
+  const totalBonuses = data.bonuses?.length || 0;
+  const allBonusesRevealed = visibleBonuses >= totalBonuses;
 
-      {/* Bundle Images */}
-      {data.bundleImages && (
-        <motion.div
-          className="package-slide__bundle"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
-        >
-          {data.bundleImages.map((img, i) => (
+  const revealNextBonus = () => {
+    if (visibleBonuses < totalBonuses) {
+      setVisibleBonuses(prev => prev + 1);
+    }
+  };
+
+  return (
+    <Slide variant="offer" id={`slide-${data.id}`} index={index}>
+      <div className={`package-slide ${data.bundleImages ? 'package-slide--with-images' : ''}`}>
+        <FadeIn>
+          <h2 className="package-slide__title text-gradient">{data.title}</h2>
+        </FadeIn>
+
+        {/* Bundle Images */}
+        {data.bundleImages && (
+          <motion.div
+            className="package-slide__bundle"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
+            {data.bundleImages.map((img, i) => (
+              <motion.div
+                key={i}
+                className="package-slide__bundle-item"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.3 + i * 0.15 }}
+              >
+                <img src={img} alt={`Bundle item ${i + 1}`} />
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
+
+        <ScaleIn delay={data.bundleImages ? 0.5 : 0.2}>
+          <div className="package-slide__main">
+            <span className="package-slide__check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </span>
+            <span>{data.mainItem}</span>
+          </div>
+        </ScaleIn>
+
+        {/* Reveal button */}
+        {!allBonusesRevealed && (
+          <motion.button
+            className="package-slide__reveal-btn"
+            onClick={revealNextBonus}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ delay: 0.6 }}
+          >
+            <span className="package-slide__reveal-icon">🎁</span>
+            <span>Click to Reveal Bonus #{visibleBonuses + 1}</span>
+          </motion.button>
+        )}
+
+        {/* Bonuses - revealed one by one */}
+        <div className="package-slide__bonuses">
+          {data.bonuses.slice(0, visibleBonuses).map((bonus, i) => (
             <motion.div
               key={i}
-              className="package-slide__bundle-item"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.3 + i * 0.15 }}
+              className="package-slide__bonus"
+              initial={{ opacity: 0, x: -30, scale: 0.9 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              transition={{ duration: 0.4, type: "spring" }}
             >
-              <img src={img} alt={`Bundle item ${i + 1}`} />
-            </motion.div>
-          ))}
-        </motion.div>
-      )}
-
-      <ScaleIn delay={data.bundleImages ? 0.5 : 0.2}>
-        <div className="package-slide__main">
-          <span className="package-slide__check">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-              <polyline points="20 6 9 17 4 12"/>
-            </svg>
-          </span>
-          <span>{data.mainItem}</span>
-        </div>
-      </ScaleIn>
-      <StaggerContainer className="package-slide__bonuses">
-        {data.bonuses.map((bonus, i) => (
-          <StaggerItem key={i}>
-            <div className="package-slide__bonus">
               <span className="package-slide__gift">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7"/>
                 </svg>
               </span>
               <span>{bonus}</span>
-            </div>
-          </StaggerItem>
-        ))}
-      </StaggerContainer>
-      <FadeIn delay={0.8}>
-        <div className="package-slide__fast-action">{data.fastAction}</div>
-      </FadeIn>
-    </div>
-  </Slide>
-);
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Fast action bonus - only show when all bonuses revealed */}
+        {allBonusesRevealed && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            <div className="package-slide__fast-action">{data.fastAction}</div>
+          </motion.div>
+        )}
+      </div>
+    </Slide>
+  );
+};
 
 // =============================================
 // TESTIMONIAL SLIDE - Enhanced with premium styling
@@ -2934,7 +3028,7 @@ export const TestimonialSlide = ({ data, index }) => {
           <h2 className="testimonial-title">{data.title}</h2>
         </motion.div>
 
-        {/* Video Testimonial Layout */}
+        {/* Video Testimonial Layout - iPhone Frame */}
         {data.hasVideo ? (
           <motion.div
             className="testimonial-video-container"
@@ -2942,27 +3036,35 @@ export const TestimonialSlide = ({ data, index }) => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3, duration: 0.6 }}
           >
-            <div className="testimonial-video-wrapper" onClick={handleVideoToggle}>
-              <video
-                ref={videoRef}
-                className="testimonial-video"
-                src={videoSources[data.id]}
-                playsInline
-                poster=""
-              />
-              {!isPlaying && (
-                <motion.div
-                  className="testimonial-video-overlay"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                >
-                  <div className="testimonial-video-play-btn">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                      <polygon points="5,3 19,12 5,21" />
-                    </svg>
-                  </div>
-                </motion.div>
-              )}
+            <div className="iphone-frame">
+              <div className="iphone-frame__notch">
+                <div className="iphone-frame__camera" />
+              </div>
+              <div className="iphone-frame__screen">
+                <div className="testimonial-video-wrapper" onClick={handleVideoToggle}>
+                  <video
+                    ref={videoRef}
+                    className="testimonial-video"
+                    src={videoSources[data.id]}
+                    playsInline
+                    poster=""
+                  />
+                  {!isPlaying && (
+                    <motion.div
+                      className="testimonial-video-overlay"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                    >
+                      <div className="testimonial-video-play-btn">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                          <polygon points="5,3 19,12 5,21" />
+                        </svg>
+                      </div>
+                    </motion.div>
+                  )}
+                </div>
+              </div>
+              <div className="iphone-frame__home-indicator" />
             </div>
             <motion.div
               className="testimonial-video-info"
