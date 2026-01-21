@@ -3028,44 +3028,74 @@ export const TestimonialSlide = ({ data, index }) => {
           <h2 className="testimonial-title">{data.title}</h2>
         </motion.div>
 
-        {/* Video Testimonial Layout - iPhone Frame */}
+        {/* Video Testimonial Layout */}
         {data.hasVideo ? (
           <motion.div
-            className="testimonial-video-container"
+            className={`testimonial-video-container ${data.id === 66 ? 'testimonial-video-container--landscape' : ''}`}
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3, duration: 0.6 }}
           >
-            <div className="iphone-frame">
-              <div className="iphone-frame__notch">
-                <div className="iphone-frame__camera" />
-              </div>
-              <div className="iphone-frame__screen">
-                <div className="testimonial-video-wrapper" onClick={handleVideoToggle}>
-                  <video
-                    ref={videoRef}
-                    className="testimonial-video"
-                    src={videoSources[data.id]}
-                    playsInline
-                    poster=""
-                  />
-                  {!isPlaying && (
-                    <motion.div
-                      className="testimonial-video-overlay"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                    >
-                      <div className="testimonial-video-play-btn">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                          <polygon points="5,3 19,12 5,21" />
-                        </svg>
-                      </div>
-                    </motion.div>
-                  )}
+            {/* iPhone Frame for slide 65 (portrait video) */}
+            {data.id === 65 && (
+              <div className="iphone-frame">
+                <div className="iphone-frame__notch">
+                  <div className="iphone-frame__camera" />
                 </div>
+                <div className="iphone-frame__screen">
+                  <div className="testimonial-video-wrapper" onClick={handleVideoToggle}>
+                    <video
+                      ref={videoRef}
+                      className="testimonial-video"
+                      src={videoSources[data.id]}
+                      playsInline
+                      poster=""
+                    />
+                    {!isPlaying && (
+                      <motion.div
+                        className="testimonial-video-overlay"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                      >
+                        <div className="testimonial-video-play-btn">
+                          <svg viewBox="0 0 24 24" fill="currentColor">
+                            <polygon points="5,3 19,12 5,21" />
+                          </svg>
+                        </div>
+                      </motion.div>
+                    )}
+                  </div>
+                </div>
+                <div className="iphone-frame__home-indicator" />
               </div>
-              <div className="iphone-frame__home-indicator" />
-            </div>
+            )}
+
+            {/* Landscape video for slide 66 */}
+            {data.id === 66 && (
+              <div className="testimonial-video-landscape" onClick={handleVideoToggle}>
+                <video
+                  ref={videoRef}
+                  className="testimonial-video"
+                  src={videoSources[data.id]}
+                  playsInline
+                  poster=""
+                />
+                {!isPlaying && (
+                  <motion.div
+                    className="testimonial-video-overlay"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                  >
+                    <div className="testimonial-video-play-btn">
+                      <svg viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="5,3 19,12 5,21" />
+                      </svg>
+                    </div>
+                  </motion.div>
+                )}
+              </div>
+            )}
+
             <motion.div
               className="testimonial-video-info"
               initial={{ opacity: 0, y: 10 }}
