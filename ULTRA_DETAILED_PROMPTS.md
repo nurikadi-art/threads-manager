@@ -1109,3 +1109,155 @@ For each image:
 - Quality: Maximum/Ultra
 - Style: Photorealistic
 - Negative prompt: "stock photo, artificial lighting, perfect skin, HDR, oversaturated, plastic, CGI, clipart, illustration, cartoon, anime, watermark, text overlay"
+
+---
+
+## NEW IMAGES (January 2026)
+
+---
+
+## IMAGE 16: ANGRY DELIVERY ROBOT (Slide 36)
+**Filename:** `angry-delivery-robot.png`
+**Aspect Ratio:** 16:9 (1920x1080)
+
+```
+SUBJECT:
+A malfunctioning delivery robot on a suburban sidewalk, showing clear signs of digital frustration and malfunction.
+
+SPECIFIC DETAILS:
+- Medium-sized delivery robot (like those used by Starship/Amazon) approximately 2 feet tall
+- LED "face" display showing angry red eyes and a glitching frown expression
+- Small sparks visibly flying from one wheel joint
+- Steam or smoke wisping from a vent on top
+- One compartment door slightly ajar, revealing a crumpled package inside
+- Warning lights blinking orange on the sides
+- The robot's body has scratches and a dent on one corner from prior mishaps
+- Tire treads show signs of uneven wear
+- A few loose screws visible near the base
+
+ENVIRONMENT:
+- Suburban sidewalk at dusk, street lights just coming on
+- Cracked concrete sidewalk with weeds growing through
+- A slightly concerned pedestrian visible in the background, blurred
+- One knocked-over trash can nearby (implied the robot hit it)
+- Fallen autumn leaves scattered around the robot
+- A house porch with warm lights visible in the background
+- Mailbox with "WRONG ADDRESS" visible on a return label stuck to it
+
+CAMERA & LIGHTING:
+- Camera: Sony A7R V with 35mm f/1.4 lens
+- Eye-level shot, slightly below the robot to give it menacing presence
+- Shallow depth of field: robot sharp, background suburban scene soft
+- Dramatic golden hour light from the left (setting sun)
+- The robot's LED face creates harsh red glow on the sidewalk below
+- Warning lights create orange color splashes
+- Cool blue shadows on the right side contrasting the warm light
+
+COLOR GRADE:
+- Warm amber sunset tones meeting cool electronic blues and angry reds
+- Cinematic contrast, not overprocessed
+- Slightly desaturated except for the robot's warning lights
+
+MOOD:
+- Ominous, slightly humorous technology rebellion
+- This robot has had ENOUGH
+- The calm suburban setting contrasts with the robot's digital rage
+- Captures the moment before something goes wrong
+
+WHAT TO AVOID:
+- Don't make the robot look cute or friendly
+- No cartoon expressions
+- No clean/pristine robot - it should show wear and malfunction
+- No daytime bright lighting - needs the dramatic dusk atmosphere
+```
+
+---
+
+## IMAGE 17: JUGGLING TORCHES - AI HIGH MAINTENANCE (Slide 39)
+**Filename:** `ai-juggling-torches.png`
+**Aspect Ratio:** 16:9 (1920x1080)
+
+```
+SUBJECT:
+A stressed business professional desperately trying to juggle multiple flaming torches in an office environment, each flame labeled or associated with AI icons/symbols.
+
+SPECIFIC DETAILS:
+- Professional in business casual (rolled-up sleeves, loosened tie)
+- Age 35-45, showing visible stress (sweat on brow, wide eyes, clenched jaw)
+- Juggling 5-6 flaming torches in various positions mid-air
+- Each torch flame has a subtle digital/pixelated quality at the edges
+- Small floating icons near each flame: robot head, chat bubble, brain icon, gear, warning triangle
+- The person's hands are slightly blurred from frantic motion
+- Expression is overwhelmed but determined - this isn't fun, it's survival
+- Slight singeing visible on one shirt sleeve
+- One torch is clearly about to fall (captured mid-drop trajectory)
+
+ENVIRONMENT:
+- Modern open-plan office at night (lights on inside, dark windows)
+- Multiple computer monitors in the background showing various AI interfaces and dashboards
+- Sticky notes and papers scattered on desk and floor
+- Coffee cups (multiple) visible - some empty, some tipped over
+- A fire extinguisher visible in the corner (ironic detail)
+- Whiteboard in background with "AI TASKS" written and many items checked off with more being added
+- Clock on wall showing 11:45 PM
+
+CAMERA & LIGHTING:
+- Camera: Canon EOS R5 with 24-70mm f/2.8 at 35mm
+- Dynamic low angle shot to emphasize the drama and height of the torches
+- Fast shutter capture to freeze the motion with slight intentional blur on the moving torches
+- Main light from the flames themselves - warm orange/yellow illuminating the face from above
+- Blue-ish office fluorescent lighting in background creates contrast
+- Each torch casts dancing shadows on the ceiling
+- Dramatic chiaroscuro effect on the subject's face
+
+COLOR GRADE:
+- Warm fire tones (orange, yellow, gold) dominating the upper frame
+- Cool office blues and grays in the lower frame and background
+- High contrast, cinematic look
+- The flames should feel dangerous and real
+
+MOOD:
+- Overwhelming chaos that's JUST barely under control
+- The viewer should feel anxiety looking at this
+- Visual metaphor for AI management being exhausting
+- NOT a failure moment - this person is MANAGING, but barely
+- Professional competence meeting its limit
+
+ARROWS/LABELS:
+- Subtle digital-style arrows pointing from some flames with small text labels:
+  - "GPT-4" near one flame
+  - "Claude" near another
+  - "Automation" near a third
+- These should be semi-transparent, like HUD overlays, not distracting from the photo
+
+WHAT TO AVOID:
+- Don't make it look like a circus act - this is an OFFICE
+- No smile or enjoyment - this is stress
+- No cartoonish flames - realistic fire
+- Don't make the AI icons too prominent - they're subtle overlays
+- No actual burns or injury - just near-misses and stress
+```
+
+---
+
+## GENERATION COMMAND FOR NEW IMAGES
+
+```bash
+# Angry Delivery Robot (Slide 36)
+python generate_images.py --prompt "IMAGE 16" --output angry-delivery-robot.png
+
+# AI Juggling Torches (Slide 39)
+python generate_images.py --prompt "IMAGE 17" --output ai-juggling-torches.png
+```
+
+## FILE PLACEMENT
+
+After generating, place files in:
+```
+public/images/generated/angry-delivery-robot.png
+public/images/generated/ai-juggling-torches.png
+```
+
+Then update slidesData.js:
+- Slide 36: Add `image: './images/generated/angry-delivery-robot.png'`
+- Slide 39: Add `image: './images/generated/ai-juggling-torches.png'`

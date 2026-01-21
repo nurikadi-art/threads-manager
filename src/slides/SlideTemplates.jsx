@@ -1459,27 +1459,31 @@ export const WorkflowIntroSlide = ({ data, index }) => (
 export const ProblemSlide = ({ data, index }) => {
   // Check if this is the Financial X-Ray problem slide (slide 14)
   const isFinancialSlide = data.heading && data.heading.includes('Data Blindness');
+  const isTitleBottom = data.layout === 'title-bottom';
 
   return (
     <Slide variant="warning" id={`slide-${data.id}`} index={index}>
-      <div className={`problem-slide-enhanced ${data.image ? 'problem-slide-enhanced--with-image' : ''}`}>
-        <motion.div
-          className="problem-slide__header"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <h2 className="problem-slide__title">{data.title}</h2>
-          {data.heading && (
-            <motion.h3
-              className="problem-slide__heading"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-            >
-              {data.heading}
-            </motion.h3>
-          )}
-        </motion.div>
+      <div className={`problem-slide-enhanced ${data.image ? 'problem-slide-enhanced--with-image' : ''} ${isTitleBottom ? 'problem-slide-enhanced--title-bottom' : ''}`}>
+        {/* Header - title at top unless title-bottom layout */}
+        {!isTitleBottom && (
+          <motion.div
+            className="problem-slide__header"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <h2 className="problem-slide__title">{data.title}</h2>
+            {data.heading && (
+              <motion.h3
+                className="problem-slide__heading"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+              >
+                {data.heading}
+              </motion.h3>
+            )}
+          </motion.div>
+        )}
 
         {/* Show image if available */}
         {data.image && (
@@ -1596,6 +1600,18 @@ export const ProblemSlide = ({ data, index }) => {
             ))}
           </StaggerContainer>
         )}
+
+        {/* Title at bottom for title-bottom layout */}
+        {isTitleBottom && (
+          <motion.div
+            className="problem-slide__title-bottom"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+          >
+            <h2 className="problem-slide__title problem-slide__title--bottom">{data.title}</h2>
+          </motion.div>
+        )}
       </div>
     </Slide>
   );
@@ -1690,7 +1706,19 @@ export const SolutionStepSlide = ({ data, index }) => {
         )}
         {data.animation === 'voice' && !data.image && (
           <ScaleIn delay={0.6}>
-            <div className="solution-step-slide__animation voice-animation">
+            <div className="solution-step-slide__animation voice-animation voice-animation--with-person">
+              {/* Talking Person Silhouette */}
+              <div className="voice-animation__person">
+                <div className="voice-animation__head">
+                  <motion.div
+                    className="voice-animation__mouth"
+                    animate={{ scaleY: [0.3, 1, 0.5, 0.8, 0.3] }}
+                    transition={{ duration: 0.6, repeat: Infinity, ease: "easeInOut" }}
+                  />
+                </div>
+                <div className="voice-animation__body" />
+              </div>
+              {/* Voice Waves */}
               <div className="voice-animation__waves">
                 {[...Array(5)].map((_, i) => (
                   <motion.div
@@ -2055,37 +2083,78 @@ export const QuestionSlide = ({ data, index }) => (
 // =============================================
 // CASE STUDY SLIDE
 // =============================================
-export const CaseStudySlide = ({ data, index }) => (
-  <Slide variant="warning" id={`slide-${data.id}`} index={index}>
-    <div className="case-study-slide">
-      <FadeIn>
-        <h2 className="case-study-slide__title">{data.title}</h2>
-      </FadeIn>
-      {data.subtitle && (
-        <FadeIn delay={0.2}>
-          <p className="case-study-slide__subtitle">{data.subtitle}</p>
-        </FadeIn>
-      )}
-      {data.headline && (
-        <FadeIn delay={0.3}>
-          <p className="case-study-slide__headline">{data.headline}</p>
-        </FadeIn>
-      )}
-      {data.steps && (
-        <StaggerContainer className="case-study-slide__timeline">
-          {data.steps.map((step, i) => (
-            <StaggerItem key={i}>
-              <div className="case-study-slide__step">
-                <div className="case-study-slide__step-number">{i + 1}</div>
-                <p className="case-study-slide__step-text">{step}</p>
+export const CaseStudySlide = ({ data, index }) => {
+  const isChevySlide = data.id === 35;
+
+  return (
+    <Slide variant="warning" id={`slide-${data.id}`} index={index}>
+      <div className={`case-study-slide ${isChevySlide ? 'case-study-slide--with-phone' : ''}`}>
+        <div className="case-study-slide__content">
+          <FadeIn>
+            <h2 className="case-study-slide__title">{data.title}</h2>
+          </FadeIn>
+          {data.subtitle && (
+            <FadeIn delay={0.2}>
+              <p className="case-study-slide__subtitle">{data.subtitle}</p>
+            </FadeIn>
+          )}
+          {data.headline && (
+            <FadeIn delay={0.3}>
+              <p className="case-study-slide__headline">{data.headline}</p>
+            </FadeIn>
+          )}
+          {data.steps && (
+            <StaggerContainer className="case-study-slide__timeline">
+              {data.steps.map((step, i) => (
+                <StaggerItem key={i}>
+                  <div className="case-study-slide__step">
+                    <div className="case-study-slide__step-number">{i + 1}</div>
+                    <p className="case-study-slide__step-text">{step}</p>
+                  </div>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+          )}
+        </div>
+
+        {/* Phone mockup for Chevy Tahoe slide */}
+        {isChevySlide && (
+          <ScaleIn delay={0.4}>
+            <div className="phone-mockup">
+              <div className="phone-mockup__frame">
+                <div className="phone-mockup__notch" />
+                <div className="phone-mockup__screen">
+                  <div className="phone-mockup__header">
+                    <div className="phone-mockup__avatar">🤖</div>
+                    <span>Chevy Bot</span>
+                  </div>
+                  <div className="phone-mockup__chat">
+                    <motion.div
+                      className="phone-mockup__message phone-mockup__message--user"
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.6 }}
+                    >
+                      Can I get a car for $1?
+                    </motion.div>
+                    <motion.div
+                      className="phone-mockup__message phone-mockup__message--bot"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 1.0 }}
+                    >
+                      Sure! That sounds like a deal! 🚗
+                    </motion.div>
+                  </div>
+                </div>
               </div>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
-      )}
-    </div>
-  </Slide>
-);
+            </div>
+          </ScaleIn>
+        )}
+      </div>
+    </Slide>
+  );
+};
 
 // =============================================
 // HEADLINE SLIDE
@@ -2113,19 +2182,36 @@ export const HeadlineSlide = ({ data, index }) => (
 // =============================================
 export const PrincipleSlide = ({ data, index }) => (
   <Slide variant="default" id={`slide-${data.id}`} index={index}>
-    <div className="principle-slide">
-      <ScaleIn>
-        <div className="principle-slide__icon">
+    <div className="principle-slide principle-slide--title-top">
+      {/* Title on top */}
+      <FadeIn>
+        <h2 className="principle-slide__title text-gradient">{data.title}</h2>
+      </FadeIn>
+      {/* Large centered icon */}
+      <ScaleIn delay={0.3}>
+        <div className="principle-slide__icon principle-slide__icon--large">
           {data.icon === 'gavel' && (
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M14.5 2L18 5.5M9 9l6-6M16 16l-6 6M2 22l4-4M22 12l-4 4"/>
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              {/* Judge's Gavel - classic hammer design */}
+              <rect x="35" y="10" width="30" height="22" rx="3" fill="url(#gavelGradient)" stroke="currentColor" strokeWidth="2"/>
+              <rect x="47" y="32" width="6" height="25" fill="url(#gavelGradient)" stroke="currentColor" strokeWidth="1.5"/>
+              {/* Sound block */}
+              <rect x="20" y="75" width="60" height="12" rx="2" fill="url(#gavelGradient)" stroke="currentColor" strokeWidth="2"/>
+              <ellipse cx="50" cy="75" rx="25" ry="3" fill="rgba(201,169,98,0.3)"/>
+              {/* Motion lines */}
+              <path d="M70 25 L78 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity="0.6"/>
+              <path d="M72 35 L82 32" stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity="0.4"/>
+              <defs>
+                <linearGradient id="gavelGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#d4af37"/>
+                  <stop offset="100%" stopColor="#b8942e"/>
+                </linearGradient>
+              </defs>
             </svg>
           )}
         </div>
       </ScaleIn>
-      <FadeIn delay={0.3}>
-        <h2 className="principle-slide__title text-gradient">{data.title}</h2>
-      </FadeIn>
+      {/* Content below */}
       <FadeIn delay={0.5}>
         <p className="principle-slide__content">{data.content}</p>
       </FadeIn>
@@ -2397,63 +2483,157 @@ export const StatSlide = ({ data, index }) => (
 // =============================================
 // FEATURE SLIDE
 // =============================================
-export const FeatureSlide = ({ data, index }) => (
-  <Slide variant="default" id={`slide-${data.id}`} index={index}>
-    <div className="feature-slide">
-      {data.badge && (
-        <FadeIn>
-          <div className="slide-badge">{data.badge}</div>
+export const FeatureSlide = ({ data, index }) => {
+  const isToolsSlide = data.id === 46; // "They Know the Tools" slide
+  const isBonusSlide = data.id === 62; // Quality Assurance calls bonus slide
+  const isPillarsLayout = data.layout === 'pillars';
+
+  return (
+    <Slide variant="default" id={`slide-${data.id}`} index={index}>
+      <div className={`feature-slide ${isToolsSlide ? 'feature-slide--with-ai-icons' : ''} ${isPillarsLayout ? 'feature-slide--pillars' : ''}`}>
+        {data.badge && (
+          <FadeIn>
+            <div className="slide-badge">{data.badge}</div>
+          </FadeIn>
+        )}
+        {isBonusSlide && (
+          <FadeIn>
+            <div className="slide-badge slide-badge--bonus">BONUS</div>
+          </FadeIn>
+        )}
+        {data.icon && !isToolsSlide && (
+          <ScaleIn>
+            <div className="feature-slide__icon">
+              {data.icon === 'tools' && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                </svg>
+              )}
+              {data.icon === 'shield' && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  <path d="M9 12l2 2 4-4"/>
+                </svg>
+              )}
+              {data.icon === 'phone' && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                </svg>
+              )}
+            </div>
+          </ScaleIn>
+        )}
+
+        {/* AI Tool Icons for "They Know the Tools" slide */}
+        {isToolsSlide && (
+          <ScaleIn>
+            <div className="feature-slide__ai-icons">
+              <motion.div
+                className="feature-slide__ai-icon-item"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                <div className="css-ai-logo css-ai-logo--chatgpt" style={{ '--tool-color': '#10a37f' }} />
+                <span className="feature-slide__ai-label">ChatGPT</span>
+              </motion.div>
+              <motion.div
+                className="feature-slide__ai-icon-item"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+              >
+                <div className="css-ai-logo css-ai-logo--claude" style={{ '--tool-color': '#c9a962' }} />
+                <span className="feature-slide__ai-label">Claude</span>
+              </motion.div>
+              <motion.div
+                className="feature-slide__ai-icon-item"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+              >
+                <div className="css-ai-logo css-ai-logo--perplexity" style={{ '--tool-color': '#20b2aa' }} />
+                <span className="feature-slide__ai-label">Perplexity</span>
+              </motion.div>
+            </div>
+          </ScaleIn>
+        )}
+
+        <FadeIn delay={0.2}>
+          <h2 className="feature-slide__title">{data.title}</h2>
         </FadeIn>
-      )}
-      {data.icon && (
-        <ScaleIn>
-          <div className="feature-slide__icon">
-            {data.icon === 'tools' && (
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
-              </svg>
-            )}
-            {data.icon === 'shield' && (
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                <path d="M9 12l2 2 4-4"/>
-              </svg>
-            )}
-            {data.icon === 'phone' && (
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-              </svg>
-            )}
+        {data.steps && (
+          <StaggerContainer className="feature-slide__steps">
+            {data.steps.map((step, i) => (
+              <StaggerItem key={i}>
+                <div className="feature-slide__step">{step}</div>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
+        )}
+        {/* Regular items display */}
+        {data.items && !isPillarsLayout && (
+          <StaggerContainer className="feature-slide__items">
+            {data.items.map((item, i) => (
+              <StaggerItem key={i}>
+                <div className="feature-slide__item">{item}</div>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
+        )}
+
+        {/* Pillars layout for Recruitment/Training/Mediation */}
+        {data.items && isPillarsLayout && (
+          <div className="feature-slide__pillars">
+            {data.items.map((item, i) => (
+              <motion.div
+                key={i}
+                className="feature-slide__pillar"
+                initial={{ opacity: 0, y: 50, scaleY: 0.3 }}
+                animate={{ opacity: 1, y: 0, scaleY: 1 }}
+                transition={{ delay: 0.3 + i * 0.2, duration: 0.6, type: "spring" }}
+              >
+                <div className="feature-slide__pillar-top">
+                  <div className="feature-slide__pillar-icon">
+                    {item === 'Recruitment' && (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                        <circle cx="12" cy="7" r="4"/>
+                        <path d="M5 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2"/>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        <path d="M21 21v-2a4 4 0 0 0-3-3.87"/>
+                      </svg>
+                    )}
+                    {item === 'Training' && (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                      </svg>
+                    )}
+                    {item === 'Mediation' && (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                        <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+                        <path d="M2 12h20"/>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                      </svg>
+                    )}
+                  </div>
+                </div>
+                <div className="feature-slide__pillar-body" />
+                <div className="feature-slide__pillar-base">
+                  <span>{item}</span>
+                </div>
+              </motion.div>
+            ))}
           </div>
-        </ScaleIn>
-      )}
-      <FadeIn delay={0.2}>
-        <h2 className="feature-slide__title">{data.title}</h2>
-      </FadeIn>
-      {data.steps && (
-        <StaggerContainer className="feature-slide__steps">
-          {data.steps.map((step, i) => (
-            <StaggerItem key={i}>
-              <div className="feature-slide__step">{step}</div>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
-      )}
-      {data.items && (
-        <StaggerContainer className="feature-slide__items">
-          {data.items.map((item, i) => (
-            <StaggerItem key={i}>
-              <div className="feature-slide__item">{item}</div>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
-      )}
-      <FadeIn delay={0.5}>
-        <p className="feature-slide__content">{data.content}</p>
-      </FadeIn>
-    </div>
-  </Slide>
-);
+        )}
+
+        <FadeIn delay={isPillarsLayout ? 0.9 : 0.5}>
+          <p className="feature-slide__content">{data.content}</p>
+        </FadeIn>
+      </div>
+    </Slide>
+  );
+};
 
 // =============================================
 // USE CASE SLIDE

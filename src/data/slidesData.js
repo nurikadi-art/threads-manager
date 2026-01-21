@@ -197,7 +197,6 @@ export const slidesData = [
     step: 'Step 1: Ramble.',
     content: 'Just talk. Don\'t worry about structure.\nRecord 5 minutes of your messy thoughts.',
     animation: 'voice',
-    image: './images/generated/idea-lost-shower.png',
   },
   {
     id: 25,
@@ -254,6 +253,7 @@ export const slidesData = [
     ],
     animation: 'list-scroll',
     image: './images/generated/screen-overload.png',
+    layout: 'title-bottom',
   },
   {
     id: 31,
@@ -436,6 +436,7 @@ export const slidesData = [
     title: 'More than a Headhunter',
     items: ['Recruitment', 'Training', 'Mediation'],
     content: 'We don\'t just find them. We train them on the latest tools and we manage the relationship.',
+    layout: 'pillars',
   },
   {
     id: 55,
