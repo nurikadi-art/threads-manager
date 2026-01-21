@@ -16,7 +16,7 @@ const BookCallWidget = () => {
       <div className="book-call-widget__qr-container">
         <QRCodeSVG
           value={BOOKING_URL}
-          size={200}
+          size={160}
           bgColor="#ffffff"
           fgColor="#0f0f14"
           level="M"
