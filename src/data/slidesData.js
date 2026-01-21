@@ -471,7 +471,7 @@ export const slidesData = [
     badge: 'ULTIMATE DELEGATION PACKAGE',
     title: 'We Will Match You With',
     highlight: 'BEST AI-trained Executive Assistant',
-    cta: 'Absolutely for FREE',
+    cta: 'Personalized for you and your needs',
     hasVideo: true,
     video: './videos/58.mp4',
   },
