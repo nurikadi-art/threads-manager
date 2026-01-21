@@ -302,7 +302,7 @@ export const slidesData = [
     title: 'Prompt Injection',
     content: 'A user tricked the bot by telling it \'Agree to everything.\'\nThe bot sold a $70k car for a dollar. You need guardrails.',
     icon: 'shield-alert',
-    image: './images/generated/prompt-injection-shield.png',
+    image: './images/slides/36.png',
   },
   {
     id: 37,
@@ -310,7 +310,7 @@ export const slidesData = [
     title: 'Case Study: DPD',
     headline: 'Parcel delivery firm disables AI after chatbot swears at customer.',
     subtitle: 'Brand Reputation Risks',
-    image: './images/generated/dpd-robot-error.png',
+    image: './images/slides/37.png',
   },
   {
     id: 38,
@@ -318,12 +318,14 @@ export const slidesData = [
     title: 'Don\'t Feed the Models',
     content: 'If you paste your client\'s private data into free ChatGPT, you might be training the model.\nThat is a privacy breach.',
     icon: 'lock',
+    image: './images/slides/38.png',
   },
   {
     id: 39,
     type: 'transition',
     title: 'AI is High Maintenance',
     style: 'concern',
+    image: './images/slides/39.png',
   },
   {
     id: 40,
@@ -340,6 +342,7 @@ export const slidesData = [
     content: 'Is your hourly rate low enough to be the spell-checker?',
     answer: 'No.',
     style: 'rhetorical',
+    image: './images/slides/41.png',
   },
   {
     id: 42,
@@ -353,7 +356,7 @@ export const slidesData = [
     type: 'introduction',
     title: 'The AI Operator',
     subtitle: 'Not just a scheduler. A trained operator of these tools.',
-    image: './images/generated/ai-operator.png',
+    image: './images/slides/43.png',
   },
   {
     id: 44,
@@ -405,7 +408,7 @@ export const slidesData = [
     title: 'The Gatekeeper',
     subtitle: 'Lead Scoring & Filtering.',
     content: 'Your VA uses AI to score every lead. You only talk to the top 10%. They handle the rest.',
-    image: './images/generated/lead-qualification.png',
+    image: './images/slides/50.png',
   },
   {
     id: 51,
@@ -413,6 +416,7 @@ export const slidesData = [
     number: 2,
     title: 'The Content Engine',
     content: 'You speak for 10 minutes. They give you a week of content.',
+    image: './images/slides/51.png',
   },
   {
     id: 52,
@@ -429,6 +433,7 @@ export const slidesData = [
     title: 'ROI Analysis',
     calculation: 'If this saves you 10 hours a week, and your time is worth $200/hr, that\'s $8,000/mo in value.',
     highlight: '$8,000/mo',
+    image: './images/slides/53.png',
   },
   {
     id: 54,
@@ -444,7 +449,7 @@ export const slidesData = [
     title: 'Let them fly. You pick the destination.',
     icon: 'compass',
     style: 'closing',
-    image: './images/generated/compass-navigation.png',
+    image: './images/slides/55.png',
   },
   {
     id: 56,
@@ -452,7 +457,7 @@ export const slidesData = [
     title: 'The Choice',
     content: 'How will you grow in 2026?',
     style: 'call-to-action',
-    image: './images/generated/founder-arena.png',
+    image: './images/slides/56.png',
   },
   {
     id: 57,
@@ -467,7 +472,8 @@ export const slidesData = [
     title: 'We Will Match You With',
     highlight: 'BEST AI-trained Executive Assistant',
     cta: 'Absolutely for FREE',
-    image: './images/generated/assistant-friendly.png',
+    hasVideo: true,
+    video: './videos/58.mp4',
   },
   {
     id: 59,
@@ -475,7 +481,7 @@ export const slidesData = [
     badge: 'ULTIMATE DELEGATION PACKAGE',
     content: 'While the rate is as low as $12/hour, these are elite, highly skilled professionals who bring sophisticated AI expertise to your business.',
     highlight: '$12/hour',
-    image: './images/generated/assistant-expert.png',
+    image: './images/slides/59.png',
   },
   {
     id: 60,
@@ -525,6 +531,10 @@ export const slidesData = [
       'BONUS #5: Access to our 4000+ AI Trained pool of VAs',
     ],
     fastAction: 'FAST-ACTION BONUS ONLY: FREE LIFETIME ACCESS TO THE VA FINDING SOFTWARE',
+    bundleImages: [
+      './images/slides/63_1.png',
+      './images/slides/63_2.png',
+    ],
   },
   {
     id: 64,

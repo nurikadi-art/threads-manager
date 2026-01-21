@@ -2696,24 +2696,65 @@ export const ROISlide = ({ data, index }) => (
 // =============================================
 // OFFER SLIDE
 // =============================================
-export const OfferSlide = ({ data, index }) => (
-  <Slide variant="offer" id={`slide-${data.id}`} index={index}>
-    <div className="offer-slide">
-      <FadeIn>
-        <div className="offer-slide__badge">{data.badge}</div>
-      </FadeIn>
-      <FadeIn delay={0.2}>
-        <h2 className="offer-slide__title">{data.title}</h2>
-      </FadeIn>
-      <ScaleIn delay={0.4}>
-        <div className="offer-slide__highlight text-gradient">{data.highlight}</div>
-      </ScaleIn>
-      <FadeIn delay={0.6}>
-        <div className="offer-slide__cta">{data.cta}</div>
-      </FadeIn>
-    </div>
-  </Slide>
-);
+export const OfferSlide = ({ data, index }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef(null);
+
+  const handleVideoToggle = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.paused) {
+      video.play();
+      setIsPlaying(true);
+    } else {
+      video.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  return (
+    <Slide variant="offer" id={`slide-${data.id}`} index={index}>
+      <div className={`offer-slide ${data.hasVideo ? 'offer-slide--with-video' : ''}`}>
+        <FadeIn>
+          <div className="offer-slide__badge">{data.badge}</div>
+        </FadeIn>
+        <FadeIn delay={0.2}>
+          <h2 className="offer-slide__title">{data.title}</h2>
+        </FadeIn>
+
+        {/* Video for slide 58 */}
+        {data.hasVideo && data.video && (
+          <ScaleIn delay={0.3}>
+            <div className="offer-slide__video-container" onClick={handleVideoToggle}>
+              <video
+                ref={videoRef}
+                className="offer-slide__video"
+                src={data.video}
+                playsInline
+              />
+              {!isPlaying && (
+                <div className="offer-slide__video-overlay">
+                  <div className="offer-slide__play-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <polygon points="5,3 19,12 5,21" />
+                    </svg>
+                  </div>
+                </div>
+              )}
+            </div>
+          </ScaleIn>
+        )}
+
+        <ScaleIn delay={data.hasVideo ? 0.5 : 0.4}>
+          <div className="offer-slide__highlight text-gradient">{data.highlight}</div>
+        </ScaleIn>
+        <FadeIn delay={data.hasVideo ? 0.7 : 0.6}>
+          <div className="offer-slide__cta">{data.cta}</div>
+        </FadeIn>
+      </div>
+    </Slide>
+  );
+};
 
 // =============================================
 // PRICING SLIDE
@@ -2789,11 +2830,34 @@ export const SavingsSlide = ({ data, index }) => (
 // =============================================
 export const PackageSlide = ({ data, index }) => (
   <Slide variant="offer" id={`slide-${data.id}`} index={index}>
-    <div className="package-slide">
+    <div className={`package-slide ${data.bundleImages ? 'package-slide--with-images' : ''}`}>
       <FadeIn>
         <h2 className="package-slide__title text-gradient">{data.title}</h2>
       </FadeIn>
-      <ScaleIn delay={0.2}>
+
+      {/* Bundle Images */}
+      {data.bundleImages && (
+        <motion.div
+          className="package-slide__bundle"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.6 }}
+        >
+          {data.bundleImages.map((img, i) => (
+            <motion.div
+              key={i}
+              className="package-slide__bundle-item"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3 + i * 0.15 }}
+            >
+              <img src={img} alt={`Bundle item ${i + 1}`} />
+            </motion.div>
+          ))}
+        </motion.div>
+      )}
+
+      <ScaleIn delay={data.bundleImages ? 0.5 : 0.2}>
         <div className="package-slide__main">
           <span className="package-slide__check">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
@@ -2845,8 +2909,8 @@ export const TestimonialSlide = ({ data, index }) => {
 
   // Video paths for testimonials
   const videoSources = {
-    65: './videos/testimonial-emad.mp4',
-    66: './videos/testimonial-eddy.mp4',
+    65: './videos/65.mp4',
+    66: './videos/66.mp4',
   };
 
   return (
