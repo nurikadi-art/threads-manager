@@ -7,11 +7,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   background: linear-gradient(145deg, #1a1a22 0%, #0f0f14 100%);
   border: 2px solid rgba(201, 169, 98, 0.4);
-  border-radius: 12px;
-  padding: 12px;
+  border-radius: 16px;
+  padding: 18px;
   box-shadow:
     0 10px 30px rgba(0, 0, 0, 0.4),
     inset 0 1px 1px rgba(255, 255, 255, 0.05);
@@ -19,18 +19,18 @@
 
 .book-call-widget__label {
   font-weight: 700;
-  font-size: 0.75rem;
+  font-size: 1rem;
   color: #c9a962;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
 }
 
 .book-call-widget__qr-container {
   display: flex;
   justify-content: center;
-  padding: 8px;
+  padding: 12px;
   background: #ffffff;
-  border-radius: 8px;
+  border-radius: 10px;
 }
 
 /* Mobile responsive */
