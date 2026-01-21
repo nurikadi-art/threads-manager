@@ -6411,6 +6411,109 @@
   transform: rotate(180deg);
 }
 
+/* Video Testimonial Styles */
+.testimonial-slide--video {
+  gap: var(--spacing-lg);
+}
+
+.testimonial-video-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-lg);
+  max-width: 800px;
+  width: 100%;
+}
+
+.testimonial-video-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(201, 169, 98, 0.3);
+  transition: all 0.3s ease;
+}
+
+.testimonial-video-wrapper:hover {
+  border-color: var(--color-gold);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+  transform: scale(1.02);
+}
+
+.testimonial-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #0f0f14;
+}
+
+.testimonial-video-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.testimonial-video-play-btn {
+  width: 80px;
+  height: 80px;
+  background: var(--color-gold-gradient);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.testimonial-video-play-btn svg {
+  width: 30px;
+  height: 30px;
+  margin-left: 5px;
+  color: var(--color-bg-primary);
+}
+
+.testimonial-video-wrapper:hover .testimonial-video-play-btn {
+  transform: scale(1.1);
+}
+
+.testimonial-video-info {
+  text-align: center;
+}
+
+.testimonial-video-name {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.testimonial-video-role {
+  font-size: 1rem;
+  color: var(--color-gold);
+}
+
+@media (max-width: 768px) {
+  .testimonial-video-container {
+    max-width: 100%;
+  }
+
+  .testimonial-video-play-btn {
+    width: 60px;
+    height: 60px;
+  }
+
+  .testimonial-video-play-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
 /* ===========================================
    ENHANCED CHECKLIST SLIDE
    =========================================== */

@@ -2828,14 +2828,30 @@ export const PackageSlide = ({ data, index }) => (
 // TESTIMONIAL SLIDE - Enhanced with premium styling
 // =============================================
 export const TestimonialSlide = ({ data, index }) => {
-  const testimonialQuotes = {
-    'Latte': '"The VA service transformed how I run my business. I finally have time to focus on what matters."',
-    'Eddy P.': '"Game-changer for scaling operations. The AI-trained assistants understand exactly what I need."'
+  const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef(null);
+
+  const handleVideoToggle = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.paused) {
+      video.play();
+      setIsPlaying(true);
+    } else {
+      video.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  // Video paths for testimonials
+  const videoSources = {
+    65: './videos/testimonial-emad.mp4',
+    66: './videos/testimonial-eddy.mp4',
   };
 
   return (
     <Slide variant="default" id={`slide-${data.id}`} index={index}>
-      <div className="testimonial-slide-enhanced">
+      <div className={`testimonial-slide-enhanced ${data.hasVideo ? 'testimonial-slide--video' : ''}`}>
         {/* Background effects */}
         <div className="slide-bg-pattern" />
         <motion.div
@@ -2854,72 +2870,117 @@ export const TestimonialSlide = ({ data, index }) => {
           <h2 className="testimonial-title">{data.title}</h2>
         </motion.div>
 
-        <motion.div
-          className="css-testimonial-card"
-          initial={{ opacity: 0, y: 30, rotateX: 10 }}
-          animate={{ opacity: 1, y: 0, rotateX: 0 }}
-          transition={{ delay: 0.3, type: "spring" }}
-          whileHover={{ y: -5, boxShadow: '0 30px 60px rgba(0, 0, 0, 0.4)' }}
-        >
-          {/* Stars */}
-          <div className="css-testimonial-card__stars">
-            {[...Array(5)].map((_, i) => (
-              <motion.span
-                key={i}
-                className="css-testimonial-card__star"
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.5 + i * 0.1 }}
-              >
-                ★
-              </motion.span>
-            ))}
-          </div>
-
-          {/* Avatar */}
+        {/* Video Testimonial Layout */}
+        {data.hasVideo ? (
           <motion.div
-            className="css-testimonial-card__avatar"
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.4, type: "spring" }}
+            className="testimonial-video-container"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
           >
-            {data.name[0]}
-          </motion.div>
-
-          <div className="css-testimonial-card__content">
-            {/* Quote */}
-            <motion.p
-              className="css-testimonial-card__quote"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-            >
-              {testimonialQuotes[data.name] || '"An incredible experience that exceeded all expectations."'}
-            </motion.p>
-
-            {/* Name and details */}
+            <div className="testimonial-video-wrapper" onClick={handleVideoToggle}>
+              <video
+                ref={videoRef}
+                className="testimonial-video"
+                src={videoSources[data.id]}
+                playsInline
+                poster=""
+              />
+              {!isPlaying && (
+                <motion.div
+                  className="testimonial-video-overlay"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                >
+                  <div className="testimonial-video-play-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <polygon points="5,3 19,12 5,21" />
+                    </svg>
+                  </div>
+                </motion.div>
+              )}
+            </div>
             <motion.div
+              className="testimonial-video-info"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 }}
+              transition={{ delay: 0.5 }}
             >
-              <h3 className="css-testimonial-card__name">{data.name}</h3>
-              <p className="css-testimonial-card__role">{data.role}</p>
-              <p className="css-testimonial-card__company">{data.company}</p>
+              <h3 className="testimonial-video-name">{data.name}</h3>
+              <p className="testimonial-video-role">{data.role}, {data.company}</p>
             </motion.div>
-          </div>
-        </motion.div>
+          </motion.div>
+        ) : (
+          /* Original Card Layout */
+          <>
+            <motion.div
+              className="css-testimonial-card"
+              initial={{ opacity: 0, y: 30, rotateX: 10 }}
+              animate={{ opacity: 1, y: 0, rotateX: 0 }}
+              transition={{ delay: 0.3, type: "spring" }}
+              whileHover={{ y: -5, boxShadow: '0 30px 60px rgba(0, 0, 0, 0.4)' }}
+            >
+              {/* Stars */}
+              <div className="css-testimonial-card__stars">
+                {[...Array(5)].map((_, i) => (
+                  <motion.span
+                    key={i}
+                    className="css-testimonial-card__star"
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.5 + i * 0.1 }}
+                  >
+                    ★
+                  </motion.span>
+                ))}
+              </div>
 
-        {/* Decorative elements */}
-        <motion.div
-          className="testimonial-decoration"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.5 }}
-          transition={{ delay: 1 }}
-        >
-          <div className="testimonial-quote-mark testimonial-quote-mark--left">"</div>
-          <div className="testimonial-quote-mark testimonial-quote-mark--right">"</div>
-        </motion.div>
+              {/* Avatar */}
+              <motion.div
+                className="css-testimonial-card__avatar"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.4, type: "spring" }}
+              >
+                {data.name[0]}
+              </motion.div>
+
+              <div className="css-testimonial-card__content">
+                {/* Quote */}
+                <motion.p
+                  className="css-testimonial-card__quote"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.6 }}
+                >
+                  "An incredible experience that exceeded all expectations."
+                </motion.p>
+
+                {/* Name and details */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8 }}
+                >
+                  <h3 className="css-testimonial-card__name">{data.name}</h3>
+                  <p className="css-testimonial-card__role">{data.role}</p>
+                  <p className="css-testimonial-card__company">{data.company}</p>
+                </motion.div>
+              </div>
+            </motion.div>
+
+            {/* Decorative elements */}
+            <motion.div
+              className="testimonial-decoration"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.5 }}
+              transition={{ delay: 1 }}
+            >
+              <div className="testimonial-quote-mark testimonial-quote-mark--left">"</div>
+              <div className="testimonial-quote-mark testimonial-quote-mark--right">"</div>
+            </motion.div>
+          </>
+        )}
       </div>
     </Slide>
   );

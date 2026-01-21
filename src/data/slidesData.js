@@ -537,10 +537,10 @@ export const slidesData = [
     id: 65,
     type: 'testimonial',
     title: 'What People Say',
-    name: 'Latte',
-    role: 'founder of Lolly Gig',
-    company: 'The Break Through Studio',
-    image: './images/generated/first-customer.png',
+    name: 'Emad Sufiyan',
+    role: 'Founder',
+    company: 'S-Group Marketing Services',
+    hasVideo: true,
   },
   {
     id: 66,
@@ -549,6 +549,7 @@ export const slidesData = [
     name: 'Eddy P.',
     role: 'CEO',
     company: 'DARK HORSE METHODS',
+    hasVideo: true,
   },
   {
     id: 67,
