@@ -1,4 +1,4 @@
-# Deploy AI Avatar Presentation to GitHub Pages
+# Deploy AI Avatar Presentation to GitHub Pages (alongside existing content)
 name: Deploy Presentation
 
 on:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -16,10 +16,10 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout source
         uses: actions/checkout@v4
 
       - name: Setup Node.js
@@ -34,25 +34,10 @@ jobs:
       - name: Build presentation
         run: npm run build
 
-      - name: Prepare deployment
-        run: |
-          mkdir -p deploy/presentation
-          cp -r dist/* deploy/presentation/
-          # Create a simple index to redirect or list both sites
-          echo '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Threads Manager</title></head><body><h1>Sites</h1><ul><li><a href="presentation/">AI Avatar Presentation</a></li></ul></body></html>' > deploy/index.html
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: 'deploy'
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          destination_dir: presentation
+          keep_files: true
