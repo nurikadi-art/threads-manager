@@ -1,4 +1,4 @@
-# Deploy AI Avatar Presentation to GitHub Pages (preserving original VA content)
+# Deploy both presentations to GitHub Pages
 name: Deploy Presentation
 
 on:
@@ -21,6 +21,8 @@ jobs:
     steps:
       - name: Checkout main branch
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -34,32 +36,36 @@ jobs:
       - name: Build AI Avatar presentation
         run: npm run build
 
-      - name: Fetch original VA presentation from gh-pages
+      - name: Fetch original VA presentation with images/videos
         run: |
           mkdir -p final-deploy
 
-          # Fetch gh-pages branch
-          git fetch origin gh-pages --depth=1 || echo "No gh-pages branch"
+          # Fetch the branch with the complete VA presentation
+          git fetch origin claude/analyze-presentation-slides-52RjT --depth=1
 
-          # Extract original content (excluding presentation folder)
-          git archive origin/gh-pages | tar -x -C final-deploy --exclude='presentation' --exclude='presentation/*' || echo "Could not extract gh-pages"
+          # Extract the docs folder (contains built VA presentation with images/videos)
+          git archive origin/claude/analyze-presentation-slides-52RjT:docs | tar -x -C final-deploy
 
-          # Show original content
+          # Show what we got
           echo "=== Original VA presentation files ==="
-          ls -la final-deploy/ || echo "No original content"
+          ls -la final-deploy/
+          echo "=== Images ==="
+          ls -la final-deploy/images/generated/ | head -20 || echo "No images folder"
+          echo "=== Videos ==="
+          ls -la final-deploy/videos/ || echo "No videos folder"
 
       - name: Add AI Avatar presentation
         run: |
-          # Copy built presentation to /presentation/ subfolder
+          # Copy built AI Avatar presentation to /presentation/ subfolder
           mkdir -p final-deploy/presentation
           cp -r dist/* final-deploy/presentation/
 
-          # Ensure .nojekyll exists
+          # Ensure .nojekyll exists (prevents Jekyll processing)
           touch final-deploy/.nojekyll
 
           echo "=== Final deployment structure ==="
           ls -la final-deploy/
-          echo "=== Presentation folder ==="
+          echo "=== AI Avatar Presentation folder ==="
           ls -la final-deploy/presentation/
 
       - name: Setup Pages
