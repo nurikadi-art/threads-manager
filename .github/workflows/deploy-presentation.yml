@@ -1,4 +1,4 @@
-# Deploy AI Avatar Presentation to GitHub Pages
+# Deploy AI Avatar Presentation to GitHub Pages (preserving original content)
 name: Deploy Presentation
 
 on:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -16,11 +16,13 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout main branch
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -34,21 +36,36 @@ jobs:
       - name: Build presentation
         run: npm run build
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+      - name: Fetch existing gh-pages content
+        run: |
+          git fetch origin gh-pages:gh-pages || echo "No gh-pages branch yet"
+          mkdir -p deploy-output
+          if git rev-parse --verify gh-pages >/dev/null 2>&1; then
+            git checkout gh-pages -- . 2>/dev/null || true
+            # Copy all existing gh-pages content except presentation folder
+            for item in *; do
+              if [ "$item" != "dist" ] && [ "$item" != "node_modules" ] && [ "$item" != "src" ] && [ "$item" != "public" ] && [ "$item" != ".git" ] && [ "$item" != "deploy-output" ]; then
+                if [ "$item" != "presentation" ]; then
+                  cp -r "$item" deploy-output/ 2>/dev/null || true
+                fi
+              fi
+            done
+            git checkout main -- . 2>/dev/null || true
+          fi
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: './dist'
+      - name: Combine original content with new presentation
+        run: |
+          # Copy new presentation build to presentation subfolder
+          mkdir -p deploy-output/presentation
+          cp -r dist/* deploy-output/presentation/
+          # Add .nojekyll file
+          touch deploy-output/.nojekyll
 
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./deploy-output
+          publish_branch: gh-pages
+          force_orphan: false
+          keep_files: false
