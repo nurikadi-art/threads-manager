@@ -7,10 +7,16 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main branch
@@ -28,36 +34,49 @@ jobs:
       - name: Build AI Avatar presentation
         run: npm run build
 
-      - name: Prepare deployment
+      - name: Fetch original VA presentation from gh-pages
         run: |
-          # Clone the existing gh-pages content
-          git clone --branch gh-pages --single-branch https://github.com/${{ github.repository }}.git gh-pages-content || mkdir gh-pages-content
-
-          # Create final deployment directory
           mkdir -p final-deploy
 
-          # Copy existing gh-pages content (original VA presentation)
-          if [ -d "gh-pages-content" ]; then
-            # Copy everything except .git and presentation folder
-            find gh-pages-content -maxdepth 1 -mindepth 1 ! -name '.git' ! -name 'presentation' -exec cp -r {} final-deploy/ \;
-          fi
+          # Fetch gh-pages branch
+          git fetch origin gh-pages --depth=1 || echo "No gh-pages branch"
 
-          # Copy new AI Avatar presentation build to /presentation/
+          # Extract original content (excluding presentation folder)
+          git archive origin/gh-pages | tar -x -C final-deploy --exclude='presentation' --exclude='presentation/*' || echo "Could not extract gh-pages"
+
+          # Show original content
+          echo "=== Original VA presentation files ==="
+          ls -la final-deploy/ || echo "No original content"
+
+      - name: Add AI Avatar presentation
+        run: |
+          # Copy built presentation to /presentation/ subfolder
           mkdir -p final-deploy/presentation
           cp -r dist/* final-deploy/presentation/
 
           # Ensure .nojekyll exists
           touch final-deploy/.nojekyll
 
-          # Show what we're deploying
-          echo "=== Deployment contents ==="
+          echo "=== Final deployment structure ==="
           ls -la final-deploy/
           echo "=== Presentation folder ==="
           ls -la final-deploy/presentation/
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./final-deploy
-          publish_branch: gh-pages
+          path: ./final-deploy
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
