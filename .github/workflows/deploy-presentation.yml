@@ -1,4 +1,4 @@
-# Deploy AI Avatar Presentation to GitHub Pages (preserving original content)
+# Deploy AI Avatar Presentation to GitHub Pages (preserving original VA content)
 name: Deploy Presentation
 
 on:
@@ -8,12 +8,6 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
 
 jobs:
   build-and-deploy:
@@ -21,8 +15,6 @@ jobs:
     steps:
       - name: Checkout main branch
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -33,39 +25,39 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build presentation
+      - name: Build AI Avatar presentation
         run: npm run build
 
-      - name: Fetch existing gh-pages content
+      - name: Prepare deployment
         run: |
-          git fetch origin gh-pages:gh-pages || echo "No gh-pages branch yet"
-          mkdir -p deploy-output
-          if git rev-parse --verify gh-pages >/dev/null 2>&1; then
-            git checkout gh-pages -- . 2>/dev/null || true
-            # Copy all existing gh-pages content except presentation folder
-            for item in *; do
-              if [ "$item" != "dist" ] && [ "$item" != "node_modules" ] && [ "$item" != "src" ] && [ "$item" != "public" ] && [ "$item" != ".git" ] && [ "$item" != "deploy-output" ]; then
-                if [ "$item" != "presentation" ]; then
-                  cp -r "$item" deploy-output/ 2>/dev/null || true
-                fi
-              fi
-            done
-            git checkout main -- . 2>/dev/null || true
+          # Clone the existing gh-pages content
+          git clone --branch gh-pages --single-branch https://github.com/${{ github.repository }}.git gh-pages-content || mkdir gh-pages-content
+
+          # Create final deployment directory
+          mkdir -p final-deploy
+
+          # Copy existing gh-pages content (original VA presentation)
+          if [ -d "gh-pages-content" ]; then
+            # Copy everything except .git and presentation folder
+            find gh-pages-content -maxdepth 1 -mindepth 1 ! -name '.git' ! -name 'presentation' -exec cp -r {} final-deploy/ \;
           fi
 
-      - name: Combine original content with new presentation
-        run: |
-          # Copy new presentation build to presentation subfolder
-          mkdir -p deploy-output/presentation
-          cp -r dist/* deploy-output/presentation/
-          # Add .nojekyll file
-          touch deploy-output/.nojekyll
+          # Copy new AI Avatar presentation build to /presentation/
+          mkdir -p final-deploy/presentation
+          cp -r dist/* final-deploy/presentation/
+
+          # Ensure .nojekyll exists
+          touch final-deploy/.nojekyll
+
+          # Show what we're deploying
+          echo "=== Deployment contents ==="
+          ls -la final-deploy/
+          echo "=== Presentation folder ==="
+          ls -la final-deploy/presentation/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./deploy-output
+          publish_dir: ./final-deploy
           publish_branch: gh-pages
-          force_orphan: false
-          keep_files: false
